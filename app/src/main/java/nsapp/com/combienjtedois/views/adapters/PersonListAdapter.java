@@ -1,0 +1,56 @@
+package nsapp.com.combienjtedois.views.adapters;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+
+import nsapp.com.combienjtedois.R;
+import nsapp.com.combienjtedois.model.Person;
+
+public class PersonListAdapter extends BaseAdapter {
+
+    private final Context context;
+    private final ArrayList<Person> personList = new ArrayList<Person>();
+
+    public PersonListAdapter(Context context, ArrayList<Person> personList) {
+        this.context = context;
+        this.personList.addAll(personList);
+    }
+
+    @Override
+    public int getCount() {
+        return personList.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return null;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+
+        LayoutInflater inflater = LayoutInflater.from(context);
+
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.linear_container, null);
+        }
+
+        Person person = personList.get(position);
+
+        ((TextView) convertView.findViewById(R.id.nameView)).setText(person.getName());
+        ((TextView) convertView.findViewById(R.id.countView)).setText(String.format(context.getString(R.string.money_format), person.getTotalAmount()));
+
+        return convertView;
+    }
+}

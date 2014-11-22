@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppBaseTheme" parent="@style/Theme.AppCompat.Light">
+        <item name="android:actionBarStyle">@style/CustomActionBar</item>
+    </style>
+
+    <style name="CustomActionBar" parent="@style/Widget.AppCompat.Light.ActionBar">
+        <item name="android:background">@color/green</item>
+        <item name="android:backgroundStacked">@color/green</item>
+        <item name="android:backgroundSplit">@color/green</item>
+    </style>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">CombienJteDois</string>
+    <string name="title_section1">Money</string>
+    <string name="title_section2">Loan</string>
+    <string name="title_section3">Presents</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_add">Add</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete</string>
+    <string name="detail">Detail</string>
+
+    <string name="person_info_format">%1$s : %2$s</string>
+    <string name="money_format">%s $</string>
+
+    <string name="content">Content</string>
+
+</resources>

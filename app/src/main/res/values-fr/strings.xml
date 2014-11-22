@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">CombienJteDois</string>
+    <string name="title_section1">Argent</string>
+    <string name="title_section2">Prêt</string>
+    <string name="title_section3">Cadeaux</string>
+    <string name="navigation_drawer_open">Ouvrir le menu</string>
+    <string name="navigation_drawer_close">Fermer le menu</string>
+    <string name="action_settings">Paramètres</string>
+    <string name="action_add">Ajouter</string>
+    <string name="action_edit">Modifier</string>
+    <string name="action_delete">Supprimer</string>
+    <string name="detail">Détail</string>
+    <string name="empty_footer_money">Ajouter une dette</string>
+    <string name="empty_footer_person">Ajouter une personne</string>
+
+    <string name="person_info_format">%1$s : %2$s</string>
+    <string name="money_format">%s €</string>
+
+    <string name="content">Content</string>
+
+</resources>
