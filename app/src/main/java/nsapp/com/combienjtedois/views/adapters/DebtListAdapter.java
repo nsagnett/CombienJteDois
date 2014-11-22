@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,10 +17,14 @@ public class DebtListAdapter extends BaseAdapter {
 
     private final Context context;
     private final ArrayList<Debt> debtArrayList = new ArrayList<Debt>();
+    private final boolean isDeletingView;
+    private final boolean isEditingView;
 
-    public DebtListAdapter(Context context, ArrayList<Debt> debtArrayList) {
+    public DebtListAdapter(Context context, ArrayList<Debt> debtArrayList, boolean isDeletingView, boolean isEditingView) {
         this.context = context;
         this.debtArrayList.addAll(debtArrayList);
+        this.isDeletingView = isDeletingView;
+        this.isEditingView = isEditingView;
     }
 
     @Override
@@ -52,6 +57,15 @@ public class DebtListAdapter extends BaseAdapter {
 
         nameView.setText(debt.getReason());
         ((TextView) convertView.findViewById(R.id.countView)).setText(String.format(context.getString(R.string.money_format), debt.getAmount()));
+        if (isDeletingView) {
+            ImageView imageView = (ImageView) convertView.findViewById(R.id.otherView);
+            imageView.setImageResource(R.drawable.delete);
+            imageView.setVisibility(View.VISIBLE);
+        } else if (isEditingView) {
+            ImageView imageView = (ImageView) convertView.findViewById(R.id.otherView);
+            imageView.setImageResource(R.drawable.edit);
+            imageView.setVisibility(View.VISIBLE);
+        }
 
         return convertView;
     }

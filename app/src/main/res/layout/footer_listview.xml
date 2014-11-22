@@ -3,5 +3,6 @@
     android:id="@+id/footerView"
     android:gravity="center"
     android:padding="30dp"
+    android:background="@drawable/custom_button"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />

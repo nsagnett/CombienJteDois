@@ -1,6 +1,7 @@
 package nsapp.com.combienjtedois.views.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -32,9 +34,13 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
     protected ArrayList<Debt> debtArrayList = new ArrayList<Debt>();
 
     protected ListView listView;
-    protected TextView headerView;
+    protected TextView headerPersonView;
     protected TextView footerView;
 
+    protected TextView positiveSort;
+    protected TextView negativeSort;
+
+    protected int sortIndex;
     protected Person person;
 
     protected boolean isDeletingView;
@@ -52,9 +58,13 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
         listView = (ListView) view.findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
 
-        headerView = (TextView) inflater.inflate(R.layout.header_listview, null, false);
+        headerPersonView = (TextView) inflater.inflate(R.layout.header_listview, null, false);
         footerView = (TextView) inflater.inflate(R.layout.footer_listview, null, false);
-        getActivity().supportInvalidateOptionsMenu();
+
+        negativeSort = (TextView) view.findViewById(R.id.negativeSort);
+        positiveSort = (TextView) view.findViewById(R.id.positiveSort);
+
+        sortIndex = -1;
 
         return view;
     }
@@ -66,9 +76,41 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
                 getArguments().getInt(ARG_SECTION_NUMBER));
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        positiveSort.setTextColor(getResources().getColor(R.color.green));
+        negativeSort.setTextColor(getResources().getColor(R.color.green));
+        positiveSort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!positiveSort.isSelected()) {
+                    sortIndex = 0;
+                    positiveSort.setSelected(true);
+                    negativeSort.setSelected(false);
+                    positiveSort.setTextColor(getResources().getColor(android.R.color.white));
+                    negativeSort.setTextColor(getResources().getColor(R.color.green));
+                    notifyChanges(listType);
+                }
+            }
+        });
+        negativeSort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!negativeSort.isSelected()) {
+                    sortIndex = 1;
+                    negativeSort.setSelected(true);
+                    positiveSort.setSelected(false);
+                    negativeSort.setTextColor(getResources().getColor(android.R.color.white));
+                    positiveSort.setTextColor(getResources().getColor(R.color.green));
+                    notifyChanges(listType);
+                }
+            }
+        });
+    }
+
     public void notifyChanges(listWantedType type) {
         Cursor c;
-        listType = type;
         switch (type) {
             case PERSON:
                 c = Tools.dbManager.fetchAllPersons();
@@ -84,15 +126,24 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
                 }
 
                 if (personArrayList.isEmpty()) {
-                    footerView.setText(R.string.empty_footer_person);
-                    footerView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_add, 0, 0);
-                    footerView.setOnClickListener(this);
-                    listView.addFooterView(footerView);
+                    isDeletingView = false;
+                    isEditingView = false;
+                    if (listView.getFooterViewsCount() == 0) {
+                        footerView.setText(R.string.empty_footer_person);
+                        footerView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_add, 0, 0);
+                        footerView.setOnClickListener(this);
+                        listView.addFooterView(footerView);
+                    }
                 } else {
                     listView.removeFooterView(footerView);
+                    if (sortIndex == 0) {
+                        personArrayList = Tools.decroissantSort(personArrayList);
+                    } else if (sortIndex == 1) {
+                        personArrayList = Tools.croissantSort(personArrayList);
+                    }
                 }
 
-                PersonListAdapter personListAdapter = new PersonListAdapter(getActivity(), personArrayList);
+                PersonListAdapter personListAdapter = new PersonListAdapter(getActivity(), personArrayList, isDeletingView, isEditingView);
                 listView.setAdapter(personListAdapter);
 
                 break;
@@ -110,19 +161,31 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
                 }
 
                 if (debtArrayList.isEmpty()) {
-                    footerView.setText(R.string.empty_footer_money);
-                    footerView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_add, 0, 0);
-                    footerView.setOnClickListener(this);
-                    listView.addFooterView(footerView);
+                    isDeletingView = false;
+                    isEditingView = false;
+                    if (listView.getFooterViewsCount() == 0) {
+                        footerView.setText(R.string.empty_footer_money);
+                        footerView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_add, 0, 0);
+                        footerView.setOnClickListener(this);
+                        listView.addFooterView(footerView);
+                    }
                 } else {
                     listView.removeFooterView(footerView);
                 }
 
-                DebtListAdapter debtListAdapter = new DebtListAdapter(getActivity(), debtArrayList);
+                DebtListAdapter debtListAdapter = new DebtListAdapter(getActivity(), debtArrayList, isDeletingView, isEditingView);
                 listView.setAdapter(debtListAdapter);
 
-                headerView.setText(String.format(getString(R.string.person_info_format), person.getName(),
-                        String.format(getString(R.string.money_format), Tools.dbManager.getTotalCount(person.getId()))));
+                Double total = Double.parseDouble(Tools.dbManager.getTotalCount(person.getId()));
+
+                if (total >= 0) {
+                    headerPersonView.setTextColor(getResources().getColor(R.color.green));
+                } else {
+                    headerPersonView.setTextColor(getResources().getColor(R.color.red));
+                }
+
+                headerPersonView.setText(String.format(getString(R.string.person_info_format), person.getName(),
+                        String.format(getString(R.string.money_format), total)));
 
                 break;
             default:
@@ -131,13 +194,95 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
     }
 
     public void addPerson() {
-        Tools.dbManager.createPerson("TEST");
-        notifyChanges(listWantedType.PERSON);
+        final AlertDialog alert = Tools.createCustomAddPersonDialogBox(getActivity(), R.string.add_person, R.drawable.add, R.string.validate);
+        alert.show();
+        final EditText editText = ((EditText) alert.findViewById(R.id.editTextView));
+        editText.requestFocus();
+        alert.findViewById(R.id.neutralTextView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (editText.getText().length() == 0) {
+                    Tools.showCustomAlertDialogBox(getActivity(),
+                            R.string.warning_text,
+                            R.drawable.warning,
+                            String.format(getString(R.string.empty_edittext_format), getString(R.string.add_person_name)),
+                            R.string.validate);
+                } else {
+                    alert.dismiss();
+                    Tools.dbManager.createPerson(editText.getText().toString());
+                    notifyChanges(listType);
+                }
+            }
+        });
     }
 
     public void addDebt() {
-        Tools.dbManager.createDebt(person.getId(), "90", "DETTE");
-        notifyChanges(listWantedType.DEBT);
+        final AlertDialog alert = Tools.createCustomAddDebtDialogBox(getActivity(), R.string.add_debt, R.drawable.add, R.string.validate);
+        alert.show();
+        final TextView positiveDebtView = (TextView) alert.findViewById(R.id.positiveDebtView);
+        final TextView negativeDebtView = (TextView) alert.findViewById(R.id.negativeDebtView);
+        TextView deviseView = (TextView) alert.findViewById(R.id.deviseView);
+        deviseView.setVisibility(View.VISIBLE);
+        deviseView.setText(R.string.euro);
+
+        positiveDebtView.setSelected(true);
+        positiveDebtView.setTextColor(getResources().getColor(android.R.color.white));
+        negativeDebtView.setTextColor(getResources().getColor(R.color.green));
+
+        positiveDebtView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!positiveDebtView.isSelected()) {
+                    negativeDebtView.setSelected(false);
+                    positiveDebtView.setSelected(true);
+                    positiveDebtView.setTextColor(getResources().getColor(android.R.color.white));
+                    negativeDebtView.setTextColor(getResources().getColor(R.color.green));
+                }
+            }
+        });
+        negativeDebtView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!negativeDebtView.isSelected()) {
+                    positiveDebtView.setSelected(false);
+                    negativeDebtView.setSelected(true);
+                    negativeDebtView.setTextColor(getResources().getColor(android.R.color.white));
+                    positiveDebtView.setTextColor(getResources().getColor(R.color.green));
+                }
+            }
+        });
+
+        ((TextView) alert.findViewById(R.id.reasonTextView)).setText(R.string.add_debt_reason);
+        ((TextView) alert.findViewById(R.id.countTextView)).setText(R.string.add_debt_amount);
+        final EditText reasonEditText = ((EditText) alert.findViewById(R.id.reasonEditText));
+        final EditText countEditText = ((EditText) alert.findViewById(R.id.countEditText));
+        reasonEditText.requestFocus();
+        alert.findViewById(R.id.neutralTextView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (reasonEditText.getText().length() == 0) {
+                    Tools.showCustomAlertDialogBox(getActivity(),
+                            R.string.warning_text,
+                            R.drawable.warning,
+                            String.format(getString(R.string.empty_edittext_format), getString(R.string.add_debt_reason)),
+                            R.string.validate);
+                } else if (countEditText.getText().length() == 0) {
+                    Tools.showCustomAlertDialogBox(getActivity(),
+                            R.string.warning_text,
+                            R.drawable.warning,
+                            String.format(getString(R.string.empty_edittext_format), getString(R.string.add_debt_amount)),
+                            R.string.validate);
+                } else {
+                    alert.dismiss();
+                    if (positiveDebtView.isSelected()) {
+                        Tools.dbManager.createDebt(person.getId(), countEditText.getText().toString(), reasonEditText.getText().toString());
+                    } else {
+                        Tools.dbManager.createDebt(person.getId(), "-" + countEditText.getText().toString(), reasonEditText.getText().toString());
+                    }
+                    notifyChanges(listType);
+                }
+            }
+        });
     }
 
 
@@ -158,6 +303,7 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
     public boolean isDeletingView() {
         return isDeletingView;
     }
+
     public boolean isEditingView() {
         return isEditingView;
     }
@@ -165,6 +311,7 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
     public void setDeletingView(boolean isDeletingView) {
         this.isDeletingView = isDeletingView;
     }
+
     public void setEditingView(boolean isEditingView) {
         this.isEditingView = isEditingView;
     }

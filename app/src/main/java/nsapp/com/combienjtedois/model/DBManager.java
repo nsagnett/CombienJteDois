@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
+
+import nsapp.com.combienjtedois.R;
 
 public class DBManager {
 
@@ -87,6 +90,8 @@ public class DBManager {
             initialValues.put(PHONE_NUMBER_KEY, "");
 
             return sqLiteDatabase.insert(DATABASE_TABLE_PERSON, null, initialValues);
+        } else {
+            Toast.makeText(context, String.format(context.getString(R.string.person_already_present_format), name), Toast.LENGTH_SHORT).show();
         }
         return 0;
     }
@@ -140,13 +145,15 @@ public class DBManager {
 
     public long createDebt(long idPerson, String amount, String reason) {
         ContentValues initialValues = new ContentValues();
-
+        reason = Tools.camelCase(reason);
         if (fetchIdDebt(idPerson, reason) == 0) {
             initialValues.put(ID_PERSON_DEBT_KEY, idPerson);
             initialValues.put(AMOUNT_KEY, amount);
             initialValues.put(REASON_KEY, reason);
 
             return sqLiteDatabase.insert(DATABASE_TABLE_DEBT, null, initialValues);
+        } else {
+            Toast.makeText(context, context.getString(R.string.debt_already_present), Toast.LENGTH_SHORT).show();
         }
         return 0;
     }

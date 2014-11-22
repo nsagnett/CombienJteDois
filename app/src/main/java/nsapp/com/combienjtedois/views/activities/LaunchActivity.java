@@ -117,11 +117,7 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!navigationDrawerFragment.isDrawerOpen()) {
-            if (!(getCurrentFragment() instanceof DetailFragment)) {
-                getMenuInflater().inflate(R.menu.global, menu);
-            } else {
-                getMenuInflater().inflate(R.menu.detail, menu);
-            }
+            getMenuInflater().inflate(R.menu.global, menu);
             restoreActionBar();
             return true;
         }
@@ -156,30 +152,34 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
         View view = getCurrentFragment().getView();
         if (view != null) {
             ListView listView = (ListView) getCurrentFragment().getView().findViewById(R.id.listView);
-            for (int i = 0; i < listView.getAdapter().getCount(); i++) {
+            if (listView != null && listView.getAdapter() != null) {
+                for (int i = 0; i < listView.getAdapter().getCount(); i++) {
 
-                final ImageView otherView = (ImageView) listView.getChildAt(i).findViewById(R.id.otherView);
+                    if (listView.getChildAt(i) != null) {
+                        final ImageView otherView = (ImageView) listView.getChildAt(i).findViewById(R.id.otherView);
 
-                if (otherView != null) {
+                        if (otherView != null) {
 
-                    TranslateAnimation imageViewTranslation;
-                    otherView.setImageResource(resViewID);
+                            TranslateAnimation imageViewTranslation;
+                            otherView.setImageResource(resViewID);
 
-                    if (otherView.getVisibility() == View.GONE) {
-                        imageViewTranslation = new TranslateAnimation(otherView.getLeft() - X_ANIMATION, otherView.getLeft(), otherView.getTop(), otherView.getTop());
-                        otherView.setVisibility(View.VISIBLE);
+                            if (otherView.getVisibility() == View.GONE) {
+                                imageViewTranslation = new TranslateAnimation(otherView.getLeft() - X_ANIMATION, otherView.getLeft(), otherView.getTop(), otherView.getTop());
+                                otherView.setVisibility(View.VISIBLE);
 
-                    } else {
-                        imageViewTranslation = new TranslateAnimation(otherView.getLeft(), otherView.getLeft() - X_ANIMATION, otherView.getTop(), otherView.getTop());
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                otherView.setVisibility(View.GONE);
+                            } else {
+                                imageViewTranslation = new TranslateAnimation(otherView.getLeft(), otherView.getLeft() - X_ANIMATION, otherView.getTop(), otherView.getTop());
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        otherView.setVisibility(View.GONE);
+                                    }
+                                }, ANIMATION_DURATION);
                             }
-                        }, ANIMATION_DURATION);
+                            imageViewTranslation.setDuration(ANIMATION_DURATION);
+                            otherView.startAnimation(imageViewTranslation);
+                        }
                     }
-                    imageViewTranslation.setDuration(ANIMATION_DURATION);
-                    otherView.startAnimation(imageViewTranslation);
                 }
             }
         }

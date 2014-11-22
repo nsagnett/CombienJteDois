@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.view.animation.ScaleAnimation;
 import android.widget.AdapterView;
 
-import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.Person;
 import nsapp.com.combienjtedois.model.Tools;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
@@ -30,7 +29,9 @@ public class DetailFragment extends AbstractFragment {
 
         person = (Person) getArguments().getSerializable(PERSON_KEY);
 
-        listView.addHeaderView(headerView);
+        listType = listWantedType.DEBT;
+
+        listView.addHeaderView(headerPersonView);
 
         return view;
     }
@@ -38,13 +39,13 @@ public class DetailFragment extends AbstractFragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((LaunchActivity) getActivity()).updateActionBarTitle(getString(R.string.detail));
-        notifyChanges(listWantedType.DEBT);
+        ((LaunchActivity) getActivity()).updateActionBarTitle(person.getName());
+        notifyChanges(listType);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (isDeletingView) {
+        if (isDeletingView && !debtArrayList.isEmpty()) {
             final int idDebt = (int) debtArrayList.get(position - 1).getId();
             final int idPerson = (int) person.getId();
             ScaleAnimation anim = new ScaleAnimation(1, 0, 1, 0);
@@ -54,7 +55,7 @@ public class DetailFragment extends AbstractFragment {
 
                 public void run() {
                     Tools.dbManager.deleteDebt(idDebt, idPerson);
-                    notifyChanges(listWantedType.DEBT);
+                    notifyChanges(listType);
                 }
 
             }, Tools.ANIMATION_DURATION);

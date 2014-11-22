@@ -1,9 +1,13 @@
 package nsapp.com.combienjtedois.views.fragments;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.ScaleAnimation;
 import android.widget.AdapterView;
 
@@ -22,28 +26,48 @@ public class MoneyFragment extends AbstractFragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        ((LaunchActivity) getActivity()).updateActionBarTitle(getString(R.string.title_section1));
-        notifyChanges(listWantedType.PERSON);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        listType = listWantedType.PERSON;
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onResume() {
+        super.onResume();
+        ((LaunchActivity) getActivity()).updateActionBarTitle(getString(R.string.title_section1));
+        notifyChanges(listType);
+    }
+
+    @Override
+    public void onItemClick(final AdapterView<?> parent, View view, final int position, long id) {
         if (isDeletingView) {
-            final int idPerson = (int) personArrayList.get(position).getId();
-            ScaleAnimation anim = new ScaleAnimation(1, 0, 1, 0);
-            anim.setDuration(Tools.ANIMATION_DURATION);
-            parent.getChildAt(position).startAnimation(anim);
-            new Handler().postDelayed(new Runnable() {
+            final AlertDialog alert = Tools.createCustomConfirmDialogBox(getActivity(), R.string.warning_text, R.drawable.warning, R.string.message_delete_text, R.string.positive_text, R.string.negative_text);
+            alert.show();
+            alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alert.dismiss();
+                    final int idPerson = (int) personArrayList.get(position).getId();
+                    ScaleAnimation anim = new ScaleAnimation(1, 0, 1, 0);
+                    anim.setDuration(Tools.ANIMATION_DURATION);
+                    parent.getChildAt(position).startAnimation(anim);
+                    new Handler().postDelayed(new Runnable() {
 
-                public void run() {
-                    Tools.dbManager.deletePerson(idPerson);
-                    notifyChanges(listWantedType.PERSON);
+                        public void run() {
+                            Tools.dbManager.deletePerson(idPerson);
+                            notifyChanges(listType);
+                        }
+
+                    }, Tools.ANIMATION_DURATION);
                 }
-
-            }, Tools.ANIMATION_DURATION);
-        } else {
+            });
+            alert.findViewById(R.id.negativeView).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alert.dismiss();
+                }
+            });
+        } else if(!personArrayList.isEmpty()){
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
             transaction.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up, R.anim.slide_in_down, R.anim.slide_out_down);
             transaction.replace(R.id.container, DetailFragment.newInstance(personArrayList.get(position)));

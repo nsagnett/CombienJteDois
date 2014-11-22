@@ -11,7 +11,6 @@
     <string name="action_add">Add</string>
     <string name="action_edit">Edit</string>
     <string name="action_delete">Delete</string>
-    <string name="detail">Detail</string>
 
     <string name="person_info_format">%1$s : %2$s</string>
     <string name="money_format">%s $</string>

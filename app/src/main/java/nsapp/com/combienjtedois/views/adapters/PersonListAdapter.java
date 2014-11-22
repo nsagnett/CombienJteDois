@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,9 +18,14 @@ public class PersonListAdapter extends BaseAdapter {
     private final Context context;
     private final ArrayList<Person> personList = new ArrayList<Person>();
 
-    public PersonListAdapter(Context context, ArrayList<Person> personList) {
+    private final boolean isDeletingView;
+    private final boolean isEditingView;
+
+    public PersonListAdapter(Context context, ArrayList<Person> personList, boolean isDeletingView, boolean isEditingView) {
         this.context = context;
         this.personList.addAll(personList);
+        this.isDeletingView = isDeletingView;
+        this.isEditingView = isEditingView;
     }
 
     @Override
@@ -50,7 +56,15 @@ public class PersonListAdapter extends BaseAdapter {
 
         ((TextView) convertView.findViewById(R.id.nameView)).setText(person.getName());
         ((TextView) convertView.findViewById(R.id.countView)).setText(String.format(context.getString(R.string.money_format), person.getTotalAmount()));
-
+        if (isDeletingView) {
+            ImageView imageView = (ImageView) convertView.findViewById(R.id.otherView);
+            imageView.setImageResource(R.drawable.delete);
+            imageView.setVisibility(View.VISIBLE);
+        } else if (isEditingView) {
+            ImageView imageView = (ImageView) convertView.findViewById(R.id.otherView);
+            imageView.setImageResource(R.drawable.edit);
+            imageView.setVisibility(View.VISIBLE);
+        }
         return convertView;
     }
 }

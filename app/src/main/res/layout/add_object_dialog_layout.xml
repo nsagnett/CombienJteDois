@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@android:color/white"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_margin="5dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/negativeDebtView"
+            android:text="@string/negative_debt"
+            android:gravity="center"
+            android:padding="15dp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/switch_button"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/positiveDebtView"
+            android:text="@string/positive_debt"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:padding="15dp"
+            android:background="@drawable/switch_button"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/reasonTextView"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <EditText
+        android:id="@+id/reasonEditText"
+        android:inputType="text"
+        android:hint="@string/add_debt_reason_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:id="@+id/countTextView"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_margin="5dp"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/countEditText"
+            android:inputType="numberSigned"
+            android:hint="@string/add_debt_amount_hint"
+            android:layout_width="0dp"
+            android:layout_weight="0.9"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/deviseView"
+            android:textSize="17sp"
+            android:visibility="gone"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="0.1"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/neutralTextView"
+        android:textColor="@color/green"
+        android:padding="15dp"
+        android:gravity="center"
+        android:background="@drawable/custom_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
