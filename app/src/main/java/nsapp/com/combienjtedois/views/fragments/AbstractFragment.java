@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,35 +80,7 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
     @Override
     public void onResume() {
         super.onResume();
-        Tools.switchView(getActivity(), positiveSort, negativeSort);
-        positiveSort.setTextColor(getResources().getColor(R.color.green));
-        negativeSort.setTextColor(getResources().getColor(R.color.green));
-        positiveSort.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!positiveSort.isSelected()) {
-                    sortIndex = 0;
-                    positiveSort.setSelected(true);
-                    negativeSort.setSelected(false);
-                    positiveSort.setTextColor(getResources().getColor(android.R.color.white));
-                    negativeSort.setTextColor(getResources().getColor(R.color.green));
-                    notifyChanges();
-                }
-            }
-        });
-        negativeSort.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!negativeSort.isSelected()) {
-                    sortIndex = 1;
-                    negativeSort.setSelected(true);
-                    positiveSort.setSelected(false);
-                    negativeSort.setTextColor(getResources().getColor(android.R.color.white));
-                    positiveSort.setTextColor(getResources().getColor(R.color.green));
-                    notifyChanges();
-                }
-            }
-        });
+        Tools.switchView(getActivity(), positiveSort, negativeSort, this);
     }
 
     public void notifyChanges() {
@@ -139,9 +112,9 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
                     listView.removeFooterView(footerView);
 
                     if (sortIndex == 0) {
-                        personArrayList = Tools.decroissantSort(personArrayList);
+                        personArrayList = Tools.decroissantPersonSort(personArrayList);
                     } else if (sortIndex == 1) {
-                        personArrayList = Tools.croissantSort(personArrayList);
+                        personArrayList = Tools.croissantPersonSort(personArrayList);
                     }
                 }
 
@@ -199,7 +172,6 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
         final AlertDialog alert = Tools.createCustomAddPersonDialogBox(getActivity(), R.string.add_person, R.drawable.add, R.string.validate);
         alert.show();
         final EditText editText = ((EditText) alert.findViewById(R.id.editTextView));
-        editText.requestFocus();
         alert.findViewById(R.id.neutralTextView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -217,8 +189,9 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
 
         final TextView positiveDebtView = (TextView) alert.findViewById(R.id.positiveDebtView);
         final TextView negativeDebtView = (TextView) alert.findViewById(R.id.negativeDebtView);
-        Tools.switchView(getActivity(), positiveDebtView, negativeDebtView);
+        Tools.switchView(getActivity(), positiveDebtView, negativeDebtView, this);
 
+        ((TextView) alert.findViewById(R.id.typeDebtView)).setText(R.string.add_debt_type);
         ((TextView) alert.findViewById(R.id.reasonTextView)).setText(R.string.add_debt_reason);
         ((TextView) alert.findViewById(R.id.countTextView)).setText(R.string.add_debt_amount);
         final EditText reasonEditText = ((EditText) alert.findViewById(R.id.reasonEditText));
@@ -307,5 +280,17 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
 
     public void setEditingView(boolean isEditingView) {
         this.isEditingView = isEditingView;
+    }
+
+    public void setSortIndex(int sortIndex){
+        this.sortIndex = sortIndex;
+    }
+
+    protected void prepareOnReplaceTransaction(Fragment fragment){
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up, R.anim.slide_in_down, R.anim.slide_out_down);
+        transaction.replace(R.id.container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

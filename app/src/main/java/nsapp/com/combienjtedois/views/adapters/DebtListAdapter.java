@@ -52,11 +52,17 @@ public class DebtListAdapter extends BaseAdapter {
         }
 
         Debt debt = debtArrayList.get(position);
+        String reason = debt.getReason();
+        Double amount = Double.parseDouble(debt.getAmount());
 
-        TextView nameView = (TextView) convertView.findViewById(R.id.nameView);
+        TextView reasonView = (TextView) convertView.findViewById(R.id.nameView);
+        reasonView.setText(reason);
 
-        nameView.setText(debt.getReason());
-        ((TextView) convertView.findViewById(R.id.countView)).setText(String.format(context.getString(R.string.money_format), debt.getAmount()));
+        TextView amountView = ((TextView) convertView.findViewById(R.id.countView));
+
+        amountView.setText(String.format(context.getString(R.string.money_format), amount));
+        amountView.setTextColor(amount >= 0 ? context.getResources().getColor(R.color.green) : context.getResources().getColor(R.color.red));
+
         if (isDeletingView) {
             ImageView imageView = (ImageView) convertView.findViewById(R.id.otherView);
             imageView.setImageResource(R.drawable.delete);

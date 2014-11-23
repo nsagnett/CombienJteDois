@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +40,7 @@ public class MoneyFragment extends AbstractFragment {
     @Override
     public void onItemClick(final AdapterView<?> parent, View view, final int position, long id) {
         if (isDeletingView) {
-            final AlertDialog alert = Tools.createCustomConfirmDialogBox(getActivity(), R.string.warning_text, R.drawable.warning, R.string.message_delete_text, R.string.positive_text, R.string.negative_text);
+            final AlertDialog alert = Tools.createCustomConfirmDialogBox(getActivity(), R.string.warning_text, R.drawable.warning, R.string.message_delete_person_text, R.string.positive_text, R.string.negative_text);
             alert.show();
             alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -67,12 +66,8 @@ public class MoneyFragment extends AbstractFragment {
                     alert.dismiss();
                 }
             });
-        } else if(!personArrayList.isEmpty()){
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            transaction.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up, R.anim.slide_in_down, R.anim.slide_out_down);
-            transaction.replace(R.id.container, DetailFragment.newInstance(personArrayList.get(position)));
-            transaction.addToBackStack(null);
-            transaction.commit();
+        } else if (!personArrayList.isEmpty()) {
+            prepareOnReplaceTransaction(DetailFragment.newInstance(personArrayList.get(position)));
         }
     }
 }

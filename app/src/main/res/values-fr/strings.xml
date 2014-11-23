@@ -29,10 +29,12 @@
     <string name="positive_text">Oui</string>
     <string name="negative_text">Non</string>
     <string name="warning_text">Attention !</string>
-    <string name="message_delete_text">Voulez-vous vraiment supprimer cette personne ?</string>
+    <string name="message_delete_person_text">Voulez-vous vraiment supprimer cette personne ?</string>
+    <string name="message_delete_debt_text">Voulez-vous vraiment supprimer cette dette ?</string>
     <string name="positive_debt">Créance</string>
     <string name="negative_debt">Dette</string>
     <string name="add_debt">Ajouter une dette ou une créance</string>
+    <string name="add_debt_type">Type</string>
     <string name="add_debt_reason">Motif</string>
     <string name="add_debt_amount">Montant</string>
     <string name="add_debt_reason_hint">Saisir le motif&#8230;</string>

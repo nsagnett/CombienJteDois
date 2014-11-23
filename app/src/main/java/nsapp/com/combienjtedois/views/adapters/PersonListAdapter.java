@@ -53,9 +53,15 @@ public class PersonListAdapter extends BaseAdapter {
         }
 
         Person person = personList.get(position);
+        String name = person.getName();
+        Double total = Double.parseDouble(person.getTotalAmount());
 
-        ((TextView) convertView.findViewById(R.id.nameView)).setText(person.getName());
-        ((TextView) convertView.findViewById(R.id.countView)).setText(String.format(context.getString(R.string.money_format), person.getTotalAmount()));
+        ((TextView) convertView.findViewById(R.id.nameView)).setText(name);
+
+        TextView countView = ((TextView) convertView.findViewById(R.id.countView));
+        countView.setText(String.format(context.getString(R.string.money_format), total));
+        countView.setTextColor(total >= 0 ? context.getResources().getColor(R.color.green) : context.getResources().getColor(R.color.red));
+
         if (isDeletingView) {
             ImageView imageView = (ImageView) convertView.findViewById(R.id.otherView);
             imageView.setImageResource(R.drawable.delete);

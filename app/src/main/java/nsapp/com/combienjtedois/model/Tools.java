@@ -10,13 +10,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import nsapp.com.combienjtedois.R;
+import nsapp.com.combienjtedois.views.fragments.AbstractFragment;
 
 import static android.view.ViewGroup.LayoutParams;
 
 public class Tools {
 
     public static DBManager dbManager = null;
-
     public static final int ANIMATION_DURATION = 400;
 
     public static String camelCase(String s) {
@@ -33,7 +33,7 @@ public class Tools {
         return result;
     }
 
-    public static ArrayList<Person> croissantSort(ArrayList<Person> persons) {
+    public static ArrayList<Person> croissantPersonSort(ArrayList<Person> persons) {
         ArrayList<Person> personsList = new ArrayList<Person>();
         do {
             double min = Integer.MAX_VALUE;
@@ -52,7 +52,7 @@ public class Tools {
         return personsList;
     }
 
-    public static ArrayList<Person> decroissantSort(ArrayList<Person> persons) {
+    public static ArrayList<Person> decroissantPersonSort(ArrayList<Person> persons) {
         ArrayList<Person> personsList = new ArrayList<Person>();
         do {
             double max = Integer.MIN_VALUE;
@@ -71,7 +71,7 @@ public class Tools {
         return personsList;
     }
 
-    public static void switchView(Context context, final TextView viewOne, final TextView viewTwo) {
+    public static void switchView(final Context context, final TextView viewOne, final TextView viewTwo, final AbstractFragment abstractFragment) {
         final int green = context.getResources().getColor(R.color.green);
         final int white = context.getResources().getColor(android.R.color.white);
 
@@ -86,6 +86,8 @@ public class Tools {
                     viewOne.setSelected(true);
                     viewOne.setTextColor(white);
                     viewTwo.setTextColor(green);
+                    abstractFragment.setSortIndex(0);
+                    abstractFragment.notifyChanges();
                 }
             }
         });
@@ -97,6 +99,8 @@ public class Tools {
                     viewTwo.setSelected(true);
                     viewTwo.setTextColor(white);
                     viewOne.setTextColor(green);
+                    abstractFragment.setSortIndex(1);
+                    abstractFragment.notifyChanges();
                 }
             }
         });
