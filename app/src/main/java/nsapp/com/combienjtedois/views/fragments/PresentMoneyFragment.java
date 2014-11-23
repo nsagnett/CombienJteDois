@@ -10,10 +10,10 @@ import android.widget.AdapterView;
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
 
-public class PresentFragment extends AbstractFragment {
+public class PresentMoneyFragment extends AbstractMoneyFragment {
 
-    public static PresentFragment newInstance(int sectionNumber) {
-        PresentFragment fragment = new PresentFragment();
+    public static PresentMoneyFragment newInstance(int sectionNumber) {
+        PresentMoneyFragment fragment = new PresentMoneyFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);

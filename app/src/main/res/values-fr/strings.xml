@@ -13,42 +13,45 @@
     <string name="action_edit">Modifier</string>
     <string name="action_delete">Supprimer</string>
 
+
+    <!--Personnes-->
     <string name="add_person">Ajouter une personne</string>
+    <string name="modify_person">Modifier une personne</string>
     <string name="add_person_name">Nom</string>
     <string name="validate">Valider</string>
     <string name="edit_hint_dialog">Saisir le nom&#8230;</string>
-
-    <string name="digits_edittext">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ-</string>
-
-
-    <!--Argent-->
-    <string name="empty_footer_money">Ajouter une dette</string>
-    <string name="empty_footer_person">Ajouter une personne</string>
+    <string name="toast_add_person">Personne ajoutée !</string>
+    <string name="toast_modify">Changement effectué !</string>
+    <string name="toast_delete_person">Personne supprimée !</string>
+    <string name="toast_add_debt">Dette ajoutée !</string>
+    <string name="toast_delete_debt">Dette supprimée !</string>
     <string name="person_info_format">%1$s : %2$s</string>
-    <string name="money_format">%s €</string>
+    <string name="message_delete_person_text">Voulez-vous vraiment supprimer cette personne ?</string>
+    <string name="person_already_present_format">%s existe déjà !</string>
+
+    <!--Utiles-->
+    <string name="digits_edittext">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ-</string>
     <string name="positive_text">Oui</string>
     <string name="negative_text">Non</string>
-    <string name="warning_text">Attention !</string>
-    <string name="message_delete_person_text">Voulez-vous vraiment supprimer cette personne ?</string>
-    <string name="message_delete_debt_text">Voulez-vous vraiment supprimer cette dette ?</string>
-    <string name="positive_debt">Créance</string>
-    <string name="negative_debt">Dette</string>
-    <string name="add_debt">Ajouter une dette ou une créance</string>
-    <string name="add_debt_type">Type</string>
-    <string name="add_debt_reason">Motif</string>
-    <string name="add_debt_amount">Montant</string>
-    <string name="add_debt_reason_hint">Saisir le motif&#8230;</string>
-    <string name="add_debt_amount_hint">Saisir le montant&#8230;</string>
-    <string name="empty_field_format">Le champ %s est requis !</string>
     <string name="ok">OK</string>
-
-    <!--Others-->
-    <string name="croissant_debt">Par montant croissant</string>
-    <string name="decroissant_debt">Par montant décroissant</string>
+    <string name="empty_field_format">Le champ %s est requis !</string>
     <string name="content">Content</string>
     <string name="euro">€</string>
+    <string name="croissant_debt">Par montant croissant</string>
+    <string name="decroissant_debt">Par montant décroissant</string>
 
-    <string name="person_already_present_format">%s existe déjà !</string>
+    <!--Argent-->
+    <string name="add_debt">Ajouter une dette</string>
+    <string name="money_format">%s €</string>
+    <string name="warning_text">Attention !</string>
+    <string name="message_delete_debt_text">Voulez-vous vraiment supprimer cette dette ?</string>
+    <string name="credence">Créance</string>
+    <string name="debt">Dette</string>
+    <string name="type">Type</string>
+    <string name="object">Objet</string>
+    <string name="amount">Montant</string>
+    <string name="object_hint">Saisir l\'objet&#8230;</string>
+    <string name="amount_hint">Saisir le montant&#8230;</string>
     <string name="debt_already_present">Cette dette existe déjà !</string>
 
 </resources>

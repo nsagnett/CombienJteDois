@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.views.fragments.AbstractFragment;
+import nsapp.com.combienjtedois.views.fragments.AbstractMoneyFragment;
 
 import static android.view.ViewGroup.LayoutParams;
 
@@ -19,20 +19,9 @@ public class Tools {
     public static DBManager dbManager = null;
     public static final int ANIMATION_DURATION = 400;
 
-    public static String camelCase(String s) {
-        String result = "";
-        s = s.toLowerCase();
-        int length = s.length();
-        for (int i = 0; i < length; i++) {
-            if (i == 0) {
-                result += String.valueOf(s.charAt(i)).toUpperCase();
-            } else {
-                result += String.valueOf(s.charAt(i));
-            }
-        }
-        return result;
-    }
-
+    /**
+     * ALGO
+     */
     public static ArrayList<Person> croissantPersonSort(ArrayList<Person> persons) {
         ArrayList<Person> personsList = new ArrayList<Person>();
         do {
@@ -71,7 +60,64 @@ public class Tools {
         return personsList;
     }
 
-    public static void switchView(final Context context, final TextView viewOne, final TextView viewTwo, final AbstractFragment abstractFragment) {
+    public static ArrayList<Debt> croissantDebtSort(ArrayList<Debt> debts) {
+        ArrayList<Debt> debtArrayList = new ArrayList<Debt>();
+        do {
+            double min = Integer.MAX_VALUE;
+            int index = 0;
+            for (int i = 0; i < debts.size(); i++) {
+                double amount = Double.parseDouble(debts.get(i).getAmount());
+                if (amount < min) {
+                    min = amount;
+                    index = i;
+                }
+            }
+            debtArrayList.add(debts.get(index));
+            debts.remove(index);
+        } while (!debts.isEmpty());
+
+        return debtArrayList;
+    }
+
+    public static ArrayList<Debt> decroissantDebtSort(ArrayList<Debt> debts) {
+        ArrayList<Debt> debtArrayList = new ArrayList<Debt>();
+        do {
+            double max = Integer.MIN_VALUE;
+            int index = 0;
+            for (int i = 0; i < debts.size(); i++) {
+                double amount = Double.parseDouble(debts.get(i).getAmount());
+                if (amount > max) {
+                    max = amount;
+                    index = i;
+                }
+            }
+            debtArrayList.add(debts.get(index));
+            debts.remove(index);
+        } while (!debts.isEmpty());
+
+        return debtArrayList;
+    }
+
+
+    /**
+     * AFFICHAGE
+     */
+    public static String camelCase(String s) {
+        String result = "";
+        s = s.toLowerCase();
+        int length = s.length();
+        for (int i = 0; i < length; i++) {
+            if (i == 0) {
+                result += String.valueOf(s.charAt(i)).toUpperCase();
+            } else {
+                result += String.valueOf(s.charAt(i));
+            }
+        }
+        return result;
+    }
+
+
+    public static void switchView(final Context context, final TextView viewOne, final TextView viewTwo, final AbstractMoneyFragment abstractMoneyFragment) {
         final int green = context.getResources().getColor(R.color.green);
         final int white = context.getResources().getColor(android.R.color.white);
 
@@ -86,8 +132,8 @@ public class Tools {
                     viewOne.setSelected(true);
                     viewOne.setTextColor(white);
                     viewTwo.setTextColor(green);
-                    abstractFragment.setSortIndex(0);
-                    abstractFragment.notifyChanges();
+                    abstractMoneyFragment.setSortIndex(0);
+                    abstractMoneyFragment.notifyChanges();
                 }
             }
         });
@@ -99,8 +145,8 @@ public class Tools {
                     viewTwo.setSelected(true);
                     viewTwo.setTextColor(white);
                     viewOne.setTextColor(green);
-                    abstractFragment.setSortIndex(1);
-                    abstractFragment.notifyChanges();
+                    abstractMoneyFragment.setSortIndex(1);
+                    abstractMoneyFragment.notifyChanges();
                 }
             }
         });

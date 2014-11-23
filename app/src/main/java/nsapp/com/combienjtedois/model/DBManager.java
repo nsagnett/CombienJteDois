@@ -96,22 +96,14 @@ public class DBManager {
         return 0;
     }
 
-    public boolean updatePhoneNumberPerson(long idPerson, String phoneNumber) {
+    public boolean modifyPerson(long idPerson, String name, String totalCount, String phoneNumber) {
         ContentValues args = new ContentValues();
+        args.put(NAME_PERSON_KEY, name);
+        args.put(TOTAL_COUNT_KEY, totalCount);
         args.put(PHONE_NUMBER_KEY, phoneNumber);
 
         return sqLiteDatabase.update(DATABASE_TABLE_PERSON, args, ID_PERSON_KEY + "="
                 + idPerson, null) > 0;
-    }
-
-    private Cursor fetchPerson(long rowIdPerson) {
-        Cursor mCursor = sqLiteDatabase.query(true, DATABASE_TABLE_PERSON, new String[]{
-                ID_PERSON_KEY, NAME_PERSON_KEY, PHONE_NUMBER_KEY, TOTAL_COUNT_KEY}, ID_PERSON_KEY + "="
-                + rowIdPerson, null, null, null, null, null);
-        if (mCursor != null) {
-            mCursor.moveToFirst();
-        }
-        return mCursor;
     }
 
     public long fetchIdPerson(String name) {
@@ -121,7 +113,6 @@ public class DBManager {
         if (c != null && c.moveToFirst()) {
             return c.getInt(c.getColumnIndex(ID_PERSON_KEY));
         }
-
         return 0;
     }
 

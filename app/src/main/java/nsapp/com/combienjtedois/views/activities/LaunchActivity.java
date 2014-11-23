@@ -17,12 +17,12 @@ import android.widget.ListView;
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.DBManager;
 import nsapp.com.combienjtedois.model.Tools;
-import nsapp.com.combienjtedois.views.fragments.AbstractFragment;
-import nsapp.com.combienjtedois.views.fragments.DetailFragment;
+import nsapp.com.combienjtedois.views.fragments.AbstractMoneyFragment;
+import nsapp.com.combienjtedois.views.fragments.DetailMoneyFragment;
 import nsapp.com.combienjtedois.views.fragments.MoneyFragment;
 import nsapp.com.combienjtedois.views.fragments.NavigationDrawerFragment;
-import nsapp.com.combienjtedois.views.fragments.ObjectFragment;
-import nsapp.com.combienjtedois.views.fragments.PresentFragment;
+import nsapp.com.combienjtedois.views.fragments.ObjectMoneyFragment;
+import nsapp.com.combienjtedois.views.fragments.PresentMoneyFragment;
 
 public class LaunchActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
@@ -61,10 +61,10 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
                 fragment = MoneyFragment.newInstance(position);
                 break;
             case 1:
-                fragment = ObjectFragment.newInstance(position);
+                fragment = ObjectMoneyFragment.newInstance(position);
                 break;
             case 2:
-                fragment = PresentFragment.newInstance(position);
+                fragment = PresentMoneyFragment.newInstance(position);
                 break;
             default:
                 fragment = MoneyFragment.newInstance(position);
@@ -133,14 +133,14 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
                 addItem();
                 break;
             case R.id.actionDelete:
-                if (!((AbstractFragment) getCurrentFragment()).isEditingView()) {
-                    ((AbstractFragment) getCurrentFragment()).setDeletingView(!((AbstractFragment) getCurrentFragment()).isDeletingView());
+                if (!((AbstractMoneyFragment) getCurrentFragment()).isEditingView()) {
+                    ((AbstractMoneyFragment) getCurrentFragment()).setDeletingView(!((AbstractMoneyFragment) getCurrentFragment()).isDeletingView());
                     otherViewToggle(R.drawable.delete);
                 }
                 break;
             case R.id.actionEdit:
-                if (!((AbstractFragment) getCurrentFragment()).isDeletingView()) {
-                    ((AbstractFragment) getCurrentFragment()).setEditingView(!((AbstractFragment) getCurrentFragment()).isEditingView());
+                if (!((AbstractMoneyFragment) getCurrentFragment()).isDeletingView()) {
+                    ((AbstractMoneyFragment) getCurrentFragment()).setEditingView(!((AbstractMoneyFragment) getCurrentFragment()).isEditingView());
                     otherViewToggle(R.drawable.edit);
                 }
                 break;
@@ -190,10 +190,10 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
     }
 
     private void addItem() {
-        if (getCurrentFragment() instanceof DetailFragment) {
-            ((DetailFragment) getCurrentFragment()).addDebt();
+        if (getCurrentFragment() instanceof DetailMoneyFragment) {
+            ((DetailMoneyFragment) getCurrentFragment()).addDebt();
         } else {
-            ((AbstractFragment) getCurrentFragment()).addPerson();
+            ((AbstractMoneyFragment) getCurrentFragment()).addPerson();
         }
     }
 

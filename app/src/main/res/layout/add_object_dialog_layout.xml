@@ -21,7 +21,7 @@
 
         <TextView
             android:id="@+id/negativeDebtView"
-            android:text="@string/negative_debt"
+            android:text="@string/debt"
             android:gravity="center"
             android:padding="15dp"
             android:textColor="@android:color/white"
@@ -32,7 +32,7 @@
 
         <TextView
             android:id="@+id/positiveDebtView"
-            android:text="@string/positive_debt"
+            android:text="@string/credence"
             android:gravity="center"
             android:textColor="@android:color/white"
             android:padding="15dp"
@@ -55,7 +55,7 @@
         android:id="@+id/reasonEditText"
         android:inputType="text"
         android:digits="@string/digits_edittext"
-        android:hint="@string/add_debt_reason_hint"
+        android:hint="@string/object_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -77,7 +77,7 @@
         <EditText
             android:id="@+id/countEditText"
             android:inputType="numberSigned"
-            android:hint="@string/add_debt_amount_hint"
+            android:hint="@string/amount_hint"
             android:layout_width="0dp"
             android:layout_weight="0.9"
             android:layout_height="wrap_content" />

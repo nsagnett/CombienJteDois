@@ -9,16 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.ScaleAnimation;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.Person;
 import nsapp.com.combienjtedois.model.Tools;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
 
-public class DetailFragment extends AbstractFragment {
+public class DetailMoneyFragment extends AbstractMoneyFragment {
 
-    public static DetailFragment newInstance(Person person) {
-        DetailFragment fragment = new DetailFragment();
+    public static DetailMoneyFragment newInstance(Person person) {
+        DetailMoneyFragment fragment = new DetailMoneyFragment();
         Bundle args = new Bundle();
         args.putSerializable(PERSON_KEY, person);
         fragment.setArguments(args);
@@ -33,7 +34,6 @@ public class DetailFragment extends AbstractFragment {
 
         listType = listWantedType.DEBT;
 
-        view.findViewById(R.id.switchViewHeader).setVisibility(View.GONE);
         listView.addHeaderView(headerPersonView);
 
         return view;
@@ -56,19 +56,8 @@ public class DetailFragment extends AbstractFragment {
                     @Override
                     public void onClick(View v) {
                         alert.dismiss();
-                        final int idDebt = (int) debtArrayList.get(position - 1).getId();
-                        final int idPerson = (int) person.getId();
-                        ScaleAnimation anim = new ScaleAnimation(1, 0, 1, 0);
-                        anim.setDuration(Tools.ANIMATION_DURATION);
-                        parent.getChildAt(position).startAnimation(anim);
-                        new Handler().postDelayed(new Runnable() {
-
-                            public void run() {
-                                Tools.dbManager.deleteDebt(idDebt, idPerson);
-                                notifyChanges();
-                            }
-
-                        }, Tools.ANIMATION_DURATION);
+                        deleteDebt(parent, position);
+                        Toast.makeText(getActivity(), getString(R.string.toast_delete_debt), Toast.LENGTH_SHORT).show();
                     }
                 });
                 alert.findViewById(R.id.negativeView).setOnClickListener(new View.OnClickListener() {
@@ -79,5 +68,21 @@ public class DetailFragment extends AbstractFragment {
                 });
             }
         }
+    }
+
+    private void deleteDebt(AdapterView<?> parent, int position) {
+        final int idDebt = (int) debtArrayList.get(position - 1).getId();
+        final int idPerson = (int) person.getId();
+        ScaleAnimation anim = new ScaleAnimation(1, 0, 1, 0);
+        anim.setDuration(Tools.ANIMATION_DURATION);
+        parent.getChildAt(position).startAnimation(anim);
+        new Handler().postDelayed(new Runnable() {
+
+            public void run() {
+                Tools.dbManager.deleteDebt(idDebt, idPerson);
+                notifyChanges();
+            }
+
+        }, Tools.ANIMATION_DURATION);
     }
 }
