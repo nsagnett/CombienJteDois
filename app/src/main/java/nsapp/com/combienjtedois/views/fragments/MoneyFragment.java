@@ -35,7 +35,7 @@ public class MoneyFragment extends AbstractFragment {
     public void onResume() {
         super.onResume();
         ((LaunchActivity) getActivity()).updateActionBarTitle(getString(R.string.title_section1));
-        notifyChanges(listType);
+        notifyChanges();
     }
 
     @Override
@@ -55,7 +55,7 @@ public class MoneyFragment extends AbstractFragment {
 
                         public void run() {
                             Tools.dbManager.deletePerson(idPerson);
-                            notifyChanges(listType);
+                            notifyChanges();
                         }
 
                     }, Tools.ANIMATION_DURATION);

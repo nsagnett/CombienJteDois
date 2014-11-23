@@ -16,6 +16,7 @@
     <EditText
         android:id="@+id/editTextView"
         android:inputType="text"
+        android:digits="@string/digits_edittext"
         android:hint="@string/edit_hint_dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

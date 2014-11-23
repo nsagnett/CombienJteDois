@@ -40,7 +40,7 @@ public class DetailFragment extends AbstractFragment {
     public void onResume() {
         super.onResume();
         ((LaunchActivity) getActivity()).updateActionBarTitle(person.getName());
-        notifyChanges(listType);
+        notifyChanges();
     }
 
     @Override
@@ -55,7 +55,7 @@ public class DetailFragment extends AbstractFragment {
 
                 public void run() {
                     Tools.dbManager.deleteDebt(idDebt, idPerson);
-                    notifyChanges(listType);
+                    notifyChanges();
                 }
 
             }, Tools.ANIMATION_DURATION);

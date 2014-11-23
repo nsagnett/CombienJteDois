@@ -90,7 +90,7 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
                     negativeSort.setSelected(false);
                     positiveSort.setTextColor(getResources().getColor(android.R.color.white));
                     negativeSort.setTextColor(getResources().getColor(R.color.green));
-                    notifyChanges(listType);
+                    notifyChanges();
                 }
             }
         });
@@ -103,15 +103,15 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
                     positiveSort.setSelected(false);
                     negativeSort.setTextColor(getResources().getColor(android.R.color.white));
                     positiveSort.setTextColor(getResources().getColor(R.color.green));
-                    notifyChanges(listType);
+                    notifyChanges();
                 }
             }
         });
     }
 
-    public void notifyChanges(listWantedType type) {
+    public void notifyChanges() {
         Cursor c;
-        switch (type) {
+        switch (listType) {
             case PERSON:
                 c = Tools.dbManager.fetchAllPersons();
                 personArrayList = new ArrayList<Person>();
@@ -210,7 +210,7 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
                 } else {
                     alert.dismiss();
                     Tools.dbManager.createPerson(editText.getText().toString());
-                    notifyChanges(listType);
+                    notifyChanges();
                 }
             }
         });
@@ -279,7 +279,7 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
                     } else {
                         Tools.dbManager.createDebt(person.getId(), "-" + countEditText.getText().toString(), reasonEditText.getText().toString());
                     }
-                    notifyChanges(listType);
+                    notifyChanges();
                 }
             }
         });

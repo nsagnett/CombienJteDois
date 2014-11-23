@@ -46,6 +46,7 @@
     <EditText
         android:id="@+id/reasonEditText"
         android:inputType="text"
+        android:digits="@string/digits_edittext"
         android:hint="@string/add_debt_reason_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
