@@ -79,6 +79,7 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
     @Override
     public void onResume() {
         super.onResume();
+        Tools.switchView(getActivity(), positiveSort, negativeSort);
         positiveSort.setTextColor(getResources().getColor(R.color.green));
         negativeSort.setTextColor(getResources().getColor(R.color.green));
         positiveSort.setOnClickListener(new View.OnClickListener() {
@@ -136,6 +137,7 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
                     }
                 } else {
                     listView.removeFooterView(footerView);
+
                     if (sortIndex == 0) {
                         personArrayList = Tools.decroissantSort(personArrayList);
                     } else if (sortIndex == 1) {
@@ -201,17 +203,7 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
         alert.findViewById(R.id.neutralTextView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (editText.getText().length() == 0) {
-                    Tools.showCustomAlertDialogBox(getActivity(),
-                            R.string.warning_text,
-                            R.drawable.warning,
-                            String.format(getString(R.string.empty_edittext_format), getString(R.string.add_person_name)),
-                            R.string.validate);
-                } else {
-                    alert.dismiss();
-                    Tools.dbManager.createPerson(editText.getText().toString());
-                    notifyChanges();
-                }
+                validateFromAddPerson(editText, alert);
             }
         });
     }
@@ -219,70 +211,71 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
     public void addDebt() {
         final AlertDialog alert = Tools.createCustomAddDebtDialogBox(getActivity(), R.string.add_debt, R.drawable.add, R.string.validate);
         alert.show();
-        final TextView positiveDebtView = (TextView) alert.findViewById(R.id.positiveDebtView);
-        final TextView negativeDebtView = (TextView) alert.findViewById(R.id.negativeDebtView);
         TextView deviseView = (TextView) alert.findViewById(R.id.deviseView);
         deviseView.setVisibility(View.VISIBLE);
         deviseView.setText(R.string.euro);
 
-        positiveDebtView.setSelected(true);
-        positiveDebtView.setTextColor(getResources().getColor(android.R.color.white));
-        negativeDebtView.setTextColor(getResources().getColor(R.color.green));
-
-        positiveDebtView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!positiveDebtView.isSelected()) {
-                    negativeDebtView.setSelected(false);
-                    positiveDebtView.setSelected(true);
-                    positiveDebtView.setTextColor(getResources().getColor(android.R.color.white));
-                    negativeDebtView.setTextColor(getResources().getColor(R.color.green));
-                }
-            }
-        });
-        negativeDebtView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!negativeDebtView.isSelected()) {
-                    positiveDebtView.setSelected(false);
-                    negativeDebtView.setSelected(true);
-                    negativeDebtView.setTextColor(getResources().getColor(android.R.color.white));
-                    positiveDebtView.setTextColor(getResources().getColor(R.color.green));
-                }
-            }
-        });
+        final TextView positiveDebtView = (TextView) alert.findViewById(R.id.positiveDebtView);
+        final TextView negativeDebtView = (TextView) alert.findViewById(R.id.negativeDebtView);
+        Tools.switchView(getActivity(), positiveDebtView, negativeDebtView);
 
         ((TextView) alert.findViewById(R.id.reasonTextView)).setText(R.string.add_debt_reason);
         ((TextView) alert.findViewById(R.id.countTextView)).setText(R.string.add_debt_amount);
         final EditText reasonEditText = ((EditText) alert.findViewById(R.id.reasonEditText));
         final EditText countEditText = ((EditText) alert.findViewById(R.id.countEditText));
-        reasonEditText.requestFocus();
+
         alert.findViewById(R.id.neutralTextView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (reasonEditText.getText().length() == 0) {
-                    Tools.showCustomAlertDialogBox(getActivity(),
-                            R.string.warning_text,
-                            R.drawable.warning,
-                            String.format(getString(R.string.empty_edittext_format), getString(R.string.add_debt_reason)),
-                            R.string.validate);
-                } else if (countEditText.getText().length() == 0) {
-                    Tools.showCustomAlertDialogBox(getActivity(),
-                            R.string.warning_text,
-                            R.drawable.warning,
-                            String.format(getString(R.string.empty_edittext_format), getString(R.string.add_debt_amount)),
-                            R.string.validate);
-                } else {
-                    alert.dismiss();
-                    if (positiveDebtView.isSelected()) {
-                        Tools.dbManager.createDebt(person.getId(), countEditText.getText().toString(), reasonEditText.getText().toString());
-                    } else {
-                        Tools.dbManager.createDebt(person.getId(), "-" + countEditText.getText().toString(), reasonEditText.getText().toString());
-                    }
-                    notifyChanges();
-                }
+                validateFormAddDebt(positiveDebtView, negativeDebtView, reasonEditText, countEditText, alert);
             }
         });
+    }
+
+    private void validateFormAddDebt(TextView positiveDebtView, TextView negativeDebtView, EditText reasonEditText, EditText countEditText, AlertDialog alert) {
+        String sign;
+        if (positiveDebtView.isSelected()) {
+            sign = "";
+        } else if (negativeDebtView.isSelected()) {
+            sign = "-";
+        } else {
+            sign = null;
+        }
+        if (sign != null) {
+            if (reasonEditText.getText().length() == 0) {
+                Tools.showCustomAlertDialogBox(getActivity(),
+                        R.string.warning_text,
+                        R.drawable.warning,
+                        String.format(getString(R.string.empty_field_format), getString(R.string.add_debt_reason)));
+            } else if (countEditText.getText().length() == 0) {
+                Tools.showCustomAlertDialogBox(getActivity(),
+                        R.string.warning_text,
+                        R.drawable.warning,
+                        String.format(getString(R.string.empty_field_format), getString(R.string.add_debt_amount)));
+            } else {
+                alert.dismiss();
+                Tools.dbManager.createDebt(person.getId(), sign + countEditText.getText().toString(), reasonEditText.getText().toString());
+                notifyChanges();
+            }
+        } else {
+            Tools.showCustomAlertDialogBox(getActivity(),
+                    R.string.warning_text,
+                    R.drawable.warning,
+                    String.format(getString(R.string.empty_field_format), getString(R.string.negative_debt)));
+        }
+    }
+
+    private void validateFromAddPerson(EditText editText, AlertDialog alert) {
+        if (editText.getText().length() == 0) {
+            Tools.showCustomAlertDialogBox(getActivity(),
+                    R.string.warning_text,
+                    R.drawable.warning,
+                    String.format(getString(R.string.empty_field_format), getString(R.string.add_person_name)));
+        } else {
+            alert.dismiss();
+            Tools.dbManager.createPerson(editText.getText().toString());
+            notifyChanges();
+        }
     }
 
 

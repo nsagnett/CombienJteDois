@@ -35,40 +35,71 @@ public class Tools {
 
     public static ArrayList<Person> croissantSort(ArrayList<Person> persons) {
         ArrayList<Person> personsList = new ArrayList<Person>();
-        do{
+        do {
             double min = Integer.MAX_VALUE;
             int index = 0;
             for (int i = 0; i < persons.size(); i++) {
                 double amount = Double.parseDouble(persons.get(i).getTotalAmount());
-                if(amount < min){
+                if (amount < min) {
                     min = amount;
                     index = i;
                 }
             }
             personsList.add(persons.get(index));
             persons.remove(index);
-        }while (!persons.isEmpty());
+        } while (!persons.isEmpty());
 
         return personsList;
     }
 
     public static ArrayList<Person> decroissantSort(ArrayList<Person> persons) {
         ArrayList<Person> personsList = new ArrayList<Person>();
-        do{
+        do {
             double max = Integer.MIN_VALUE;
             int index = 0;
             for (int i = 0; i < persons.size(); i++) {
                 double amount = Double.parseDouble(persons.get(i).getTotalAmount());
-                if(amount > max){
+                if (amount > max) {
                     max = amount;
                     index = i;
                 }
             }
             personsList.add(persons.get(index));
             persons.remove(index);
-        }while (!persons.isEmpty());
+        } while (!persons.isEmpty());
 
         return personsList;
+    }
+
+    public static void switchView(Context context, final TextView viewOne, final TextView viewTwo) {
+        final int green = context.getResources().getColor(R.color.green);
+        final int white = context.getResources().getColor(android.R.color.white);
+
+        viewOne.setTextColor(green);
+        viewTwo.setTextColor(green);
+
+        viewOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!viewOne.isSelected()) {
+                    viewTwo.setSelected(false);
+                    viewOne.setSelected(true);
+                    viewOne.setTextColor(white);
+                    viewTwo.setTextColor(green);
+                }
+            }
+        });
+        viewTwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!viewTwo.isSelected()) {
+                    viewOne.setSelected(false);
+                    viewTwo.setSelected(true);
+                    viewTwo.setTextColor(white);
+                    viewOne.setTextColor(green);
+                }
+            }
+        });
     }
 
     public static View getCustomTitleDialogBox(Context context, int resTitleID, int resDrawableTitleID) {
@@ -84,14 +115,14 @@ public class Tools {
         return titleView;
     }
 
-    public static void showCustomAlertDialogBox(Context context, int resTitleID, int resDrawableTitleID, String resMessageID, int resNeutralID) {
+    public static void showCustomAlertDialogBox(Context context, int resTitleID, int resDrawableTitleID, String resMessageID) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View view = LayoutInflater.from(context).inflate(R.layout.alert_dialog_layout, null);
 
         builder.setCustomTitle(getCustomTitleDialogBox(context, resTitleID, resDrawableTitleID));
 
         TextView ok = (TextView) view.findViewById(R.id.neutralTextView);
-        ok.setText(resNeutralID);
+        ok.setText(R.string.ok);
 
         ((TextView) view.findViewById(R.id.messageAlertText)).setText(resMessageID);
 

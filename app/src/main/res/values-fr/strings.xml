@@ -37,7 +37,8 @@
     <string name="add_debt_amount">Montant</string>
     <string name="add_debt_reason_hint">Saisir le motif&#8230;</string>
     <string name="add_debt_amount_hint">Saisir le montant&#8230;</string>
-    <string name="empty_edittext_format">Le champ %s est requis !</string>
+    <string name="empty_field_format">Le champ %s est requis !</string>
+    <string name="ok">OK</string>
 
     <!--Others-->
     <string name="croissant_debt">Par montant croissant</string>
