@@ -22,7 +22,7 @@ public class Tools {
     /**
      * ALGO
      */
-    public static ArrayList<Person> croissantPersonSort(ArrayList<Person> persons) {
+    public static ArrayList<Person> increasingOrderPersonAmountSort(ArrayList<Person> persons) {
         ArrayList<Person> personsList = new ArrayList<Person>();
         do {
             double min = Integer.MAX_VALUE;
@@ -41,7 +41,7 @@ public class Tools {
         return personsList;
     }
 
-    public static ArrayList<Person> decroissantPersonSort(ArrayList<Person> persons) {
+    public static ArrayList<Person> decreasingOrderPersonAmountSort(ArrayList<Person> persons) {
         ArrayList<Person> personsList = new ArrayList<Person>();
         do {
             double max = Integer.MIN_VALUE;
@@ -60,7 +60,7 @@ public class Tools {
         return personsList;
     }
 
-    public static ArrayList<Debt> croissantDebtSort(ArrayList<Debt> debts) {
+    public static ArrayList<Debt> increasingOrderDebtAmountSort(ArrayList<Debt> debts) {
         ArrayList<Debt> debtArrayList = new ArrayList<Debt>();
         do {
             double min = Integer.MAX_VALUE;
@@ -79,7 +79,7 @@ public class Tools {
         return debtArrayList;
     }
 
-    public static ArrayList<Debt> decroissantDebtSort(ArrayList<Debt> debts) {
+    public static ArrayList<Debt> decreasingOrderDebtAmountSort(ArrayList<Debt> debts) {
         ArrayList<Debt> debtArrayList = new ArrayList<Debt>();
         do {
             double max = Integer.MIN_VALUE;

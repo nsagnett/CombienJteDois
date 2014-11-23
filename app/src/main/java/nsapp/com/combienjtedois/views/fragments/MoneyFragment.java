@@ -55,7 +55,7 @@ public class MoneyFragment extends AbstractMoneyFragment {
     private void modifyPerson(final Person person) {
         final AlertDialog alert = Tools.createCustomAddPersonDialogBox(getActivity(), R.string.modify_person, R.drawable.edit, R.string.validate);
         alert.show();
-        final EditText editText = ((EditText) alert.findViewById(R.id.editTextView));
+        final EditText editText = ((EditText) alert.findViewById(R.id.namePersonEditView));
         alert.findViewById(R.id.neutralTextView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

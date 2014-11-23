@@ -17,9 +17,10 @@
     <!--Personnes-->
     <string name="add_person">Ajouter une personne</string>
     <string name="modify_person">Modifier une personne</string>
-    <string name="add_person_name">Nom</string>
+    <string name="name">Nom</string>
+    <string name="phone_number">N° de téléphone</string>
     <string name="validate">Valider</string>
-    <string name="edit_hint_dialog">Saisir le nom&#8230;</string>
+    <string name="name_hint">Saisir le nom&#8230;</string>
     <string name="toast_add_person">Personne ajoutée !</string>
     <string name="toast_modify">Changement effectué !</string>
     <string name="toast_delete_person">Personne supprimée !</string>
@@ -28,6 +29,7 @@
     <string name="person_info_format">%1$s : %2$s</string>
     <string name="message_delete_person_text">Voulez-vous vraiment supprimer cette personne ?</string>
     <string name="person_already_present_format">%s existe déjà !</string>
+    <string name="phone_hint">Saisir le numéro&#8230;</string>
 
     <!--Utiles-->
     <string name="digits_edittext">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ-</string>
@@ -37,8 +39,9 @@
     <string name="empty_field_format">Le champ %s est requis !</string>
     <string name="content">Content</string>
     <string name="euro">€</string>
-    <string name="croissant_debt">Par montant croissant</string>
-    <string name="decroissant_debt">Par montant décroissant</string>
+    <string name="three_points">&#8230;</string>
+    <string name="increasing_amount">Par montant croissant</string>
+    <string name="decreasing_debt">Par montant décroissant</string>
 
     <!--Argent-->
     <string name="add_debt">Ajouter une dette</string>

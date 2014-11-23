@@ -1,7 +1,11 @@
 package nsapp.com.combienjtedois.views.fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -23,8 +27,12 @@ import nsapp.com.combienjtedois.model.Tools;
 import nsapp.com.combienjtedois.views.adapters.DebtListAdapter;
 import nsapp.com.combienjtedois.views.adapters.PersonListAdapter;
 
+import static android.provider.ContactsContract.CommonDataKinds.Phone;
+import static android.provider.ContactsContract.Contacts;
+
 public abstract class AbstractMoneyFragment extends AbstractFragment implements AdapterView.OnItemClickListener, View.OnClickListener {
 
+    private static final int IMPORT_CODE = 1;
     protected ArrayList<Person> personArrayList = new ArrayList<Person>();
     protected ArrayList<Debt> debtArrayList = new ArrayList<Debt>();
 
@@ -39,6 +47,9 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
     protected Person person;
 
     protected listWantedType listType;
+
+    protected String importPhoneNumber;
+    protected String importName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -112,9 +123,9 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                     listView.removeFooterView(footerView);
 
                     if (sortIndex == 0) {
-                        personArrayList = Tools.decroissantPersonSort(personArrayList);
+                        personArrayList = Tools.decreasingOrderPersonAmountSort(personArrayList);
                     } else if (sortIndex == 1) {
-                        personArrayList = Tools.croissantPersonSort(personArrayList);
+                        personArrayList = Tools.increasingOrderPersonAmountSort(personArrayList);
                     }
                 }
 
@@ -148,9 +159,9 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                     listView.removeFooterView(footerView);
 
                     if (sortIndex == 0) {
-                        debtArrayList = Tools.decroissantDebtSort(debtArrayList);
+                        debtArrayList = Tools.decreasingOrderDebtAmountSort(debtArrayList);
                     } else if (sortIndex == 1) {
-                        debtArrayList = Tools.croissantDebtSort(debtArrayList);
+                        debtArrayList = Tools.increasingOrderDebtAmountSort(debtArrayList);
                     }
                 }
 
@@ -177,13 +188,27 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
     public void addPerson() {
         final AlertDialog alert = Tools.createCustomAddPersonDialogBox(getActivity(), R.string.add_person, R.drawable.add, R.string.validate);
         alert.show();
-        final EditText editText = ((EditText) alert.findViewById(R.id.editTextView));
+        final EditText nameEditView = ((EditText) alert.findViewById(R.id.namePersonEditView));
+        final EditText phoneNumberView = ((EditText) alert.findViewById(R.id.phoneNumberEditView));
+        final TextView importContactView = ((TextView) alert.findViewById(R.id.importContactView));
+
+        nameEditView.setText(importName);
+        phoneNumberView.setText(importPhoneNumber);
+
+        importContactView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(Intent.ACTION_PICK, Contacts.CONTENT_URI), IMPORT_CODE);
+                alert.dismiss();
+            }
+        });
+
         alert.findViewById(R.id.neutralTextView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkPersonForm(editText)) {
+                if (checkPersonForm(nameEditView)) {
                     alert.dismiss();
-                    Tools.dbManager.createPerson(editText.getText().toString());
+                    Tools.dbManager.createPerson(nameEditView.getText().toString());
                     notifyChanges();
                     Toast.makeText(getActivity(), getString(R.string.toast_add_person), Toast.LENGTH_SHORT).show();
                 }
@@ -257,10 +282,39 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
             Tools.showCustomAlertDialogBox(getActivity(),
                     R.string.warning_text,
                     R.drawable.warning,
-                    String.format(getString(R.string.empty_field_format), getString(R.string.add_person_name)));
+                    String.format(getString(R.string.empty_field_format), getString(R.string.name)));
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == IMPORT_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                ContentResolver contentResolver = getActivity().getContentResolver();
+                Uri dataUri = data.getData();
+                Cursor c = contentResolver.query(dataUri, null, null, null, null);
+                if (c.getCount() > 0) {
+                    if (c.moveToFirst()) {
+                        String id = c.getString(c.getColumnIndex(Contacts._ID));
+                        c.getString(c.getColumnIndex(Contacts.DISPLAY_NAME));
+                        if (Integer.parseInt(c.getString(c.getColumnIndex(Contacts.HAS_PHONE_NUMBER))) > 0) {
+                            Cursor phones = contentResolver.query(Phone.CONTENT_URI, null, Phone.CONTACT_ID + " = ?",
+                                    new String[]{id}, null);
+                            phones.moveToFirst();
+                            importName = c.getString(c.getColumnIndex(Phone.DISPLAY_NAME));
+                            importPhoneNumber = phones.getString(phones.getColumnIndex(Phone.NUMBER));
+                            phones.close();
+                        }
+                    }
+                }
+                c.close();
+                addPerson();
+            }
+        }
     }
 
 }
