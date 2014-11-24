@@ -193,7 +193,7 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
         if (getCurrentFragment() instanceof DetailMoneyFragment) {
             ((DetailMoneyFragment) getCurrentFragment()).addDebt();
         } else {
-            ((AbstractMoneyFragment) getCurrentFragment()).addPerson();
+            ((AbstractMoneyFragment) getCurrentFragment()).addPerson(null, null);
         }
     }
 

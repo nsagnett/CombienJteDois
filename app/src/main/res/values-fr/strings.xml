@@ -18,7 +18,7 @@
     <string name="add_person">Ajouter une personne</string>
     <string name="modify_person">Modifier une personne</string>
     <string name="name">Nom</string>
-    <string name="phone_number">N° de téléphone</string>
+    <string name="phone_number">N° de téléphone (facultatif)</string>
     <string name="validate">Valider</string>
     <string name="name_hint">Saisir le nom&#8230;</string>
     <string name="toast_add_person">Personne ajoutée !</string>

@@ -42,6 +42,8 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
+    <include layout="@layout/separator" />
+
     <TextView
         android:id="@+id/reasonTextView"
         android:textSize="17sp"
@@ -58,6 +60,8 @@
         android:hint="@string/object_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <include layout="@layout/separator" />
 
 
     <TextView
@@ -91,6 +95,8 @@
             android:layout_weight="0.1"
             android:layout_height="wrap_content" />
     </LinearLayout>
+
+    <include layout="@layout/separator" />
 
     <TextView
         android:id="@+id/neutralTextView"

@@ -48,9 +48,6 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
 
     protected listWantedType listType;
 
-    protected String importPhoneNumber;
-    protected String importName;
-
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -80,7 +77,7 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
     public void onClick(View v) {
         switch (listType) {
             case PERSON:
-                addPerson();
+                addPerson(null, null);
                 break;
             case DEBT:
                 addDebt();
@@ -185,7 +182,7 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
         }
     }
 
-    public void addPerson() {
+    public void addPerson(String importName, String importPhoneNumber) {
         final AlertDialog alert = Tools.createCustomAddPersonDialogBox(getActivity(), R.string.add_person, R.drawable.add, R.string.validate);
         alert.show();
         final EditText nameEditView = ((EditText) alert.findViewById(R.id.namePersonEditView));
@@ -208,7 +205,7 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
             public void onClick(View v) {
                 if (checkPersonForm(nameEditView)) {
                     alert.dismiss();
-                    Tools.dbManager.createPerson(nameEditView.getText().toString());
+                    Tools.dbManager.createPerson(nameEditView.getText().toString(), importContactView.getText().toString());
                     notifyChanges();
                     Toast.makeText(getActivity(), getString(R.string.toast_add_person), Toast.LENGTH_SHORT).show();
                 }
@@ -271,7 +268,7 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
             Tools.showCustomAlertDialogBox(getActivity(),
                     R.string.warning_text,
                     R.drawable.warning,
-                    String.format(getString(R.string.empty_field_format), getString(R.string.debt)));
+                    String.format(getString(R.string.empty_field_format), getString(R.string.type)));
             return false;
         }
         return true;
@@ -297,6 +294,8 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                 ContentResolver contentResolver = getActivity().getContentResolver();
                 Uri dataUri = data.getData();
                 Cursor c = contentResolver.query(dataUri, null, null, null, null);
+                String importName = null;
+                String importPhoneNumber = null;
                 if (c.getCount() > 0) {
                     if (c.moveToFirst()) {
                         String id = c.getString(c.getColumnIndex(Contacts._ID));
@@ -312,7 +311,7 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                     }
                 }
                 c.close();
-                addPerson();
+                addPerson(importName, importPhoneNumber);
             }
         }
     }

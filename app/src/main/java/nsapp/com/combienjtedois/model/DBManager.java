@@ -81,13 +81,13 @@ public class DBManager {
      * PERSON QUERIES
      */
 
-    public long createPerson(String name) {
+    public long createPerson(String name, String phoneNumber) {
         ContentValues initialValues = new ContentValues();
         name = Tools.camelCase(name);
         if (fetchIdPerson(name) == 0) {
             initialValues.put(NAME_PERSON_KEY, name);
             initialValues.put(TOTAL_COUNT_KEY, "");
-            initialValues.put(PHONE_NUMBER_KEY, "");
+            initialValues.put(PHONE_NUMBER_KEY, phoneNumber);
 
             return sqLiteDatabase.insert(DATABASE_TABLE_PERSON, null, initialValues);
         } else {
