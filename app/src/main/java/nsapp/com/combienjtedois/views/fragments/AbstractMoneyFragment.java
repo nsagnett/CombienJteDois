@@ -1,21 +1,14 @@
 package nsapp.com.combienjtedois.views.fragments;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.ContentResolver;
-import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -27,12 +20,8 @@ import nsapp.com.combienjtedois.model.Tools;
 import nsapp.com.combienjtedois.views.adapters.DebtListAdapter;
 import nsapp.com.combienjtedois.views.adapters.PersonListAdapter;
 
-import static android.provider.ContactsContract.CommonDataKinds.Phone;
-import static android.provider.ContactsContract.Contacts;
+public abstract class AbstractMoneyFragment extends AbstractFragment implements View.OnClickListener, AdapterView.OnItemClickListener {
 
-public abstract class AbstractMoneyFragment extends AbstractFragment implements AdapterView.OnItemClickListener, View.OnClickListener {
-
-    private static final int IMPORT_CODE = 1;
     protected ArrayList<Person> personArrayList = new ArrayList<Person>();
     protected ArrayList<Debt> debtArrayList = new ArrayList<Debt>();
 
@@ -75,16 +64,7 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
 
     @Override
     public void onClick(View v) {
-        switch (listType) {
-            case PERSON:
-                addPerson(null, null);
-                break;
-            case DEBT:
-                addDebt();
-                break;
-            default:
-                break;
-        }
+        addItem(null, null);
     }
 
     public void setSortIndex(int sortIndex) {
@@ -175,145 +155,9 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
 
                 headerPersonView.setText(String.format(getString(R.string.person_info_format), person.getName(),
                         String.format(getString(R.string.money_format), total)));
-
                 break;
             default:
                 break;
         }
     }
-
-    public void addPerson(String importName, String importPhoneNumber) {
-        final AlertDialog alert = Tools.createCustomAddPersonDialogBox(getActivity(), R.string.add_person, R.drawable.add, R.string.validate);
-        alert.show();
-        final EditText nameEditView = ((EditText) alert.findViewById(R.id.namePersonEditView));
-        final EditText phoneNumberView = ((EditText) alert.findViewById(R.id.phoneNumberEditView));
-        final TextView importContactView = ((TextView) alert.findViewById(R.id.importContactView));
-
-        nameEditView.setText(importName);
-        phoneNumberView.setText(importPhoneNumber);
-
-        importContactView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(new Intent(Intent.ACTION_PICK, Contacts.CONTENT_URI), IMPORT_CODE);
-                alert.dismiss();
-            }
-        });
-
-        alert.findViewById(R.id.neutralTextView).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkPersonForm(nameEditView)) {
-                    alert.dismiss();
-                    Tools.dbManager.createPerson(nameEditView.getText().toString(), importContactView.getText().toString());
-                    notifyChanges();
-                    Toast.makeText(getActivity(), getString(R.string.toast_add_person), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
-    public void addDebt() {
-        final AlertDialog alert = Tools.createCustomAddDebtDialogBox(getActivity(), R.string.add_debt, R.drawable.add, R.string.validate);
-        alert.show();
-        TextView deviseView = (TextView) alert.findViewById(R.id.deviseView);
-        deviseView.setVisibility(View.VISIBLE);
-        deviseView.setText(R.string.euro);
-
-        final TextView positiveDebtView = (TextView) alert.findViewById(R.id.positiveDebtView);
-        final TextView negativeDebtView = (TextView) alert.findViewById(R.id.negativeDebtView);
-        Tools.switchView(getActivity(), positiveDebtView, negativeDebtView, this);
-
-        ((TextView) alert.findViewById(R.id.typeDebtView)).setText(R.string.type);
-        ((TextView) alert.findViewById(R.id.reasonTextView)).setText(R.string.object);
-        ((TextView) alert.findViewById(R.id.countTextView)).setText(R.string.amount);
-        final EditText reasonEditText = ((EditText) alert.findViewById(R.id.reasonEditText));
-        final EditText countEditText = ((EditText) alert.findViewById(R.id.countEditText));
-
-        alert.findViewById(R.id.neutralTextView).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String sign = null;
-                if (positiveDebtView.isSelected()) {
-                    sign = "";
-                } else if (negativeDebtView.isSelected()) {
-                    sign = "-";
-                }
-                if (checkDebtForm(reasonEditText, countEditText, sign)) {
-                    alert.dismiss();
-                    Tools.dbManager.createDebt(person.getId(), sign + countEditText.getText().toString(), reasonEditText.getText().toString());
-                    Toast.makeText(getActivity(), getString(R.string.toast_add_debt), Toast.LENGTH_SHORT).show();
-                    notifyChanges();
-                }
-            }
-        });
-    }
-
-    protected boolean checkDebtForm(EditText reasonEditText, EditText countEditText, String sign) {
-        if (sign != null) {
-            if (reasonEditText.getText().length() == 0) {
-                Tools.showCustomAlertDialogBox(getActivity(),
-                        R.string.warning_text,
-                        R.drawable.warning,
-                        String.format(getString(R.string.empty_field_format), getString(R.string.object)));
-                return false;
-            } else if (countEditText.getText().length() == 0) {
-                Tools.showCustomAlertDialogBox(getActivity(),
-                        R.string.warning_text,
-                        R.drawable.warning,
-                        String.format(getString(R.string.empty_field_format), getString(R.string.amount)));
-                return false;
-            }
-        } else {
-            Tools.showCustomAlertDialogBox(getActivity(),
-                    R.string.warning_text,
-                    R.drawable.warning,
-                    String.format(getString(R.string.empty_field_format), getString(R.string.type)));
-            return false;
-        }
-        return true;
-    }
-
-    protected boolean checkPersonForm(EditText editText) {
-        if (editText.getText().length() == 0) {
-            Tools.showCustomAlertDialogBox(getActivity(),
-                    R.string.warning_text,
-                    R.drawable.warning,
-                    String.format(getString(R.string.empty_field_format), getString(R.string.name)));
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == IMPORT_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                ContentResolver contentResolver = getActivity().getContentResolver();
-                Uri dataUri = data.getData();
-                Cursor c = contentResolver.query(dataUri, null, null, null, null);
-                String importName = null;
-                String importPhoneNumber = null;
-                if (c.getCount() > 0) {
-                    if (c.moveToFirst()) {
-                        String id = c.getString(c.getColumnIndex(Contacts._ID));
-                        c.getString(c.getColumnIndex(Contacts.DISPLAY_NAME));
-                        if (Integer.parseInt(c.getString(c.getColumnIndex(Contacts.HAS_PHONE_NUMBER))) > 0) {
-                            Cursor phones = contentResolver.query(Phone.CONTENT_URI, null, Phone.CONTACT_ID + " = ?",
-                                    new String[]{id}, null);
-                            phones.moveToFirst();
-                            importName = c.getString(c.getColumnIndex(Phone.DISPLAY_NAME));
-                            importPhoneNumber = phones.getString(phones.getColumnIndex(Phone.NUMBER));
-                            phones.close();
-                        }
-                    }
-                }
-                c.close();
-                addPerson(importName, importPhoneNumber);
-            }
-        }
-    }
-
 }

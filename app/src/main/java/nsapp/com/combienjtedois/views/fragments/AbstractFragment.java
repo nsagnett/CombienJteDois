@@ -1,13 +1,18 @@
 package nsapp.com.combienjtedois.views.fragments;
 
 import android.app.Activity;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
 
-public class AbstractFragment extends Fragment {
+public abstract class AbstractFragment extends Fragment {
 
 
     protected static final String ARG_SECTION_NUMBER = "section_number";
@@ -18,6 +23,13 @@ public class AbstractFragment extends Fragment {
     protected boolean isDeletingView;
     protected boolean isEditingView;
 
+    protected LaunchActivity launchActivity;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        launchActivity = ((LaunchActivity) getActivity());
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -25,6 +37,8 @@ public class AbstractFragment extends Fragment {
         ((LaunchActivity) activity).onSectionAttached(
                 getArguments().getInt(ARG_SECTION_NUMBER));
     }
+
+    public abstract void addItem(String importName, String importPhone);
 
     public boolean isDeletingView() {
         return isDeletingView;

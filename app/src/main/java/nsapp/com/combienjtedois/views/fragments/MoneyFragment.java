@@ -1,8 +1,14 @@
 package nsapp.com.combienjtedois.views.fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,14 +16,16 @@ import android.view.ViewGroup;
 import android.view.animation.ScaleAnimation;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.Person;
 import nsapp.com.combienjtedois.model.Tools;
-import nsapp.com.combienjtedois.views.activities.LaunchActivity;
 
 public class MoneyFragment extends AbstractMoneyFragment {
+
+    private static final int IMPORT_CODE = 1;
 
     public static MoneyFragment newInstance(int sectionNumber) {
         MoneyFragment fragment = new MoneyFragment();
@@ -36,7 +44,7 @@ public class MoneyFragment extends AbstractMoneyFragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((LaunchActivity) getActivity()).updateActionBarTitle(getString(R.string.title_section1));
+        launchActivity.updateActionBarTitle(getString(R.string.title_section1));
         notifyChanges();
     }
 
@@ -50,6 +58,69 @@ public class MoneyFragment extends AbstractMoneyFragment {
         } else if (!personArrayList.isEmpty()) {
             prepareOnReplaceTransaction(DetailMoneyFragment.newInstance(person));
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == IMPORT_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                ContentResolver contentResolver = getActivity().getContentResolver();
+                Uri dataUri = data.getData();
+                Cursor c = contentResolver.query(dataUri, null, null, null, null);
+                String importName = null;
+                String importPhoneNumber = null;
+                if (c.getCount() > 0) {
+                    if (c.moveToFirst()) {
+                        String id = c.getString(c.getColumnIndex(ContactsContract.Contacts._ID));
+                        c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                        if (Integer.parseInt(c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+                            Cursor phones = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                                    new String[]{id}, null);
+                            phones.moveToFirst();
+                            importName = c.getString(c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+                            importPhoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                            phones.close();
+                        }
+                    }
+                }
+                c.close();
+                addItem(importName, importPhoneNumber);
+            }
+        }
+    }
+
+    @Override
+    public void addItem(String importName, String importPhoneNumber) {
+        final AlertDialog alert = Tools.createCustomAddPersonDialogBox(getActivity(), R.string.add_person, R.drawable.add, R.string.validate);
+        alert.show();
+        final EditText nameEditView = ((EditText) alert.findViewById(R.id.namePersonEditView));
+        final EditText phoneNumberView = ((EditText) alert.findViewById(R.id.phoneNumberEditView));
+        final TextView importContactView = ((TextView) alert.findViewById(R.id.importContactView));
+
+        nameEditView.setText(importName);
+        phoneNumberView.setText(importPhoneNumber);
+
+        importContactView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI), IMPORT_CODE);
+                alert.dismiss();
+            }
+        });
+
+        alert.findViewById(R.id.neutralTextView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkPersonForm(nameEditView)) {
+                    alert.dismiss();
+                    Tools.dbManager.createPerson(nameEditView.getText().toString(), importContactView.getText().toString());
+                    notifyChanges();
+                    Toast.makeText(getActivity(), getString(R.string.toast_add_person), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void modifyPerson(final Person person) {
@@ -96,5 +167,16 @@ public class MoneyFragment extends AbstractMoneyFragment {
                 alert.dismiss();
             }
         });
+    }
+
+    protected boolean checkPersonForm(EditText editText) {
+        if (editText.getText().length() == 0) {
+            Tools.showCustomAlertDialogBox(getActivity(),
+                    R.string.warning_text,
+                    R.drawable.warning,
+                    String.format(getString(R.string.empty_field_format), getString(R.string.name)));
+            return false;
+        }
+        return true;
     }
 }

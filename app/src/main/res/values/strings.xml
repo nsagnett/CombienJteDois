@@ -4,7 +4,7 @@
     <!--General-->
     <string name="app_name">CombienJteDois</string>
     <string name="title_section1">Money</string>
-    <string name="title_section2">Loan made</string>
+    <string name="title_section2">Loan Objects</string>
     <string name="title_section3">Presents</string>
     <string name="navigation_drawer_open">Open menu</string>
     <string name="navigation_drawer_close">Close menu</string>
