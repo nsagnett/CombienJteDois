@@ -98,7 +98,7 @@ public class DBManager {
 
     public boolean modifyPerson(long idPerson, String name, String totalCount, String phoneNumber) {
         ContentValues args = new ContentValues();
-        args.put(NAME_PERSON_KEY, name);
+        args.put(NAME_PERSON_KEY, Tools.camelCase(name));
         args.put(TOTAL_COUNT_KEY, totalCount);
         args.put(PHONE_NUMBER_KEY, phoneNumber);
 
@@ -149,20 +149,13 @@ public class DBManager {
         return 0;
     }
 
-    public boolean updateAmountDebt(long rowIdDebt, long idPerson, String amount) {
-        ContentValues args = new ContentValues();
-        args.put(AMOUNT_KEY, amount);
+    public boolean modifyDebt(long idDebt, String object, String amount) {
+        ContentValues initialValues = new ContentValues();
+        object = Tools.camelCase(object);
+        initialValues.put(AMOUNT_KEY, amount);
+        initialValues.put(REASON_KEY, object);
 
-        return sqLiteDatabase.update(DATABASE_TABLE_DEBT, args, ID_PERSON_DEBT_KEY + "="
-                + idPerson + "AND" + ID_DEBT_KEY + "=" + rowIdDebt, null) > 0;
-    }
-
-    public boolean updateReasonDebt(long rowIdDebt, long idPerson, String reason) {
-        ContentValues args = new ContentValues();
-        args.put(REASON_KEY, reason);
-
-        return sqLiteDatabase.update(DATABASE_TABLE_DEBT, args, ID_PERSON_DEBT_KEY + "="
-                + idPerson + "AND" + ID_DEBT_KEY + "=" + rowIdDebt, null) > 0;
+        return sqLiteDatabase.update(DATABASE_TABLE_DEBT, initialValues, ID_PERSON_DEBT_KEY + "=" + idDebt, null) > 0;
     }
 
     public long fetchIdDebt(long idPerson, String reason) {

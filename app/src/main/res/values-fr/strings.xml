@@ -24,8 +24,6 @@
     <string name="toast_add_person">Personne ajoutée !</string>
     <string name="toast_modify">Changement effectué !</string>
     <string name="toast_delete_person">Personne supprimée !</string>
-    <string name="toast_add_debt">Dette ajoutée !</string>
-    <string name="toast_delete_debt">Dette supprimée !</string>
     <string name="person_info_format">%1$s : %2$s</string>
     <string name="message_delete_person_text">Voulez-vous vraiment supprimer cette personne ?</string>
     <string name="person_already_present_format">%s existe déjà !</string>
@@ -42,6 +40,7 @@
     <string name="three_points">&#8230;</string>
     <string name="increasing_amount">Par montant croissant</string>
     <string name="decreasing_debt">Par montant décroissant</string>
+    <string name="error">Erreur pendant l\'opération, veuillez réessayer</string>
 
     <!--Argent-->
     <string name="add_debt">Ajouter une dette</string>
@@ -56,5 +55,7 @@
     <string name="object_hint">Saisir l\'objet&#8230;</string>
     <string name="amount_hint">Saisir le montant&#8230;</string>
     <string name="debt_already_present">Cette dette existe déjà !</string>
+    <string name="toast_add_debt">Dette ajoutée !</string>
+    <string name="toast_delete_debt">Dette supprimée !</string>
 
 </resources>

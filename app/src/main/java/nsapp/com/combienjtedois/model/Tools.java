@@ -118,7 +118,7 @@ public class Tools {
 
 
     public static void switchView(final Context context, final TextView viewOne, final TextView viewTwo, final AbstractMoneyFragment abstractMoneyFragment) {
-        final int green = context.getResources().getColor(R.color.green);
+        final int green = context.getResources().getColor(R.color.dark_blue);
         final int white = context.getResources().getColor(android.R.color.white);
 
         viewOne.setTextColor(green);
@@ -159,7 +159,8 @@ public class Tools {
         titleView.setGravity(Gravity.CENTER_VERTICAL);
         titleView.setText(resTitleID);
         titleView.setTextSize(17);
-        titleView.setBackgroundResource(android.R.color.white);
+        titleView.setTextColor(context.getResources().getColor(android.R.color.white));
+        titleView.setBackgroundResource(R.color.dark_blue);
         titleView.setCompoundDrawablesWithIntrinsicBounds(resDrawableTitleID, 0, 0, 0);
 
         return titleView;

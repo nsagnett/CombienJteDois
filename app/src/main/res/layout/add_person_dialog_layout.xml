@@ -60,7 +60,7 @@
 
     <TextView
         android:id="@+id/neutralTextView"
-        android:textColor="@color/green"
+        android:textColor="@color/dark_blue"
         android:padding="15dp"
         android:gravity="center"
         android:background="@drawable/custom_button"

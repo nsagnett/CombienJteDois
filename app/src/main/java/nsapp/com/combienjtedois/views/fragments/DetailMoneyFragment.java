@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import nsapp.com.combienjtedois.R;
+import nsapp.com.combienjtedois.model.Debt;
 import nsapp.com.combienjtedois.model.Person;
 import nsapp.com.combienjtedois.model.Tools;
 
@@ -50,23 +51,11 @@ public class DetailMoneyFragment extends AbstractMoneyFragment {
     @Override
     public void onItemClick(final AdapterView<?> parent, View view, final int position, long id) {
         if (!debtArrayList.isEmpty()) {
+            Debt debt = debtArrayList.get(position - 1);
             if (isDeletingView) {
-                final AlertDialog alert = Tools.createCustomConfirmDialogBox(getActivity(), R.string.warning_text, R.drawable.warning, R.string.message_delete_debt_text, R.string.positive_text, R.string.negative_text);
-                alert.show();
-                alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alert.dismiss();
-                        deleteDebt(parent, position);
-                        Toast.makeText(getActivity(), getString(R.string.toast_delete_debt), Toast.LENGTH_SHORT).show();
-                    }
-                });
-                alert.findViewById(R.id.negativeView).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alert.dismiss();
-                    }
-                });
+                deleteDebt(parent, position, debt);
+            } else if (isEditingView) {
+                modifyItem(debt);
             }
         }
     }
@@ -108,20 +97,74 @@ public class DetailMoneyFragment extends AbstractMoneyFragment {
         });
     }
 
-    private void deleteDebt(AdapterView<?> parent, int position) {
-        final int idDebt = (int) debtArrayList.get(position - 1).getId();
-        final int idPerson = (int) person.getId();
-        ScaleAnimation anim = new ScaleAnimation(1, 0, 1, 0);
-        anim.setDuration(Tools.ANIMATION_DURATION);
-        parent.getChildAt(position).startAnimation(anim);
-        new Handler().postDelayed(new Runnable() {
+    public void modifyItem(final Debt debt) {
+        final AlertDialog alert = Tools.createCustomAddDebtDialogBox(getActivity(), R.string.add_debt, R.drawable.add, R.string.validate);
+        alert.show();
+        TextView deviseView = (TextView) alert.findViewById(R.id.deviseView);
+        deviseView.setVisibility(View.VISIBLE);
+        deviseView.setText(R.string.euro);
 
-            public void run() {
-                Tools.dbManager.deleteDebt(idDebt, idPerson);
-                notifyChanges();
+        final TextView positiveDebtView = (TextView) alert.findViewById(R.id.positiveDebtView);
+        final TextView negativeDebtView = (TextView) alert.findViewById(R.id.negativeDebtView);
+        Tools.switchView(getActivity(), positiveDebtView, negativeDebtView, this);
+
+        ((TextView) alert.findViewById(R.id.typeDebtView)).setText(R.string.type);
+        ((TextView) alert.findViewById(R.id.reasonTextView)).setText(R.string.object);
+        ((TextView) alert.findViewById(R.id.countTextView)).setText(R.string.amount);
+        final EditText reasonEditText = ((EditText) alert.findViewById(R.id.reasonEditText));
+        final EditText countEditText = ((EditText) alert.findViewById(R.id.countEditText));
+
+        countEditText.setText(debt.getAmount());
+        reasonEditText.setText(debt.getReason());
+
+        alert.findViewById(R.id.neutralTextView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String sign = null;
+                if (positiveDebtView.isSelected()) {
+                    sign = "";
+                } else if (negativeDebtView.isSelected()) {
+                    sign = "-";
+                }
+                if (checkDebtForm(reasonEditText, countEditText, sign)) {
+                    alert.dismiss();
+                    Tools.dbManager.modifyDebt(debt.getId(), sign + countEditText.getText().toString(), reasonEditText.getText().toString());
+                    Toast.makeText(getActivity(), getString(R.string.toast_modify), Toast.LENGTH_SHORT).show();
+                    notifyChanges();
+                }
             }
+        });
+    }
 
-        }, Tools.ANIMATION_DURATION);
+    private void deleteDebt(final AdapterView<?> parent, final int position, final Debt debt) {
+        final AlertDialog alert = Tools.createCustomConfirmDialogBox(getActivity(), R.string.warning_text, R.drawable.warning, R.string.message_delete_debt_text, R.string.positive_text, R.string.negative_text);
+        alert.show();
+        alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alert.dismiss();
+                final int idDebt = (int) debt.getId();
+                final int idPerson = (int) person.getId();
+                ScaleAnimation anim = new ScaleAnimation(1, 0, 1, 0);
+                anim.setDuration(Tools.ANIMATION_DURATION);
+                parent.getChildAt(position).startAnimation(anim);
+                new Handler().postDelayed(new Runnable() {
+
+                    public void run() {
+                        Tools.dbManager.deleteDebt(idDebt, idPerson);
+                        notifyChanges();
+                    }
+
+                }, Tools.ANIMATION_DURATION);
+                Toast.makeText(getActivity(), getString(R.string.toast_delete_debt), Toast.LENGTH_SHORT).show();
+            }
+        });
+        alert.findViewById(R.id.negativeView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alert.dismiss();
+            }
+        });
     }
 
     protected boolean checkDebtForm(EditText reasonEditText, EditText countEditText, String sign) {

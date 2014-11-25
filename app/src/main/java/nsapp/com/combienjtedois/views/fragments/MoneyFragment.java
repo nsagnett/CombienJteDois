@@ -126,13 +126,16 @@ public class MoneyFragment extends AbstractMoneyFragment {
     private void modifyPerson(final Person person) {
         final AlertDialog alert = Tools.createCustomAddPersonDialogBox(getActivity(), R.string.modify_person, R.drawable.edit, R.string.validate);
         alert.show();
-        final EditText editText = ((EditText) alert.findViewById(R.id.namePersonEditView));
+        final EditText nameView = ((EditText) alert.findViewById(R.id.namePersonEditView));
+        final EditText phoneNumberView = ((EditText) alert.findViewById(R.id.phoneNumberEditView));
+        nameView.setText(person.getName());
+        phoneNumberView.setText(person.getPhoneNumber());
         alert.findViewById(R.id.neutralTextView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkPersonForm(editText)) {
+                if (checkPersonForm(nameView)) {
                     alert.dismiss();
-                    Tools.dbManager.modifyPerson(person.getId(), editText.getText().toString(), person.getTotalAmount(), person.getPhoneNumber());
+                    Tools.dbManager.modifyPerson(person.getId(), nameView.getText().toString(), person.getTotalAmount(), person.getPhoneNumber());
                     notifyChanges();
                     Toast.makeText(getActivity(), getString(R.string.toast_modify), Toast.LENGTH_SHORT).show();
                 }

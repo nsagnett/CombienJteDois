@@ -92,7 +92,7 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                     isEditingView = false;
                     if (listView.getFooterViewsCount() == 0) {
                         footerView.setText(R.string.add_person);
-                        footerView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_add, 0, 0);
+                        footerView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.dark_add, 0, 0);
                         footerView.setOnClickListener(this);
                         listView.addFooterView(footerView);
                     }
@@ -128,7 +128,7 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                     isEditingView = false;
                     if (listView.getFooterViewsCount() == 0) {
                         footerView.setText(R.string.add_debt);
-                        footerView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_add, 0, 0);
+                        footerView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.dark_add, 0, 0);
                         footerView.setOnClickListener(this);
                         listView.addFooterView(footerView);
                     }

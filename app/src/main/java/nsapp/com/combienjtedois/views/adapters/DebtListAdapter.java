@@ -65,11 +65,11 @@ public class DebtListAdapter extends BaseAdapter {
 
         if (isDeletingView) {
             ImageView imageView = (ImageView) convertView.findViewById(R.id.otherView);
-            imageView.setImageResource(R.drawable.delete);
+            imageView.setImageResource(R.drawable.dark_delete);
             imageView.setVisibility(View.VISIBLE);
         } else if (isEditingView) {
             ImageView imageView = (ImageView) convertView.findViewById(R.id.otherView);
-            imageView.setImageResource(R.drawable.edit);
+            imageView.setImageResource(R.drawable.dark_edit);
             imageView.setVisibility(View.VISIBLE);
         }
 

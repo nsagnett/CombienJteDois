@@ -134,13 +134,13 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
             case R.id.actionDelete:
                 if (!((AbstractFragment) getCurrentFragment()).isEditingView()) {
                     ((AbstractFragment) getCurrentFragment()).setDeletingView(!((AbstractFragment) getCurrentFragment()).isDeletingView());
-                    otherViewToggle(R.drawable.delete);
+                    otherViewToggle(R.drawable.dark_delete);
                 }
                 break;
             case R.id.actionEdit:
                 if (!((AbstractFragment) getCurrentFragment()).isDeletingView()) {
                     ((AbstractFragment) getCurrentFragment()).setEditingView(!((AbstractFragment) getCurrentFragment()).isEditingView());
-                    otherViewToggle(R.drawable.edit);
+                    otherViewToggle(R.drawable.dark_edit);
                 }
                 break;
         }
