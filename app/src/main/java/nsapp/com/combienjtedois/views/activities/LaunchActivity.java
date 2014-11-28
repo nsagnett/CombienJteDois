@@ -15,8 +15,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import nsapp.com.combienjtedois.R;
+import nsapp.com.combienjtedois.model.AllDatas;
 import nsapp.com.combienjtedois.model.DBManager;
-import nsapp.com.combienjtedois.model.Tools;
 import nsapp.com.combienjtedois.views.fragments.AbstractFragment;
 import nsapp.com.combienjtedois.views.fragments.LoanObjectsFragment;
 import nsapp.com.combienjtedois.views.fragments.MoneyFragment;
@@ -46,8 +46,8 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
         title = getTitle();
         navigationDrawerFragment.closeDrawer();
 
-        Tools.dbManager = new DBManager(this);
-        Tools.dbManager.open();
+        AllDatas.dbManager = new DBManager(this);
+        AllDatas.dbManager.open();
     }
 
     @Override
@@ -184,7 +184,7 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
         }
     }
 
-    private Fragment getCurrentFragment() {
+    public Fragment getCurrentFragment() {
         return getSupportFragmentManager().findFragmentById(R.id.container);
     }
 

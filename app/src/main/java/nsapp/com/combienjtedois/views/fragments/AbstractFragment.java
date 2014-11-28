@@ -16,7 +16,6 @@ public abstract class AbstractFragment extends Fragment {
 
 
     protected static final String ARG_SECTION_NUMBER = "section_number";
-    protected static final String PERSON_KEY = "person";
 
     public enum listWantedType {PERSON, DEBT}
 

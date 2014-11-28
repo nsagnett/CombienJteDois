@@ -3,15 +3,15 @@ package nsapp.com.combienjtedois.model;
 public class Debt {
 
     private long id;
-    private long idPerson;
     private String amount;
     private String reason;
+    private String profileImageUrl;
 
-    public Debt(long id, long idPerson, String amount, String reason){
+    public Debt(long id, String amount, String reason, String profileImageUrl){
         this.id = id;
-        this.idPerson = idPerson;
         this.amount = amount;
         this.reason = reason;
+        this.profileImageUrl = profileImageUrl;
     }
 
     public String getReason() {
@@ -28,5 +28,9 @@ public class Debt {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
     }
 }

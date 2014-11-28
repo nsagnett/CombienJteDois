@@ -41,6 +41,10 @@
     <string name="increasing_amount">Par montant croissant</string>
     <string name="decreasing_debt">Par montant décroissant</string>
     <string name="error">Erreur pendant l\'opération, veuillez réessayer</string>
+    <string name="camera">Appareil photo</string>
+    <string name="gallery">Galerie</string>
+    <string name="nothing">Ne rien mettre</string>
+    <string name="choose">Choisir</string>
 
     <!--Argent-->
     <string name="add_debt">Ajouter une dette</string>

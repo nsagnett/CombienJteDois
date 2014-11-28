@@ -1,6 +1,7 @@
 package nsapp.com.combienjtedois.views.fragments;
 
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,10 +14,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import nsapp.com.combienjtedois.R;
+import nsapp.com.combienjtedois.model.AllDatas;
 import nsapp.com.combienjtedois.model.DBManager;
 import nsapp.com.combienjtedois.model.Debt;
 import nsapp.com.combienjtedois.model.Person;
-import nsapp.com.combienjtedois.model.Tools;
+import nsapp.com.combienjtedois.model.SortClass;
+import nsapp.com.combienjtedois.model.ViewCreator;
 import nsapp.com.combienjtedois.views.adapters.DebtListAdapter;
 import nsapp.com.combienjtedois.views.adapters.PersonListAdapter;
 
@@ -36,6 +39,8 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
     protected Person person;
 
     protected listWantedType listType;
+
+    protected Uri capturedImageURI;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,7 +64,7 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
     @Override
     public void onResume() {
         super.onResume();
-        Tools.switchView(getActivity(), positiveSort, negativeSort, this);
+        ViewCreator.switchView(getActivity(), positiveSort, negativeSort, this);
     }
 
     @Override
@@ -75,16 +80,17 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
         Cursor c;
         switch (listType) {
             case PERSON:
-                c = Tools.dbManager.fetchAllPersons();
+                c = AllDatas.dbManager.fetchAllPersons();
                 personArrayList = new ArrayList<Person>();
 
                 while (c.moveToNext()) {
                     String name = c.getString(c.getColumnIndex(DBManager.NAME_PERSON_KEY));
                     String phoneNumber = c.getString(c.getColumnIndex(DBManager.PHONE_NUMBER_KEY));
+                    String imageUrl = c.getString(c.getColumnIndex(DBManager.IMAGE_PROFILE));
 
-                    long id = Tools.dbManager.fetchIdPerson(name);
-                    String total = Tools.dbManager.getTotalCount(id);
-                    personArrayList.add(new Person(id, name, total, phoneNumber));
+                    long id = AllDatas.dbManager.fetchIdPerson(name);
+                    String total = AllDatas.dbManager.getTotalCount(id);
+                    personArrayList.add(new Person(id, name, total, phoneNumber, imageUrl));
                 }
 
                 if (personArrayList.isEmpty()) {
@@ -100,27 +106,28 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                     listView.removeFooterView(footerView);
 
                     if (sortIndex == 0) {
-                        personArrayList = Tools.decreasingOrderPersonAmountSort(personArrayList);
+                        personArrayList = SortClass.decreasingOrderPersonAmountSort(personArrayList);
                     } else if (sortIndex == 1) {
-                        personArrayList = Tools.increasingOrderPersonAmountSort(personArrayList);
+                        personArrayList = SortClass.increasingOrderPersonAmountSort(personArrayList);
                     }
                 }
 
-                PersonListAdapter personListAdapter = new PersonListAdapter(getActivity(), personArrayList, isDeletingView, isEditingView);
+                PersonListAdapter personListAdapter = new PersonListAdapter(launchActivity, (MoneyFragment) launchActivity.getCurrentFragment(), personArrayList, isDeletingView, isEditingView);
                 listView.setAdapter(personListAdapter);
 
                 break;
             case DEBT:
                 long idPerson = person.getId();
-                c = Tools.dbManager.fetchAllDebt(idPerson);
+                c = AllDatas.dbManager.fetchAllDebt(idPerson);
                 debtArrayList = new ArrayList<Debt>();
 
                 while (c.moveToNext()) {
                     String reason = c.getString(c.getColumnIndex(DBManager.REASON_KEY));
+                    String profileImage = c.getString(c.getColumnIndex(DBManager.IMAGE_PROFILE));
 
-                    long id = Tools.dbManager.fetchIdDebt(idPerson, reason);
-                    String amount = Tools.dbManager.getCount(id);
-                    debtArrayList.add(new Debt(id, idPerson, amount, reason));
+                    long id = AllDatas.dbManager.fetchIdDebt(idPerson, reason);
+                    String amount = AllDatas.dbManager.getCount(id);
+                    debtArrayList.add(new Debt(id, amount, reason, profileImage));
                 }
 
                 if (debtArrayList.isEmpty()) {
@@ -136,16 +143,16 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                     listView.removeFooterView(footerView);
 
                     if (sortIndex == 0) {
-                        debtArrayList = Tools.decreasingOrderDebtAmountSort(debtArrayList);
+                        debtArrayList = SortClass.decreasingOrderDebtAmountSort(debtArrayList);
                     } else if (sortIndex == 1) {
-                        debtArrayList = Tools.increasingOrderDebtAmountSort(debtArrayList);
+                        debtArrayList = SortClass.increasingOrderDebtAmountSort(debtArrayList);
                     }
                 }
 
-                DebtListAdapter debtListAdapter = new DebtListAdapter(getActivity(), debtArrayList, isDeletingView, isEditingView);
+                DebtListAdapter debtListAdapter = new DebtListAdapter(launchActivity, (DetailMoneyFragment) launchActivity.getCurrentFragment(), debtArrayList, isDeletingView, isEditingView);
                 listView.setAdapter(debtListAdapter);
 
-                Double total = Double.parseDouble(Tools.dbManager.getTotalCount(person.getId()));
+                Double total = Double.parseDouble(AllDatas.dbManager.getTotalCount(person.getId()));
 
                 if (total >= 0) {
                     headerPersonView.setTextColor(getResources().getColor(R.color.green));
@@ -159,5 +166,13 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
             default:
                 break;
         }
+    }
+
+    public void setCapturedImageURI(Uri capturedImageURI) {
+        this.capturedImageURI = capturedImageURI;
+    }
+
+    public Uri getCapturedImageURI() {
+        return capturedImageURI;
     }
 }

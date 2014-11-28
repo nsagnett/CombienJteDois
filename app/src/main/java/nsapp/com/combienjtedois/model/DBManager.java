@@ -22,6 +22,7 @@ public class DBManager {
     public static final String AMOUNT_KEY = "amount";
     public static final String REASON_KEY = "reason";
 
+    public static final String IMAGE_PROFILE = "profileImageUrl";
     private static final String DATABASE_NAME = "dataBaseApp";
     private static final int DATABASE_VERSION = 1;
 
@@ -31,12 +32,14 @@ public class DBManager {
     private static final String CREATE_TABLE_PERSON_QUERY = "create table person (idP integer primary key autoincrement, "
             + "name text not null, "
             + "phoneNumber text, "
+            + "profileImageUrl text,"
             + "totalCount text not null); ";
 
     private static final String CREATE_TABLE_DEBT_QUERY = "create table debt (idD integer primary key autoincrement, "
             + "idFKP integer not null, "
             + "amount text not null, "
             + "reason text not null, "
+            + "profileImageUrl text,"
             + "foreign key(idFKP) references person(idP)); ";
 
     private DatabaseHelper databaseHelper;
@@ -80,14 +83,14 @@ public class DBManager {
     /**
      * PERSON QUERIES
      */
-
     public long createPerson(String name, String phoneNumber) {
         ContentValues initialValues = new ContentValues();
-        name = Tools.camelCase(name);
+        name = AllDatas.camelCase(name);
         if (fetchIdPerson(name) == 0) {
             initialValues.put(NAME_PERSON_KEY, name);
             initialValues.put(TOTAL_COUNT_KEY, "");
             initialValues.put(PHONE_NUMBER_KEY, phoneNumber);
+            initialValues.put(IMAGE_PROFILE, "");
 
             return sqLiteDatabase.insert(DATABASE_TABLE_PERSON, null, initialValues);
         } else {
@@ -96,9 +99,17 @@ public class DBManager {
         return 0;
     }
 
+    public boolean setImageProfileUrlPerson(long idPerson, String url){
+        ContentValues args = new ContentValues();
+        args.put(IMAGE_PROFILE, url);
+
+        return sqLiteDatabase.update(DATABASE_TABLE_PERSON, args, ID_PERSON_KEY + "="
+                + idPerson, null) > 0;
+    }
+
     public boolean modifyPerson(long idPerson, String name, String totalCount, String phoneNumber) {
         ContentValues args = new ContentValues();
-        args.put(NAME_PERSON_KEY, Tools.camelCase(name));
+        args.put(NAME_PERSON_KEY, AllDatas.camelCase(name));
         args.put(TOTAL_COUNT_KEY, totalCount);
         args.put(PHONE_NUMBER_KEY, phoneNumber);
 
@@ -108,7 +119,7 @@ public class DBManager {
 
     public long fetchIdPerson(String name) {
         Cursor c = sqLiteDatabase.query(DATABASE_TABLE_PERSON, new String[]{
-                ID_PERSON_KEY, NAME_PERSON_KEY, PHONE_NUMBER_KEY, TOTAL_COUNT_KEY}, NAME_PERSON_KEY + "= '" + name + "'", null, null, null, null);
+                ID_PERSON_KEY, NAME_PERSON_KEY, PHONE_NUMBER_KEY, IMAGE_PROFILE, TOTAL_COUNT_KEY}, NAME_PERSON_KEY + "= '" + name + "'", null, null, null, null);
 
         if (c != null && c.moveToFirst()) {
             return c.getInt(c.getColumnIndex(ID_PERSON_KEY));
@@ -119,7 +130,7 @@ public class DBManager {
 
     public Cursor fetchAllPersons() {
         return sqLiteDatabase.query(DATABASE_TABLE_PERSON, new String[]{
-                        ID_PERSON_KEY, NAME_PERSON_KEY, PHONE_NUMBER_KEY, TOTAL_COUNT_KEY}, null, null, null, null,
+                        ID_PERSON_KEY, NAME_PERSON_KEY, PHONE_NUMBER_KEY, IMAGE_PROFILE, TOTAL_COUNT_KEY}, null, null, null, null,
                 null);
     }
 
@@ -136,11 +147,12 @@ public class DBManager {
 
     public long createDebt(long idPerson, String amount, String reason) {
         ContentValues initialValues = new ContentValues();
-        reason = Tools.camelCase(reason);
+        reason = AllDatas.camelCase(reason);
         if (fetchIdDebt(idPerson, reason) == 0) {
             initialValues.put(ID_PERSON_DEBT_KEY, idPerson);
             initialValues.put(AMOUNT_KEY, amount);
             initialValues.put(REASON_KEY, reason);
+            initialValues.put(IMAGE_PROFILE, "");
 
             return sqLiteDatabase.insert(DATABASE_TABLE_DEBT, null, initialValues);
         } else {
@@ -151,16 +163,24 @@ public class DBManager {
 
     public boolean modifyDebt(long idDebt, String object, String amount) {
         ContentValues initialValues = new ContentValues();
-        object = Tools.camelCase(object);
+        object = AllDatas.camelCase(object);
         initialValues.put(AMOUNT_KEY, amount);
         initialValues.put(REASON_KEY, object);
 
         return sqLiteDatabase.update(DATABASE_TABLE_DEBT, initialValues, ID_PERSON_DEBT_KEY + "=" + idDebt, null) > 0;
     }
 
+    public boolean setImageProfileUrlDebt(long idDebt, String url){
+        ContentValues args = new ContentValues();
+        args.put(IMAGE_PROFILE, url);
+
+        return sqLiteDatabase.update(DATABASE_TABLE_DEBT, args, ID_DEBT_KEY + "="
+                + idDebt, null) > 0;
+    }
+
     public long fetchIdDebt(long idPerson, String reason) {
         Cursor c = sqLiteDatabase.query(DATABASE_TABLE_DEBT, new String[]{
-                ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY,}, ID_PERSON_DEBT_KEY + "='" + idPerson + "' AND " + REASON_KEY + "='" + reason + "'", null, null, null, null);
+                ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, IMAGE_PROFILE}, ID_PERSON_DEBT_KEY + "='" + idPerson + "' AND " + REASON_KEY + "='" + reason + "'", null, null, null, null);
 
         if (c != null && c.moveToFirst()) {
             return c.getInt(c.getColumnIndex(ID_DEBT_KEY));
@@ -170,7 +190,7 @@ public class DBManager {
 
     private Cursor fetchDebt(long rowIdDebt) {
         Cursor mCursor = sqLiteDatabase.query(true, DATABASE_TABLE_DEBT, new String[]{
-                ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY,}, ID_DEBT_KEY + "="
+                ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, IMAGE_PROFILE}, ID_DEBT_KEY + "="
                 + rowIdDebt, null, null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
@@ -180,7 +200,7 @@ public class DBManager {
 
     public Cursor fetchAllDebt(long idPerson) {
         return sqLiteDatabase.query(DATABASE_TABLE_DEBT, new String[]{
-                        ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY}, ID_PERSON_DEBT_KEY + "=" + idPerson, null, null, null,
+                        ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, IMAGE_PROFILE}, ID_PERSON_DEBT_KEY + "=" + idPerson, null, null, null,
                 null);
     }
 
