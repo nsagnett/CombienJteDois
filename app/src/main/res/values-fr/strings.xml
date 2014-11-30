@@ -24,7 +24,8 @@
     <string name="toast_add_person">Personne ajoutée !</string>
     <string name="toast_modify">Changement effectué !</string>
     <string name="toast_delete_person">Personne supprimée !</string>
-    <string name="person_info_format">%1$s : %2$s</string>
+    <string name="person_name_format">%s : </string>
+    <string name="person_count_format"> : %s</string>
     <string name="message_delete_person_text">Voulez-vous vraiment supprimer cette personne ?</string>
     <string name="person_already_present_format">%s existe déjà !</string>
     <string name="phone_hint">Saisir le numéro&#8230;</string>
@@ -34,6 +35,7 @@
     <string name="positive_text">Oui</string>
     <string name="negative_text">Non</string>
     <string name="ok">OK</string>
+    <string name="total">Total :&#160;</string>
     <string name="empty_field_format">Le champ %s est requis !</string>
     <string name="content">Content</string>
     <string name="euro">€</string>
@@ -41,10 +43,13 @@
     <string name="increasing_amount">Par montant croissant</string>
     <string name="decreasing_debt">Par montant décroissant</string>
     <string name="error">Erreur pendant l\'opération, veuillez réessayer</string>
+    <string name="missing_picture">Aucune photo détectée !</string>
+    <string name="fullscreen">Agrandir</string>
     <string name="camera">Appareil photo</string>
     <string name="gallery">Galerie</string>
     <string name="nothing">Ne rien mettre</string>
     <string name="choose">Choisir</string>
+    <string name="date_format">Ajouté le %s</string>
 
     <!--Argent-->
     <string name="add_debt">Ajouter une dette</string>

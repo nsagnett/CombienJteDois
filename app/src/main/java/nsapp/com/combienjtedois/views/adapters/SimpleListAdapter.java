@@ -46,13 +46,25 @@ public class SimpleListAdapter extends BaseAdapter {
         titleView.setTextSize(17);
         titleView.setText(items[position]);
 
-        if (position == 0) {
-            titleView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.camera, 0, 0, 0);
-        } else if (position == 1) {
-            titleView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.gallery, 0, 0, 0);
-        } else {
-            titleView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.trash, 0, 0, 0);
+        int drawableID = 0;
+        switch (position) {
+            case 0:
+                drawableID = R.drawable.camera;
+                break;
+            case 1:
+                drawableID = R.drawable.gallery;
+                break;
+            case 2:
+                drawableID = android.R.drawable.ic_menu_search;
+                break;
+            case 3:
+                drawableID = R.drawable.trash;
+                break;
+            default:
+                break;
         }
+
+        titleView.setCompoundDrawablesWithIntrinsicBounds(drawableID, 0, 0, 0);
 
         return convertView;
     }

@@ -25,7 +25,7 @@
     <string name="toast_delete_person">Person deleted !</string>
     <string name="toast_add_debt">Debt added !</string>
     <string name="toast_delete_debt">Debt deleted !</string>
-    <string name="person_info_format">%1$s : %2$s</string>
+    <string name="person_name_format">%1$s : %2$s</string>
     <string name="message_delete_person_text">Are you sure to delete this person ?</string>
     <string name="person_already_present_format">%s already exists !</string>
 

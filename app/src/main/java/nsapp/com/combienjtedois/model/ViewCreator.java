@@ -14,9 +14,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.views.fragments.AbstractMoneyFragment;
+import nsapp.com.combienjtedois.views.fragments.money.AbstractMoneyFragment;
 
 public class ViewCreator {
+
+    public static enum TYPE_SWITCH {
+        SORT, TYPE_DEBT
+    }
 
     public static View getCustomTitleDialogBox(Context context, int resTitleID, int resDrawableTitleID) {
         TextView titleView = new TextView(context);
@@ -94,7 +98,7 @@ public class ViewCreator {
         return builder.create();
     }
 
-    public static void switchView(final Context context, final TextView viewOne, final TextView viewTwo, final AbstractMoneyFragment abstractMoneyFragment) {
+    public static void switchView(final Context context, final TextView viewOne, final TextView viewTwo, final AbstractMoneyFragment abstractMoneyFragment, final TYPE_SWITCH typeSwitch) {
         final int green = context.getResources().getColor(R.color.dark_blue);
         final int white = context.getResources().getColor(android.R.color.white);
 
@@ -109,8 +113,11 @@ public class ViewCreator {
                     viewOne.setSelected(true);
                     viewOne.setTextColor(white);
                     viewTwo.setTextColor(green);
-                    abstractMoneyFragment.setSortIndex(0);
-                    abstractMoneyFragment.notifyChanges();
+
+                    if (typeSwitch == TYPE_SWITCH.SORT) {
+                        abstractMoneyFragment.setSortIndex(0);
+                        abstractMoneyFragment.notifyChanges();
+                    }
                 }
             }
         });
@@ -122,8 +129,10 @@ public class ViewCreator {
                     viewTwo.setSelected(true);
                     viewTwo.setTextColor(white);
                     viewOne.setTextColor(green);
-                    abstractMoneyFragment.setSortIndex(1);
-                    abstractMoneyFragment.notifyChanges();
+                    if (typeSwitch == TYPE_SWITCH.SORT) {
+                        abstractMoneyFragment.setSortIndex(1);
+                        abstractMoneyFragment.notifyChanges();
+                    }
                 }
             }
         });
@@ -133,7 +142,7 @@ public class ViewCreator {
         int targetWidth = 50;
         int targetHeight = 50;
         Bitmap targetBitmap = Bitmap.createBitmap(targetWidth,
-                targetHeight,Bitmap.Config.ARGB_8888);
+                targetHeight, Bitmap.Config.ARGB_8888);
 
         Canvas canvas = new Canvas(targetBitmap);
         Path path = new Path();
@@ -151,7 +160,7 @@ public class ViewCreator {
         return targetBitmap;
     }
 
-    public static AlertDialog createListViewDialogBox(Context context, ListView listView){
+    public static AlertDialog createListViewDialogBox(Context context, ListView listView) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setCustomTitle(getCustomTitleDialogBox(context, R.string.choose, R.drawable.question));
         builder.setView(listView);

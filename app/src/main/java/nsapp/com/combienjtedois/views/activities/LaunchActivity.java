@@ -15,11 +15,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.model.AllDatas;
+import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.model.DBManager;
 import nsapp.com.combienjtedois.views.fragments.AbstractFragment;
 import nsapp.com.combienjtedois.views.fragments.LoanObjectsFragment;
-import nsapp.com.combienjtedois.views.fragments.MoneyFragment;
+import nsapp.com.combienjtedois.views.fragments.money.PersonListForMoneyFragment;
 import nsapp.com.combienjtedois.views.fragments.NavigationDrawerFragment;
 import nsapp.com.combienjtedois.views.fragments.PresentFragment;
 
@@ -46,8 +46,8 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
         title = getTitle();
         navigationDrawerFragment.closeDrawer();
 
-        AllDatas.dbManager = new DBManager(this);
-        AllDatas.dbManager.open();
+        Utils.dbManager = new DBManager(this);
+        Utils.dbManager.open();
     }
 
     @Override
@@ -57,7 +57,7 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
 
         switch (position) {
             case 0:
-                fragment = MoneyFragment.newInstance(position);
+                fragment = PersonListForMoneyFragment.newInstance(position);
                 break;
             case 1:
                 fragment = LoanObjectsFragment.newInstance(position);
@@ -66,7 +66,7 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
                 fragment = PresentFragment.newInstance(position);
                 break;
             default:
-                fragment = MoneyFragment.newInstance(position);
+                fragment = PersonListForMoneyFragment.newInstance(position);
                 break;
         }
 
