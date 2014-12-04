@@ -173,7 +173,9 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
             }
             break;
             case Utils.UPDATE_DEBT_COUNT:
-                updateCountView(data.getStringExtra(RESULT_KEY));
+                if(data != null) {
+                    updateCountView(data.getStringExtra(RESULT_KEY));
+                }
                 break;
             default:
                 break;
