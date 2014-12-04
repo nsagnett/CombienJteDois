@@ -19,6 +19,7 @@ public class Utils {
     public static final int IMPORT_DEBT_IMAGE_CODE = 2;
     public static final int TAKE_PICTURE_FOR_PERSON = 3;
     public static final int TAKE_PICTURE_FOR_DEBT = 4;
+    public static final int UPDATE_DEBT_COUNT = 5;
 
     public static DBManager dbManager = null;
 

@@ -98,6 +98,20 @@ public class ViewCreator {
         return builder.create();
     }
 
+    public static AlertDialog createCustomModifyDebtDialogBox(Context context, int resTitleID, int resDrawableTitleID, int resNeutralID) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.modify_object_dialog_layout, null);
+
+        builder.setCustomTitle(getCustomTitleDialogBox(context, resTitleID, resDrawableTitleID));
+
+        ((TextView) view.findViewById(R.id.neutralTextView)).setText(resNeutralID);
+
+        builder.setView(view);
+
+
+        return builder.create();
+    }
+
     public static void switchView(final Context context, final TextView viewOne, final TextView viewTwo, final AbstractMoneyFragment abstractMoneyFragment, final TYPE_SWITCH typeSwitch) {
         final int green = context.getResources().getColor(R.color.dark_blue);
         final int white = context.getResources().getColor(android.R.color.white);

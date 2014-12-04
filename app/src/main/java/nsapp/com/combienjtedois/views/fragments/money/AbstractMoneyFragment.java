@@ -40,7 +40,8 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
     protected TextView negativeSort;
 
     protected int sortIndex;
-    protected Person person;
+    protected Person selectedPerson;
+    protected Debt selectedDebt;
 
     protected listWantedType listType;
 
@@ -122,7 +123,7 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
 
                 break;
             case DEBT:
-                long idPerson = person.getId();
+                long idPerson = selectedPerson.getId();
                 c = Utils.dbManager.fetchAllDebt(idPerson);
                 debtArrayList = new ArrayList<Debt>();
 
@@ -158,7 +159,7 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                 DebtListAdapter debtListAdapter = new DebtListAdapter(launchActivity, (DetailPersonFragment) launchActivity.getCurrentFragment(), debtArrayList, isDeletingView, isEditingView);
                 listView.setAdapter(debtListAdapter);
 
-                Double total = Double.parseDouble(Utils.dbManager.getTotalCount(person.getId()));
+                Double total = Double.parseDouble(Utils.dbManager.getTotalCount(selectedPerson.getId()));
 
                 if (total >= 0) {
                     headerCountView.setTextColor(getResources().getColor(R.color.green));

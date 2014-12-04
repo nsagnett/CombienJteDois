@@ -19,7 +19,7 @@
     <string name="modify_person">Modify person</string>
     <string name="name">Name</string>
     <string name="validate">Validate</string>
-    <string name="name_hint">Tap the nom&#8230;</string>
+    <string name="name_hint">Tap the nom</string>
     <string name="toast_add_person">Person added !</string>
     <string name="toast_modify">Changes done !</string>
     <string name="toast_delete_person">Person deleted !</string>
@@ -50,8 +50,8 @@
     <string name="type">Type</string>
     <string name="object">Object</string>
     <string name="amount">Amount</string>
-    <string name="object_hint">Tap the object&#8230;</string>
-    <string name="amount_hint">Tap the amount&#8230;</string>
+    <string name="object_hint">Tap the object</string>
+    <string name="amount_hint">Tap the amount</string>
     <string name="debt_already_present">This debt already exists !</string>
 
 </resources>

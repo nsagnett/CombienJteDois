@@ -1,6 +1,8 @@
 package nsapp.com.combienjtedois.model;
 
-public class Debt {
+import java.io.Serializable;
+
+public class Debt implements Serializable{
 
     private long id;
     private String amount;
@@ -40,7 +42,7 @@ public class Debt {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 }

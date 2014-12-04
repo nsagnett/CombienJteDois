@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@android:color/white"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/typeDebtView"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_margin="5dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/negativeDebtView"
+            android:text="@string/debt"
+            android:gravity="center"
+            android:padding="15dp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/switch_button"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/positiveDebtView"
+            android:text="@string/credence"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:padding="15dp"
+            android:background="@drawable/switch_button"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <include layout="@layout/separator" />
+
+    <TextView
+        android:id="@+id/reasonTextView"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <EditText
+        android:id="@+id/reasonEditText"
+        android:inputType="text"
+        android:layout_margin="5dp"
+        android:background="@null"
+        android:padding="5dp"
+        android:digits="@string/digits_edittext"
+        android:hint="@string/object_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include layout="@layout/separator" />
+
+    <TextView
+        android:id="@+id/countTextView"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:padding="20dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/addTextView"
+            android:textSize="17sp"
+            android:textColor="@color/green"
+            android:gravity="center"
+            android:padding="15dp"
+            android:background="@drawable/custom_button"
+            android:text="@string/add"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/subtractTextView"
+            android:textSize="17sp"
+            android:gravity="center"
+            android:textColor="@color/red"
+            android:padding="15dp"
+            android:text="@string/subtract"
+            android:background="@drawable/custom_button"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <include layout="@layout/separator" />
+
+    <TextView
+        android:id="@+id/neutralTextView"
+        android:textColor="@color/dark_blue"
+        android:padding="15dp"
+        android:gravity="center"
+        android:background="@drawable/custom_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

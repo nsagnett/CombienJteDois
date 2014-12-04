@@ -56,6 +56,9 @@
     <EditText
         android:id="@+id/reasonEditText"
         android:inputType="text"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:background="@null"
         android:digits="@string/digits_edittext"
         android:hint="@string/object_hint"
         android:layout_width="match_parent"
@@ -83,6 +86,9 @@
             android:inputType="numberSigned"
             android:hint="@string/amount_hint"
             android:layout_width="0dp"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:background="@null"
             android:layout_weight="0.9"
             android:layout_height="wrap_content" />
 

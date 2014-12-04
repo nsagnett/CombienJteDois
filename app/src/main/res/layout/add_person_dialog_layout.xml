@@ -16,6 +16,8 @@
     <EditText
         android:id="@+id/namePersonEditView"
         android:inputType="text"
+        android:background="@null"
+        android:padding="5dp"
         android:digits="@string/digits_edittext"
         android:hint="@string/name_hint"
         android:layout_width="match_parent"

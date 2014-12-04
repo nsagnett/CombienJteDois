@@ -23,7 +23,6 @@ import nsapp.com.combienjtedois.model.Debt;
 import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.model.ViewCreator;
 import nsapp.com.combienjtedois.views.activities.FullScreenImageActivity;
-import nsapp.com.combienjtedois.views.fragments.money.AbstractMoneyFragment;
 import nsapp.com.combienjtedois.views.fragments.money.DetailPersonFragment;
 
 public class DebtListAdapter extends BaseAdapter implements View.OnClickListener {
@@ -120,10 +119,10 @@ public class DebtListAdapter extends BaseAdapter implements View.OnClickListener
                         String fileName = "temp.jpg";
                         ContentValues values = new ContentValues();
                         values.put(MediaStore.Images.Media.TITLE, fileName);
-                        ((AbstractMoneyFragment) fragment).setCapturedImageURI(context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values));
+                        fragment.setCapturedImageURI(context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values));
 
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, ((AbstractMoneyFragment) fragment).getCapturedImageURI());
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, fragment.getCapturedImageURI());
                         fragment.startActivityForResult(intent, Utils.TAKE_PICTURE_FOR_DEBT);
                         break;
                     case 1:
