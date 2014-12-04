@@ -39,12 +39,7 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
     private static final String TYPE = "type";
     private static final String DEBT_EXTRA = "debt";
     private Debt debtExtra;
-
-    private enum Operation {
-        ADD, SUBTRACT
-    }
-
-    private Operation operation;
+    private int typeDebt = -1;
 
     public static DetailPersonFragment newInstance(Person person) {
         DetailPersonFragment fragment = new DetailPersonFragment();
@@ -173,8 +168,10 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
             }
             break;
             case Utils.UPDATE_DEBT_COUNT:
-                if(data != null) {
+                if (data != null) {
                     updateCountView(data.getStringExtra(RESULT_KEY));
+                } else {
+                    updateCountView(selectedDebt.getAmount());
                 }
                 break;
             default:
@@ -258,13 +255,13 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
         ViewCreator.switchView(getActivity(), positiveDebtView, negativeDebtView, this, TYPE_DEBT);
 
         Double amount = Double.parseDouble(debt.getAmount());
-        final int type;
+
         if (amount >= 0) {
-            type = 0;
+            typeDebt = 0;
             positiveDebtView.setSelected(true);
             positiveDebtView.setTextColor(getResources().getColor(android.R.color.white));
         } else {
-            type = 1;
+            typeDebt = 1;
             negativeDebtView.setSelected(true);
             negativeDebtView.setTextColor(getResources().getColor(android.R.color.white));
         }
@@ -278,10 +275,9 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
             @Override
             public void onClick(View v) {
                 alert.dismiss();
-                operation = Operation.ADD;
                 Intent intent = new Intent(launchActivity, EditTextAmountActivity.class);
                 intent.putExtra(OPERATION, 0);
-                intent.putExtra(TYPE, type);
+                intent.putExtra(TYPE, typeDebt);
                 intent.putExtra(DEBT_EXTRA, selectedDebt);
                 startActivityForResult(intent, Utils.UPDATE_DEBT_COUNT);
             }
@@ -291,10 +287,9 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
             @Override
             public void onClick(View v) {
                 alert.dismiss();
-                operation = Operation.SUBTRACT;
                 Intent intent = new Intent(launchActivity, EditTextAmountActivity.class);
                 intent.putExtra(OPERATION, 1);
-                intent.putExtra(TYPE, type);
+                intent.putExtra(TYPE, typeDebt);
                 intent.putExtra(DEBT_EXTRA, selectedDebt);
                 startActivityForResult(intent, Utils.UPDATE_DEBT_COUNT);
             }

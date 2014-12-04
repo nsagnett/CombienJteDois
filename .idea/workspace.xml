@@ -68,12 +68,19 @@
       <file leaf-file-name="DetailPersonFragment.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/fragments/money/DetailPersonFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.71489364" vertical-offset="1152" max-vertical-offset="3165">
-              <caret line="177" column="17" selection-start-line="177" selection-start-column="17" selection-end-line="177" selection-end-column="17" />
+            <state vertical-scroll-proportion="0.50769234" vertical-offset="0" max-vertical-offset="3015">
+              <caret line="41" column="30" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
               <folding>
                 <element signature="method#onClick#0;class#DetailPersonFragment#0" expanded="false" />
                 <element signature="method#onItemClick#0;class#DetailPersonFragment#0" expanded="false" />
+                <element signature="method#updateProfileView#0;class#DetailPersonFragment#0" expanded="false" />
                 <element signature="method#addItem#0;class#DetailPersonFragment#0" expanded="false" />
+                <element signature="e#12728#13195#0" expanded="true" />
+                <element signature="e#13184#13185#0" expanded="true" />
+                <element signature="e#13243#13710#0" expanded="true" />
+                <element signature="e#13699#13700#0" expanded="true" />
+                <element signature="e#13782#14892#0" expanded="true" />
+                <element signature="e#14881#14882#0" expanded="true" />
                 <element signature="method#deleteDebt#0;class#DetailPersonFragment#0" expanded="false" />
                 <element signature="method#checkAddDebtForm#0;class#DetailPersonFragment#0" expanded="false" />
                 <element signature="method#checkModifyDebtForm#0;class#DetailPersonFragment#0" expanded="false" />
@@ -1640,14 +1647,14 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294893" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294893" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3970346" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3970346" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294893" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294893" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.5453048" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5453048" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1682,7 +1689,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="46" />
+      <option name="time" value="47" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -2013,14 +2020,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/model/ViewCreator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1115" max-vertical-offset="2475">
-          <caret line="102" column="80" selection-start-line="102" selection-start-column="80" selection-end-line="102" selection-end-column="80" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/activities/FullScreenImageActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5686901" vertical-offset="92" max-vertical-offset="525">
@@ -2127,14 +2126,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/model/ViewCreator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5630769" vertical-offset="1242" max-vertical-offset="2475">
+          <caret line="114" column="23" selection-start-line="114" selection-start-column="23" selection-end-line="114" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/fragments/money/DetailPersonFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.71489364" vertical-offset="1152" max-vertical-offset="3165">
-          <caret line="177" column="17" selection-start-line="177" selection-start-column="17" selection-end-line="177" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.50769234" vertical-offset="0" max-vertical-offset="3015">
+          <caret line="41" column="30" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
           <folding>
             <element signature="method#onClick#0;class#DetailPersonFragment#0" expanded="false" />
             <element signature="method#onItemClick#0;class#DetailPersonFragment#0" expanded="false" />
+            <element signature="method#updateProfileView#0;class#DetailPersonFragment#0" expanded="false" />
             <element signature="method#addItem#0;class#DetailPersonFragment#0" expanded="false" />
+            <element signature="e#12728#13195#0" expanded="true" />
+            <element signature="e#13184#13185#0" expanded="true" />
+            <element signature="e#13243#13710#0" expanded="true" />
+            <element signature="e#13699#13700#0" expanded="true" />
+            <element signature="e#13782#14892#0" expanded="true" />
+            <element signature="e#14881#14882#0" expanded="true" />
             <element signature="method#deleteDebt#0;class#DetailPersonFragment#0" expanded="false" />
             <element signature="method#checkAddDebtForm#0;class#DetailPersonFragment#0" expanded="false" />
             <element signature="method#checkModifyDebtForm#0;class#DetailPersonFragment#0" expanded="false" />
