@@ -60,7 +60,7 @@ public class PersonListAdapter extends BaseAdapter {
         Double total = Double.parseDouble(person.getTotalAmount());
 
         ((TextView) convertView.findViewById(R.id.nameView)).setText(name);
-        ((TextView) convertView.findViewById(R.id.dateView)).setText(String.format(context.getString(R.string.date_format), person.getDateAdded()));
+        ((TextView) convertView.findViewById(R.id.dateView)).setText(String.format(context.getString(R.string.date_format), person.getModificationDate()));
 
 
         TextView countView = ((TextView) convertView.findViewById(R.id.countView));

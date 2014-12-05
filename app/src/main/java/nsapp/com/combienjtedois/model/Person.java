@@ -7,14 +7,14 @@ public class Person implements Serializable {
     private long id;
     private String phoneNumber;
     private String name;
-    private String dateAdded;
+    private String modificationDate;
     private String totalAmount;
     private String imageProfileUrl;
 
-    public Person(long id, String name, String totalAmount, String phoneNumber, String imageProfileUrl, String dateAdded) {
+    public Person(long id, String name, String totalAmount, String phoneNumber, String imageProfileUrl, String modificationDate) {
         this.id = id;
         this.name = name;
-        this.dateAdded = dateAdded;
+        this.modificationDate = modificationDate;
         this.phoneNumber = phoneNumber;
         this.totalAmount = totalAmount;
         this.imageProfileUrl = imageProfileUrl;
@@ -47,11 +47,11 @@ public class Person implements Serializable {
         this.imageProfileUrl = imageProfileUrl;
     }
 
-    public String getDateAdded() {
-        return dateAdded;
+    public String getModificationDate() {
+        return modificationDate;
     }
 
-    public void setDateAdded(String dateAdded) {
-        this.dateAdded = dateAdded;
+    public void setModificationDate(String modificationDate) {
+        this.modificationDate = modificationDate;
     }
 }

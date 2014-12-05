@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Date;
 
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.Utils;
@@ -97,7 +100,7 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
             public void onClick(View v) {
                 if (checkPersonForm(nameEditView)) {
                     alert.dismiss();
-                    Utils.dbManager.createPerson(nameEditView.getText().toString(), importContactView.getText().toString());
+                    Utils.dbManager.createPerson(nameEditView.getText().toString(), importContactView.getText().toString(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
                     notifyChanges();
                     Toast.makeText(getActivity(), getString(R.string.toast_add_person), Toast.LENGTH_SHORT).show();
                 }

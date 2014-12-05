@@ -69,7 +69,7 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                     String name = c.getString(c.getColumnIndex(DBManager.NAME_PERSON_KEY));
                     String phoneNumber = c.getString(c.getColumnIndex(DBManager.PHONE_NUMBER_KEY));
                     String imageUrl = c.getString(c.getColumnIndex(DBManager.IMAGE_PROFILE));
-                    String date = c.getString(c.getColumnIndex(DBManager.DATE_ADDED_KEY));
+                    String date = c.getString(c.getColumnIndex(DBManager.MODIFICATION_DATE_KEY));
 
                     long id = Utils.dbManager.fetchIdPerson(name);
                     String total = Utils.dbManager.getTotalCount(id);
@@ -101,7 +101,7 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                 while (c.moveToNext()) {
                     String reason = c.getString(c.getColumnIndex(DBManager.REASON_KEY));
                     String profileImage = c.getString(c.getColumnIndex(DBManager.IMAGE_PROFILE));
-                    String date = c.getString(c.getColumnIndex(DBManager.DATE_ADDED_KEY));
+                    String date = c.getString(c.getColumnIndex(DBManager.MODIFICATION_DATE_KEY));
 
                     long id = Utils.dbManager.fetchIdDebt(idPerson, reason);
                     String amount = Utils.dbManager.getCount(id);

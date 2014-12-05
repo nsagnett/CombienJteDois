@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Date;
 
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.Debt;
@@ -236,7 +239,8 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
                 }
                 if (checkAddDebtForm(reasonEditText, countEditText, sign)) {
                     alert.dismiss();
-                    Utils.dbManager.createDebt(selectedPerson.getId(), sign + countEditText.getText().toString(), reasonEditText.getText().toString());
+                    selectedPerson.setModificationDate((String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
+                    Utils.dbManager.createDebt(selectedPerson.getId(), sign + countEditText.getText().toString(), reasonEditText.getText().toString(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
                     Toast.makeText(getActivity(), getString(R.string.toast_add_debt), Toast.LENGTH_SHORT).show();
                     notifyChanges();
                 }
@@ -303,6 +307,7 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
                 alert.dismiss();
                 Utils.dbManager.modifyDebt(debt.getId(), finalSign + amountInteger.toString());
                 Toast.makeText(getActivity(), getString(R.string.toast_modify), Toast.LENGTH_SHORT).show();
+                selectedPerson.setModificationDate((String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
                 notifyChanges();
             }
         });
@@ -315,6 +320,7 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
             @Override
             public void onClick(View v) {
                 alert.dismiss();
+                selectedPerson.setModificationDate((String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
                 final int idDebt = (int) debt.getId();
                 final int idPerson = (int) selectedPerson.getId();
                 ScaleAnimation anim = new ScaleAnimation(1, 0, 1, 0);

@@ -6,20 +6,15 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.text.format.DateFormat;
 import android.widget.Toast;
-
-import java.util.Date;
 
 import nsapp.com.combienjtedois.R;
 
 public class DBManager {
 
-    private static final String patternDate = "dd-MM-yyyy";
-
     private static final String ID_PERSON_KEY = "idP";
     public static final String NAME_PERSON_KEY = "name";
-    public static final String DATE_ADDED_KEY = "date";
+    public static final String MODIFICATION_DATE_KEY = "date";
     public static final String PHONE_NUMBER_KEY = "phoneNumber";
     public static final String TOTAL_COUNT_KEY = "totalCount";
 
@@ -91,14 +86,14 @@ public class DBManager {
     /**
      * PERSON QUERIES
      */
-    public long createPerson(String name, String phoneNumber) {
+    public long createPerson(String name, String phoneNumber, String date) {
         ContentValues initialValues = new ContentValues();
         name = Utils.camelCase(name);
         if (fetchIdPerson(name) == 0) {
             initialValues.put(NAME_PERSON_KEY, name);
             initialValues.put(TOTAL_COUNT_KEY, "");
             initialValues.put(PHONE_NUMBER_KEY, phoneNumber);
-            initialValues.put(DATE_ADDED_KEY, (String) DateFormat.format(patternDate, new Date().getTime()));
+            initialValues.put(MODIFICATION_DATE_KEY, date);
             initialValues.put(IMAGE_PROFILE, "");
 
             return sqLiteDatabase.insert(DATABASE_TABLE_PERSON, null, initialValues);
@@ -128,7 +123,7 @@ public class DBManager {
 
     public long fetchIdPerson(String name) {
         Cursor c = sqLiteDatabase.query(DATABASE_TABLE_PERSON, new String[]{
-                ID_PERSON_KEY, NAME_PERSON_KEY, PHONE_NUMBER_KEY, IMAGE_PROFILE, TOTAL_COUNT_KEY, DATE_ADDED_KEY}, NAME_PERSON_KEY + "= '" + name + "'", null, null, null, null);
+                ID_PERSON_KEY, NAME_PERSON_KEY, PHONE_NUMBER_KEY, IMAGE_PROFILE, TOTAL_COUNT_KEY, MODIFICATION_DATE_KEY}, NAME_PERSON_KEY + "= '" + name + "'", null, null, null, null);
 
         if (c != null && c.moveToFirst()) {
             return c.getInt(c.getColumnIndex(ID_PERSON_KEY));
@@ -139,7 +134,7 @@ public class DBManager {
 
     public Cursor fetchAllPersons() {
         return sqLiteDatabase.query(DATABASE_TABLE_PERSON, new String[]{
-                        ID_PERSON_KEY, NAME_PERSON_KEY, PHONE_NUMBER_KEY, IMAGE_PROFILE, TOTAL_COUNT_KEY, DATE_ADDED_KEY}, null, null, null, null,
+                        ID_PERSON_KEY, NAME_PERSON_KEY, PHONE_NUMBER_KEY, IMAGE_PROFILE, TOTAL_COUNT_KEY, MODIFICATION_DATE_KEY}, null, null, null, null,
                 null);
     }
 
@@ -154,14 +149,14 @@ public class DBManager {
      * DEBT QUERIES
      */
 
-    public long createDebt(long idPerson, String amount, String reason) {
+    public long createDebt(long idPerson, String amount, String reason, String date) {
         ContentValues initialValues = new ContentValues();
         reason = Utils.camelCase(reason);
         if (fetchIdDebt(idPerson, reason) == 0) {
             initialValues.put(ID_PERSON_DEBT_KEY, idPerson);
             initialValues.put(AMOUNT_KEY, amount);
             initialValues.put(REASON_KEY, reason);
-            initialValues.put(DATE_ADDED_KEY, (String) DateFormat.format(patternDate, new Date().getTime()));
+            initialValues.put(MODIFICATION_DATE_KEY, date);
             initialValues.put(IMAGE_PROFILE, "");
 
             return sqLiteDatabase.insert(DATABASE_TABLE_DEBT, null, initialValues);
@@ -188,7 +183,7 @@ public class DBManager {
 
     public long fetchIdDebt(long idPerson, String reason) {
         Cursor c = sqLiteDatabase.query(DATABASE_TABLE_DEBT, new String[]{
-                ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, IMAGE_PROFILE, DATE_ADDED_KEY}, ID_PERSON_DEBT_KEY + "='" + idPerson + "' AND " + REASON_KEY + "='" + reason + "'", null, null, null, null);
+                ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, IMAGE_PROFILE, MODIFICATION_DATE_KEY}, ID_PERSON_DEBT_KEY + "='" + idPerson + "' AND " + REASON_KEY + "='" + reason + "'", null, null, null, null);
 
         if (c != null && c.moveToFirst()) {
             return c.getInt(c.getColumnIndex(ID_DEBT_KEY));
@@ -198,7 +193,7 @@ public class DBManager {
 
     private Cursor fetchDebt(long rowIdDebt) {
         Cursor mCursor = sqLiteDatabase.query(true, DATABASE_TABLE_DEBT, new String[]{
-                ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, IMAGE_PROFILE, DATE_ADDED_KEY}, ID_DEBT_KEY + "="
+                ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, IMAGE_PROFILE, MODIFICATION_DATE_KEY}, ID_DEBT_KEY + "="
                 + rowIdDebt, null, null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
@@ -208,7 +203,7 @@ public class DBManager {
 
     public Cursor fetchAllDebt(long idPerson) {
         return sqLiteDatabase.query(DATABASE_TABLE_DEBT, new String[]{
-                        ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, IMAGE_PROFILE, DATE_ADDED_KEY}, ID_PERSON_DEBT_KEY + "=" + idPerson, null, null, null,
+                        ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, IMAGE_PROFILE, MODIFICATION_DATE_KEY}, ID_PERSON_DEBT_KEY + "=" + idPerson, null, null, null,
                 null);
     }
 

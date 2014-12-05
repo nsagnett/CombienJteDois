@@ -49,7 +49,7 @@
     <string name="gallery">Galerie</string>
     <string name="nothing">Ne rien mettre</string>
     <string name="choose">Choisir</string>
-    <string name="date_format">Ajouté le %s</string>
+    <string name="date_format">Dernière modification : %s</string>
     <string name="increase">Augmenter</string>
     <string name="add_hint">à ajouter</string>
     <string name="reduce">Réduire</string>
