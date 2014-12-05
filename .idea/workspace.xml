@@ -40,61 +40,72 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="AbstractMoneyFragment.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/fragments/money/AbstractMoneyFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="97" max-vertical-offset="2400">
-              <caret line="43" column="16" selection-start-line="43" selection-start-column="16" selection-end-line="43" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="relative_edittext.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/relative_edittext.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.888889" vertical-offset="141" max-vertical-offset="750">
-              <caret line="29" column="39" selection-start-line="20" selection-start-column="4" selection-end-line="29" selection-end-column="39" />
-              <folding>
-                <element signature="e#588#609#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DetailPersonFragment.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="DetailPersonFragment.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/fragments/money/DetailPersonFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.50769234" vertical-offset="0" max-vertical-offset="3015">
-              <caret line="41" column="30" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2134" max-vertical-offset="2910">
+              <caret line="279" column="46" selection-start-line="279" selection-start-column="46" selection-end-line="279" selection-end-column="46" />
               <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#2432#2576#0" expanded="true" />
+                <element signature="e#2565#2566#0" expanded="true" />
                 <element signature="method#onClick#0;class#DetailPersonFragment#0" expanded="false" />
+                <element signature="e#2984#3010#0" expanded="true" />
+                <element signature="e#3012#3039#0" expanded="true" />
+                <element signature="e#3041#3071#0" expanded="true" />
+                <element signature="e#3073#3100#0" expanded="true" />
+                <element signature="e#5174#5209#0" expanded="true" />
                 <element signature="method#onItemClick#0;class#DetailPersonFragment#0" expanded="false" />
+                <element signature="method#onActivityResult#0;class#DetailPersonFragment#0" expanded="false" />
+                <element signature="method#updateCountView#0;class#DetailPersonFragment#0" expanded="false" />
                 <element signature="method#updateProfileView#0;class#DetailPersonFragment#0" expanded="false" />
-                <element signature="method#addItem#0;class#DetailPersonFragment#0" expanded="false" />
-                <element signature="e#12728#13195#0" expanded="true" />
-                <element signature="e#13184#13185#0" expanded="true" />
-                <element signature="e#13243#13710#0" expanded="true" />
-                <element signature="e#13699#13700#0" expanded="true" />
-                <element signature="e#13782#14892#0" expanded="true" />
-                <element signature="e#14881#14882#0" expanded="true" />
+                <element signature="e#9199#9216#0" expanded="true" />
+                <element signature="e#9234#9251#0" expanded="true" />
+                <element signature="e#9429#9442#0" expanded="true" />
+                <element signature="e#9789#9814#0" expanded="true" />
+                <element signature="e#9886#9913#0" expanded="true" />
+                <element signature="e#9984#10011#0" expanded="true" />
+                <element signature="e#10908#10942#0" expanded="true" />
+                <element signature="e#11199#11219#0" expanded="true" />
+                <element signature="e#11238#11255#0" expanded="true" />
+                <element signature="e#11632#11660#0" expanded="true" />
+                <element signature="e#11860#11884#0" expanded="true" />
+                <element signature="e#12150#12186#0" expanded="true" />
+                <element signature="e#12265#12303#0" expanded="true" />
+                <element signature="e#12418#12456#0" expanded="true" />
+                <element signature="e#12473#12505#0" expanded="true" />
+                <element signature="e#13745#14131#0" expanded="true" />
+                <element signature="e#14013#14045#0" expanded="true" />
+                <element signature="e#14120#14121#0" expanded="true" />
                 <element signature="method#deleteDebt#0;class#DetailPersonFragment#0" expanded="false" />
+                <element signature="e#14327#14348#0" expanded="true" />
+                <element signature="e#14370#14403#0" expanded="true" />
+                <element signature="e#14405#14427#0" expanded="true" />
+                <element signature="e#14429#14451#0" expanded="true" />
+                <element signature="e#15311#15348#0" expanded="true" />
                 <element signature="method#checkAddDebtForm#0;class#DetailPersonFragment#0" expanded="false" />
-                <element signature="method#checkModifyDebtForm#0;class#DetailPersonFragment#0" expanded="false" />
+                <element signature="e#15909#15930#0" expanded="true" />
+                <element signature="e#16014#16052#0" expanded="true" />
+                <element signature="e#16054#16080#0" expanded="true" />
+                <element signature="e#16270#16291#0" expanded="true" />
+                <element signature="e#16375#16413#0" expanded="true" />
+                <element signature="e#16415#16441#0" expanded="true" />
+                <element signature="e#16590#16611#0" expanded="true" />
+                <element signature="e#16687#16725#0" expanded="true" />
+                <element signature="e#16727#16751#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EditTextAmountActivity.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="EditTextAmountActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/activities/EditTextAmountActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="591" max-vertical-offset="1170">
-              <caret line="55" column="33" selection-start-line="55" selection-start-column="33" selection-end-line="55" selection-end-column="33" />
-              <folding />
+            <state vertical-scroll-proportion="1.0245901" vertical-offset="60" max-vertical-offset="1110">
+              <caret line="38" column="61" selection-start-line="38" selection-start-column="61" selection-end-line="38" selection-end-column="61" />
+              <folding>
+                <element signature="e#1325#1357#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -833,12 +844,9 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values/style.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/image_border.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/header_listview.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_listview.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/fragments/DetailMoneyFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/model/Person.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/model/DBManager.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/fragments/AbstractMoneyFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/header.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/fragments/money/MoneyFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/fragments/money/DetailMoneyFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/fragments/money/PersonListForMoneyFragment.java" />
@@ -852,20 +860,23 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/linear_container.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/color.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/adapters/DebtListAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/model/ViewCreator.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/add_object_dialog_layout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/add_person_dialog_layout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/model/Utils.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/modify_object_dialog_layout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/invert_custom_button.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/fragments/money/AbstractMoneyFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/model/Debt.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values-fr/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/relative_edittext.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/activities/EditTextAmountActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/fragments/money/AbstractMoneyFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/model/ViewCreator.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_listview.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/model/DBManager.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/modify_object_dialog_layout.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/header.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values-fr/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/add_object_dialog_layout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/fragments/money/DetailPersonFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/activities/EditTextAmountActivity.java" />
       </list>
     </option>
   </component>
@@ -1006,36 +1017,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="values-fr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CombienJteDois" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CombienJteDois" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="values" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -1067,36 +1048,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CombienJteDois" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CombienJteDois" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drawable" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1201,6 +1152,10 @@
               <option name="myItemId" value="combienjtedois" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="model" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -1222,8 +1177,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -1424,6 +1377,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1454,11 +1409,11 @@
       <recent name="nsapp.com.combienjtedois.views.activities" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/src/main/res/drawable" />
-      <recent name="$PROJECT_DIR$/app/src/main/res/layout" />
       <recent name="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi" />
       <recent name="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi" />
       <recent name="$PROJECT_DIR$/app/src/main/res/drawable-mdpi" />
+      <recent name="$PROJECT_DIR$/app/src/main/res/drawable-hdpi" />
+      <recent name="$PROJECT_DIR$/app/src/main/res/drawable" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="nsapp.com.combienjtedois.views.activities" />
@@ -1638,16 +1593,16 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="723" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956383" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294893" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3294893" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294893" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3970346" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3970346" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294893" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1842,28 +1797,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_listview.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="840">
-          <caret line="8" column="42" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../sdk/sources/android-20/com/android/internal/os/ZygoteInit.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.37699682" vertical-offset="10982" max-vertical-offset="11295">
           <caret line="784" column="0" selection-start-line="784" selection-start-column="0" selection-end-line="784" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/model/SortClass.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.6834319" vertical-offset="128" max-vertical-offset="1320">
-          <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1878,25 +1815,6 @@
             <element signature="e#1344#1345#0" expanded="false" />
           </folding>
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/model/DBManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.409836" vertical-offset="2859" max-vertical-offset="3480">
-          <caret line="242" column="1" selection-start-line="242" selection-start-column="1" selection-end-line="242" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/header.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3809524" vertical-offset="526" max-vertical-offset="885">
-          <caret line="42" column="38" selection-start-line="42" selection-start-column="38" selection-end-line="42" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../sdk/sources/android-20/java/lang/Object.java">
@@ -1996,17 +1914,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/add_object_dialog_layout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334" vertical-offset="712" max-vertical-offset="1815">
-          <caret line="55" column="5" selection-start-line="55" selection-start-column="5" selection-end-line="55" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/add_person_dialog_layout.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5103245" vertical-offset="112" max-vertical-offset="1155">
@@ -2030,14 +1937,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/model/Utils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="121" max-vertical-offset="795">
-          <caret line="21" column="49" selection-start-line="21" selection-start-column="49" selection-end-line="21" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4753363" vertical-offset="689" max-vertical-offset="930">
@@ -2052,17 +1951,6 @@
           <caret line="33" column="72" selection-start-line="33" selection-start-column="72" selection-end-line="33" selection-end-column="72" />
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/modify_object_dialog_layout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.0288463" vertical-offset="735" max-vertical-offset="1860">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/invert_custom_button.xml">
@@ -2089,28 +1977,58 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/fragments/money/AbstractMoneyFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="177" max-vertical-offset="2400">
-          <caret line="43" column="16" selection-start-line="43" selection-start-column="16" selection-end-line="43" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-fr/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7472924" vertical-offset="426" max-vertical-offset="1215">
-          <caret line="56" column="70" selection-start-line="56" selection-start-column="70" selection-end-line="56" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/relative_edittext.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.888889" vertical-offset="141" max-vertical-offset="750">
+        <state vertical-scroll-proportion="0.54545456" vertical-offset="141" max-vertical-offset="750">
           <caret line="29" column="39" selection-start-line="20" selection-start-column="4" selection-end-line="29" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/fragments/money/AbstractMoneyFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1965">
+          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_listview.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27884614" vertical-offset="62" max-vertical-offset="330">
+          <caret line="8" column="42" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/model/Utils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.20725389" vertical-offset="120" max-vertical-offset="795">
+          <caret line="21" column="49" selection-start-line="21" selection-start-column="49" selection-end-line="21" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/model/DBManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4116608" vertical-offset="2152" max-vertical-offset="3450">
+          <caret line="176" column="0" selection-start-line="176" selection-start-column="0" selection-end-line="176" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/modify_object_dialog_layout.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5673077" vertical-offset="677" max-vertical-offset="1170">
+          <caret line="53" column="34" selection-start-line="53" selection-start-column="34" selection-end-line="53" selection-end-column="34" />
           <folding>
-            <element signature="e#588#609#0" expanded="true" />
+            <element signature="e#1455#1473#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2118,40 +2036,108 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/activities/EditTextAmountActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/header.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="591" max-vertical-offset="1170">
-          <caret line="55" column="33" selection-start-line="55" selection-start-column="33" selection-end-line="55" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.7492625" vertical-offset="616" max-vertical-offset="1155">
+          <caret line="58" column="4" selection-start-line="58" selection-start-column="4" selection-end-line="58" selection-end-column="4" />
+          <folding>
+            <element signature="e#2188#2205#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-fr/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.64689267" vertical-offset="836" max-vertical-offset="1260">
+          <caret line="71" column="33" selection-start-line="71" selection-start-column="33" selection-end-line="71" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/add_object_dialog_layout.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.877551" vertical-offset="727" max-vertical-offset="1800">
+          <caret line="80" column="35" selection-start-line="80" selection-start-column="35" selection-end-line="80" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/model/ViewCreator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5630769" vertical-offset="1242" max-vertical-offset="2475">
-          <caret line="114" column="23" selection-start-line="114" selection-start-column="23" selection-end-line="114" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.13780919" vertical-offset="1077" max-vertical-offset="2280">
+          <caret line="95" column="30" selection-start-line="95" selection-start-column="30" selection-end-line="95" selection-end-column="30" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/fragments/money/DetailPersonFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.50769234" vertical-offset="0" max-vertical-offset="3015">
-          <caret line="41" column="30" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2134" max-vertical-offset="2910">
+          <caret line="279" column="46" selection-start-line="279" selection-start-column="46" selection-end-line="279" selection-end-column="46" />
           <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2432#2576#0" expanded="true" />
+            <element signature="e#2565#2566#0" expanded="true" />
             <element signature="method#onClick#0;class#DetailPersonFragment#0" expanded="false" />
+            <element signature="e#2984#3010#0" expanded="true" />
+            <element signature="e#3012#3039#0" expanded="true" />
+            <element signature="e#3041#3071#0" expanded="true" />
+            <element signature="e#3073#3100#0" expanded="true" />
+            <element signature="e#5174#5209#0" expanded="true" />
             <element signature="method#onItemClick#0;class#DetailPersonFragment#0" expanded="false" />
+            <element signature="method#onActivityResult#0;class#DetailPersonFragment#0" expanded="false" />
+            <element signature="method#updateCountView#0;class#DetailPersonFragment#0" expanded="false" />
             <element signature="method#updateProfileView#0;class#DetailPersonFragment#0" expanded="false" />
-            <element signature="method#addItem#0;class#DetailPersonFragment#0" expanded="false" />
-            <element signature="e#12728#13195#0" expanded="true" />
-            <element signature="e#13184#13185#0" expanded="true" />
-            <element signature="e#13243#13710#0" expanded="true" />
-            <element signature="e#13699#13700#0" expanded="true" />
-            <element signature="e#13782#14892#0" expanded="true" />
-            <element signature="e#14881#14882#0" expanded="true" />
+            <element signature="e#9199#9216#0" expanded="true" />
+            <element signature="e#9234#9251#0" expanded="true" />
+            <element signature="e#9429#9442#0" expanded="true" />
+            <element signature="e#9789#9814#0" expanded="true" />
+            <element signature="e#9886#9913#0" expanded="true" />
+            <element signature="e#9984#10011#0" expanded="true" />
+            <element signature="e#10908#10942#0" expanded="true" />
+            <element signature="e#11199#11219#0" expanded="true" />
+            <element signature="e#11238#11255#0" expanded="true" />
+            <element signature="e#11632#11660#0" expanded="true" />
+            <element signature="e#11860#11884#0" expanded="true" />
+            <element signature="e#12150#12186#0" expanded="true" />
+            <element signature="e#12265#12303#0" expanded="true" />
+            <element signature="e#12418#12456#0" expanded="true" />
+            <element signature="e#12473#12505#0" expanded="true" />
+            <element signature="e#13745#14131#0" expanded="true" />
+            <element signature="e#14013#14045#0" expanded="true" />
+            <element signature="e#14120#14121#0" expanded="true" />
             <element signature="method#deleteDebt#0;class#DetailPersonFragment#0" expanded="false" />
+            <element signature="e#14327#14348#0" expanded="true" />
+            <element signature="e#14370#14403#0" expanded="true" />
+            <element signature="e#14405#14427#0" expanded="true" />
+            <element signature="e#14429#14451#0" expanded="true" />
+            <element signature="e#15311#15348#0" expanded="true" />
             <element signature="method#checkAddDebtForm#0;class#DetailPersonFragment#0" expanded="false" />
-            <element signature="method#checkModifyDebtForm#0;class#DetailPersonFragment#0" expanded="false" />
+            <element signature="e#15909#15930#0" expanded="true" />
+            <element signature="e#16014#16052#0" expanded="true" />
+            <element signature="e#16054#16080#0" expanded="true" />
+            <element signature="e#16270#16291#0" expanded="true" />
+            <element signature="e#16375#16413#0" expanded="true" />
+            <element signature="e#16415#16441#0" expanded="true" />
+            <element signature="e#16590#16611#0" expanded="true" />
+            <element signature="e#16687#16725#0" expanded="true" />
+            <element signature="e#16727#16751#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/activities/EditTextAmountActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.0245901" vertical-offset="60" max-vertical-offset="1110">
+          <caret line="38" column="61" selection-start-line="38" selection-start-column="61" selection-end-line="38" selection-end-column="61" />
+          <folding>
+            <element signature="e#1325#1357#0" expanded="true" />
           </folding>
         </state>
       </provider>

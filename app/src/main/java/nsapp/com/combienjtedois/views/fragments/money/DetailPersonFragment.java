@@ -30,8 +30,6 @@ import nsapp.com.combienjtedois.views.activities.EditTextAmountActivity;
 import nsapp.com.combienjtedois.views.activities.FullScreenImageActivity;
 import nsapp.com.combienjtedois.views.adapters.SimpleListAdapter;
 
-import static nsapp.com.combienjtedois.model.ViewCreator.TYPE_SWITCH.TYPE_DEBT;
-
 public class DetailPersonFragment extends AbstractMoneyFragment {
 
     private static final String RESULT_KEY = "result";
@@ -39,7 +37,6 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
     private static final String TYPE = "type";
     private static final String DEBT_EXTRA = "debt";
     private Debt debtExtra;
-    private int typeDebt = -1;
 
     public static DetailPersonFragment newInstance(Person person) {
         DetailPersonFragment fragment = new DetailPersonFragment();
@@ -58,6 +55,13 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
         listType = listWantedType.DEBT;
         view.findViewById(R.id.headerLayout).setVisibility(View.VISIBLE);
         ((TextView) view.findViewById(R.id.headerNameView)).setText(selectedPerson.getName());
+
+        view.findViewById(R.id.smsView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // SMS TASK
+            }
+        });
 
         return view;
     }
@@ -213,11 +217,11 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
 
         final TextView positiveDebtView = (TextView) alert.findViewById(R.id.positiveDebtView);
         final TextView negativeDebtView = (TextView) alert.findViewById(R.id.negativeDebtView);
-        ViewCreator.switchView(getActivity(), positiveDebtView, negativeDebtView, this, TYPE_DEBT);
+        ViewCreator.switchView(getActivity(), positiveDebtView, negativeDebtView);
 
-        ((TextView) alert.findViewById(R.id.typeDebtView)).setText(R.string.type);
-        ((TextView) alert.findViewById(R.id.reasonTextView)).setText(R.string.object);
-        ((TextView) alert.findViewById(R.id.countTextView)).setText(R.string.amount);
+        ((TextView) alert.findViewById(R.id.typeDebtView)).setText(R.string.type_with_points);
+        ((TextView) alert.findViewById(R.id.reasonTextView)).setText(R.string.object_with_points);
+        ((TextView) alert.findViewById(R.id.countTextView)).setText(R.string.amount_with_points);
         final EditText reasonEditText = ((EditText) alert.findViewById(R.id.reasonEditText));
         final EditText countEditText = ((EditText) alert.findViewById(R.id.countEditText));
 
@@ -244,78 +248,62 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
         final AlertDialog alert = ViewCreator.createCustomModifyDebtDialogBox(getActivity(), R.string.modify_debt, R.drawable.edit, R.string.validate);
         alert.show();
 
-        final TextView positiveDebtView = (TextView) alert.findViewById(R.id.positiveDebtView);
-        final TextView negativeDebtView = (TextView) alert.findViewById(R.id.negativeDebtView);
-        ((TextView) alert.findViewById(R.id.typeDebtView)).setText(R.string.type);
-        ((TextView) alert.findViewById(R.id.reasonTextView)).setText(R.string.object);
-        final EditText reasonEditText = ((EditText) alert.findViewById(R.id.reasonEditText));
-        final TextView addTextView = ((TextView) alert.findViewById(R.id.addTextView));
-        final TextView subtractTextView = ((TextView) alert.findViewById(R.id.subtractTextView));
-
-        ViewCreator.switchView(getActivity(), positiveDebtView, negativeDebtView, this, TYPE_DEBT);
+        final TextView increaseTextView = ((TextView) alert.findViewById(R.id.addTextView));
+        final TextView reduceTextView = ((TextView) alert.findViewById(R.id.subtractTextView));
+        final String type;
+        String sign = "";
 
         Double amount = Double.parseDouble(debt.getAmount());
-
         if (amount >= 0) {
-            typeDebt = 0;
-            positiveDebtView.setSelected(true);
-            positiveDebtView.setTextColor(getResources().getColor(android.R.color.white));
+            type = getString(R.string.credence);
+            increaseTextView.setTextColor(getResources().getColor(R.color.green));
+            reduceTextView.setTextColor(getResources().getColor(R.color.red));
         } else {
-            typeDebt = 1;
-            negativeDebtView.setSelected(true);
-            negativeDebtView.setTextColor(getResources().getColor(android.R.color.white));
+            type = getString(R.string.debt);
+            reduceTextView.setTextColor(getResources().getColor(R.color.green));
+            increaseTextView.setTextColor(getResources().getColor(R.color.red));
+            sign = "-";
         }
 
-        final Integer amountInteger = (int) Math.abs(amount);
-        String amountString = getString(R.string.amount) + String.format(getString(R.string.money_format), amountInteger.toString());
-        ((TextView) alert.findViewById(R.id.countTextView)).setText(amountString);
-        reasonEditText.setText(debt.getReason());
+        ((TextView) alert.findViewById(R.id.typeDebtView)).setText(getString(R.string.type_with_points) + type);
+        ((TextView) alert.findViewById(R.id.reasonTextView)).setText(getString(R.string.object_with_points) + debt.getReason());
 
-        addTextView.setOnClickListener(new View.OnClickListener() {
+        final Integer amountInteger = (int) Math.abs(amount);
+        String amountString = getString(R.string.amount_with_points) + String.format(getString(R.string.money_format), amountInteger.toString());
+        ((TextView) alert.findViewById(R.id.countTextView)).setText(amountString);
+
+        increaseTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alert.dismiss();
                 Intent intent = new Intent(launchActivity, EditTextAmountActivity.class);
                 intent.putExtra(OPERATION, 0);
-                intent.putExtra(TYPE, typeDebt);
+                intent.putExtra(TYPE, type);
                 intent.putExtra(DEBT_EXTRA, selectedDebt);
                 startActivityForResult(intent, Utils.UPDATE_DEBT_COUNT);
             }
         });
 
-        subtractTextView.setOnClickListener(new View.OnClickListener() {
+        reduceTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alert.dismiss();
                 Intent intent = new Intent(launchActivity, EditTextAmountActivity.class);
                 intent.putExtra(OPERATION, 1);
-                intent.putExtra(TYPE, typeDebt);
+                intent.putExtra(TYPE, type);
                 intent.putExtra(DEBT_EXTRA, selectedDebt);
                 startActivityForResult(intent, Utils.UPDATE_DEBT_COUNT);
             }
         });
 
+        final String finalSign = sign;
         alert.findViewById(R.id.neutralTextView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String sign = null;
-                if (positiveDebtView.isSelected()) {
-                    sign = "";
-                } else if (negativeDebtView.isSelected()) {
-                    sign = "-";
-                }
-                if (reasonEditText.getText().length() == 0) {
-                    ViewCreator.showCustomAlertDialogBox(getActivity(),
-                            R.string.warning_text,
-                            R.drawable.warning,
-                            String.format(getString(R.string.empty_field_format), getString(R.string.object)));
-                }
-                if (checkModifyDebtForm(reasonEditText, sign)) {
-                    alert.dismiss();
-                    Utils.dbManager.modifyDebt(debt.getId(), sign + amountInteger.toString(), reasonEditText.getText().toString());
-                    Toast.makeText(getActivity(), getString(R.string.toast_modify), Toast.LENGTH_SHORT).show();
-                    notifyChanges();
-                }
+                alert.dismiss();
+                Utils.dbManager.modifyDebt(debt.getId(), finalSign + amountInteger.toString());
+                Toast.makeText(getActivity(), getString(R.string.toast_modify), Toast.LENGTH_SHORT).show();
+                notifyChanges();
             }
         });
     }
@@ -364,25 +352,6 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
                         R.string.warning_text,
                         R.drawable.warning,
                         String.format(getString(R.string.empty_field_format), getString(R.string.amount)));
-                return false;
-            }
-        } else {
-            ViewCreator.showCustomAlertDialogBox(getActivity(),
-                    R.string.warning_text,
-                    R.drawable.warning,
-                    String.format(getString(R.string.empty_field_format), getString(R.string.type)));
-            return false;
-        }
-        return true;
-    }
-
-    protected boolean checkModifyDebtForm(EditText reasonEditText, String sign) {
-        if (sign != null) {
-            if (reasonEditText.getText().length() == 0) {
-                ViewCreator.showCustomAlertDialogBox(getActivity(),
-                        R.string.warning_text,
-                        R.drawable.warning,
-                        String.format(getString(R.string.empty_field_format), getString(R.string.object)));
                 return false;
             }
         } else {

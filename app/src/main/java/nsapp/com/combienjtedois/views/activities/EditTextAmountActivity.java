@@ -30,17 +30,13 @@ public class EditTextAmountActivity extends ActionBarActivity implements View.On
 
         editText = (EditText) findViewById(R.id.editView);
 
-        int type = getIntent().getIntExtra(TYPE, 0);
+        String type = getIntent().getStringExtra(TYPE);
         operation = getIntent().getIntExtra(OPERATION, -1);
         Debt debt = (Debt) getIntent().getSerializableExtra(DEBT_EXTRA);
 
         amount = Math.abs(Double.parseDouble(debt.getAmount()));
 
-        if (type == 0) {
-            ((TextView) findViewById(R.id.typeView)).setText(getString(R.string.credence) + " : " + String.format(getString(R.string.money_format), amount));
-        } else {
-            ((TextView) findViewById(R.id.typeView)).setText(getString(R.string.debt) + " : " + String.format(getString(R.string.money_format), amount));
-        }
+        ((TextView) findViewById(R.id.typeView)).setText(type + " : " + String.format(getString(R.string.money_format), amount));
 
         if (operation == 0) {
             editText.setHint(editText.getHint() + " " + getString(R.string.add_hint));

@@ -171,11 +171,9 @@ public class DBManager {
         return 0;
     }
 
-    public boolean modifyDebt(long idDebt, String amount, String object) {
+    public boolean modifyDebt(long idDebt, String amount) {
         ContentValues initialValues = new ContentValues();
-        object = Utils.camelCase(object);
         initialValues.put(AMOUNT_KEY, amount);
-        initialValues.put(REASON_KEY, object);
 
         return sqLiteDatabase.update(DATABASE_TABLE_DEBT, initialValues, ID_DEBT_KEY + "=" + idDebt, null) > 0;
     }

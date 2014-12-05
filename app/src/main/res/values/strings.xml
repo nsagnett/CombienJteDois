@@ -47,9 +47,9 @@
     <string name="message_delete_debt_text">Are you sure to delete this debt ?</string>
     <string name="credence">Credence</string>
     <string name="debt">Debt</string>
-    <string name="type">Type</string>
-    <string name="object">Object</string>
-    <string name="amount">Amount</string>
+    <string name="type_with_points">Type</string>
+    <string name="object_with_points">Object</string>
+    <string name="amount_with_points">Amount</string>
     <string name="object_hint">Tap the object</string>
     <string name="amount_hint">Tap the amount</string>
     <string name="debt_already_present">This debt already exists !</string>

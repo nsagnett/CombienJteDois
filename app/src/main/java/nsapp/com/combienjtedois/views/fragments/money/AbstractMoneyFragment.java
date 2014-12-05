@@ -14,17 +14,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.model.DBManager;
 import nsapp.com.combienjtedois.model.Debt;
 import nsapp.com.combienjtedois.model.Person;
-import nsapp.com.combienjtedois.model.SortClass;
-import nsapp.com.combienjtedois.model.ViewCreator;
+import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.adapters.DebtListAdapter;
 import nsapp.com.combienjtedois.views.adapters.PersonListAdapter;
 import nsapp.com.combienjtedois.views.fragments.AbstractFragment;
-
-import static nsapp.com.combienjtedois.model.ViewCreator.TYPE_SWITCH.*;
 
 public abstract class AbstractMoneyFragment extends AbstractFragment implements View.OnClickListener, AdapterView.OnItemClickListener {
 
@@ -36,10 +32,6 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
 
     protected TextView headerCountView;
 
-    protected TextView positiveSort;
-    protected TextView negativeSort;
-
-    protected int sortIndex;
     protected Person selectedPerson;
     protected Debt selectedDebt;
 
@@ -58,27 +50,12 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
         headerCountView = (TextView) view.findViewById(R.id.headerCountView);
         footerView = (TextView) inflater.inflate(R.layout.footer_listview, null, false);
 
-        negativeSort = (TextView) view.findViewById(R.id.negativeSort);
-        positiveSort = (TextView) view.findViewById(R.id.positiveSort);
-
-        sortIndex = -1;
-
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        ViewCreator.switchView(getActivity(), positiveSort, negativeSort, this, SORT);
     }
 
     @Override
     public void onClick(View v) {
         addItem(null, null);
-    }
-
-    public void setSortIndex(int sortIndex) {
-        this.sortIndex = sortIndex;
     }
 
     public void notifyChanges() {
@@ -110,12 +87,6 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                     }
                 } else {
                     listView.removeFooterView(footerView);
-
-                    if (sortIndex == 0) {
-                        personArrayList = SortClass.decreasingOrderPersonAmountSort(personArrayList);
-                    } else if (sortIndex == 1) {
-                        personArrayList = SortClass.increasingOrderPersonAmountSort(personArrayList);
-                    }
                 }
 
                 PersonListAdapter personListAdapter = new PersonListAdapter(launchActivity, personArrayList, isDeletingView, isEditingView);
@@ -148,12 +119,6 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                     }
                 } else {
                     listView.removeFooterView(footerView);
-
-                    if (sortIndex == 0) {
-                        debtArrayList = SortClass.decreasingOrderDebtAmountSort(debtArrayList);
-                    } else if (sortIndex == 1) {
-                        debtArrayList = SortClass.increasingOrderDebtAmountSort(debtArrayList);
-                    }
                 }
 
                 DebtListAdapter debtListAdapter = new DebtListAdapter(launchActivity, (DetailPersonFragment) launchActivity.getCurrentFragment(), debtArrayList, isDeletingView, isEditingView);

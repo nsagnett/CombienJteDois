@@ -51,4 +51,22 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:padding="20dp"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_weight="0.5"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/smsView"
+            android:layout_width="match_parent"
+            android:src="@drawable/sms"
+            android:background="@drawable/custom_button"
+            android:contentDescription="@string/content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
 </LinearLayout>

@@ -50,9 +50,9 @@
     <string name="nothing">Ne rien mettre</string>
     <string name="choose">Choisir</string>
     <string name="date_format">Ajouté le %s</string>
-    <string name="add">Ajouter</string>
+    <string name="increase">Augmenter</string>
     <string name="add_hint">à ajouter</string>
-    <string name="subtract">Soustraire</string>
+    <string name="reduce">Réduire</string>
     <string name="subtract_hint">à soustraire</string>
     <string name="negative_amount">Le montant ne peut pas être négatif</string>
 
@@ -64,9 +64,12 @@
     <string name="message_delete_debt_text">Voulez-vous vraiment supprimer cette dette ?</string>
     <string name="credence">Créance</string>
     <string name="debt">Dette</string>
-    <string name="type">Type :</string>
-    <string name="object">Objet :</string>
-    <string name="amount">Montant :</string>
+    <string name="type_with_points">Type :&#160;</string>
+    <string name="type">Type</string>
+    <string name="object_with_points">Objet :&#160;</string>
+    <string name="object">Objet</string>
+    <string name="amount_with_points">Montant :&#160;</string>
+    <string name="amount">Montant</string>
     <string name="object_hint">Saisir l\'objet</string>
     <string name="amount_hint">Saisir le montant</string>
     <string name="debt_already_present">Cette dette existe déjà !</string>

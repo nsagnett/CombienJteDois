@@ -14,13 +14,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.views.fragments.money.AbstractMoneyFragment;
 
 public class ViewCreator {
-
-    public static enum TYPE_SWITCH {
-        SORT, TYPE_DEBT
-    }
 
     public static View getCustomTitleDialogBox(Context context, int resTitleID, int resDrawableTitleID) {
         TextView titleView = new TextView(context);
@@ -112,7 +107,7 @@ public class ViewCreator {
         return builder.create();
     }
 
-    public static void switchView(final Context context, final TextView viewOne, final TextView viewTwo, final AbstractMoneyFragment abstractMoneyFragment, final TYPE_SWITCH typeSwitch) {
+    public static void switchView(final Context context, final TextView viewOne, final TextView viewTwo) {
         final int green = context.getResources().getColor(R.color.dark_blue);
         final int white = context.getResources().getColor(android.R.color.white);
 
@@ -127,11 +122,6 @@ public class ViewCreator {
                     viewOne.setSelected(true);
                     viewOne.setTextColor(white);
                     viewTwo.setTextColor(green);
-
-                    if (typeSwitch == TYPE_SWITCH.SORT) {
-                        abstractMoneyFragment.setSortIndex(0);
-                        abstractMoneyFragment.notifyChanges();
-                    }
                 }
             }
         });
@@ -143,10 +133,6 @@ public class ViewCreator {
                     viewTwo.setSelected(true);
                     viewTwo.setTextColor(white);
                     viewOne.setTextColor(green);
-                    if (typeSwitch == TYPE_SWITCH.SORT) {
-                        abstractMoneyFragment.setSortIndex(1);
-                        abstractMoneyFragment.notifyChanges();
-                    }
                 }
             }
         });
