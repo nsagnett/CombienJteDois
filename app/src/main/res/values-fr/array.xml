@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="objectsArray">
+        <item>DVD et Blu-Ray</item>
+        <item>Livres</item>
+        <item>Musique</item>
+        <item>Cinéma</item>
+        <item>Bandes dessinées, Manga et Humour</item>
+        <item>Dictionnaires, langues et encyclopédies</item>
+        <item>Jeux Vidéo</item>
+        <item>Maison</item>
+        <item>Son</item>
+        <item>Photo</item>
+        <item>Puériculture</item>
+        <item>Sport</item>
+        <item>Vêtements</item>
+        <item>Véhicules</item>
+        <item>Bricolage</item>
+        <item>Electromenager</item>
+        <item>Informatique</item>
+        <item>Jardin</item>
+        <item>Jouets</item>
+        <item>Autres objets</item>
+    </string-array>
+
+</resources>

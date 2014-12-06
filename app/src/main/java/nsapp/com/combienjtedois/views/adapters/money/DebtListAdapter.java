@@ -64,7 +64,7 @@ public class DebtListAdapter extends BaseAdapter implements View.OnClickListener
         final LayoutInflater inflater = LayoutInflater.from(context);
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.linear_container, null);
+            convertView = inflater.inflate(R.layout.person_holder, null);
         }
 
         debt = debtArrayList.get(position);
@@ -72,7 +72,7 @@ public class DebtListAdapter extends BaseAdapter implements View.OnClickListener
         Double amount = Double.parseDouble(debt.getAmount());
 
         TextView reasonView = (TextView) convertView.findViewById(R.id.nameView);
-        ((TextView) convertView.findViewById(R.id.dateView)).setText(String.format(context.getString(R.string.date_format), debt.getDate()));
+        ((TextView) convertView.findViewById(R.id.dateView)).setText(String.format(context.getString(R.string.modification_date_format), debt.getDate()));
         reasonView.setText(reason);
 
         TextView amountView = ((TextView) convertView.findViewById(R.id.countView));

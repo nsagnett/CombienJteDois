@@ -14,7 +14,7 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -323,7 +323,7 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
                 Utils.dbManager.setModificationDatePerson(selectedPerson.getId(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
                 final int idDebt = (int) debt.getId();
                 final int idPerson = (int) selectedPerson.getId();
-                ScaleAnimation anim = new ScaleAnimation(1, 0, 1, 0);
+                TranslateAnimation anim = new TranslateAnimation(0, Utils.getScreenWidth(launchActivity), 0, 0);
                 anim.setDuration(Utils.ANIMATION_DURATION);
                 parent.getChildAt(position).startAnimation(anim);
                 new Handler().postDelayed(new Runnable() {

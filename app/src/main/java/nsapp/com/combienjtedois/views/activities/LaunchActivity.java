@@ -98,10 +98,10 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
         if (navigationDrawerFragment.isDrawerOpen()) {
             navigationDrawerFragment.closeDrawer();
         } else {
-            super.onBackPressed();
             if (getSupportFragmentManager().getBackStackEntryCount() != 0) {
                 updateActionBarTitle(getTitle().toString());
             }
+            super.onBackPressed();
         }
     }
 
@@ -116,7 +116,11 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!navigationDrawerFragment.isDrawerOpen()) {
-            getMenuInflater().inflate(R.menu.global, menu);
+            if (getCurrentFragment() instanceof LoanObjectsFragment) {
+                getMenuInflater().inflate(R.menu.loan_object, menu);
+            } else {
+                getMenuInflater().inflate(R.menu.global, menu);
+            }
             restoreActionBar();
             return true;
         }

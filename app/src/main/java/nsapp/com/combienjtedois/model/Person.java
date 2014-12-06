@@ -27,16 +27,13 @@ public class Person implements Serializable {
     public String getTotalAmount() {
         return totalAmount;
     }
+
     public String getName() {
         return name;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     public String getImageProfileUrl() {
@@ -49,9 +46,5 @@ public class Person implements Serializable {
 
     public String getModificationDate() {
         return modificationDate;
-    }
-
-    public void setModificationDate(String modificationDate) {
-        this.modificationDate = modificationDate;
     }
 }

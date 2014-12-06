@@ -56,6 +56,8 @@ public abstract class AbstractFragment extends Fragment {
     }
 
     protected void prepareOnReplaceTransaction(Fragment fragment) {
+        isDeletingView = false;
+        isEditingView = false;
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up, R.anim.slide_in_down, R.anim.slide_out_down);
         transaction.replace(R.id.container, fragment);

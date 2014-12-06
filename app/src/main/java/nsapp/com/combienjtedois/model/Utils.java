@@ -1,11 +1,15 @@
 package nsapp.com.combienjtedois.model;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
+import android.view.Display;
 
 public class Utils {
 
@@ -40,8 +44,8 @@ public class Utils {
     }
 
     public static String getPathImage(Context context, Uri uri) {
-        String[] projection = { MediaStore.Images.Media.DATA};
-        if(context.getContentResolver() != null && uri != null) {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        if (context.getContentResolver() != null && uri != null) {
             Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
             int column_index_data = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
@@ -52,5 +56,18 @@ public class Utils {
 
     public static Bitmap getImageFromPath(String path) {
         return BitmapFactory.decodeFile(path);
+    }
+
+    public static int getScreenWidth(Activity activity) {
+        Display display = activity.getWindowManager().getDefaultDisplay();
+        int width;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            Point size = new Point();
+            display.getSize(size);
+            width = size.x;
+        } else {
+            width = display.getWidth();
+        }
+        return width;
     }
 }
