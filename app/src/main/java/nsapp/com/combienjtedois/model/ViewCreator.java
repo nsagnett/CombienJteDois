@@ -25,7 +25,7 @@ public class ViewCreator {
         titleView.setText(resTitleID);
         titleView.setTextSize(17);
         titleView.setTextColor(context.getResources().getColor(android.R.color.white));
-        titleView.setBackgroundResource(R.color.dark_blue);
+        titleView.setBackgroundResource(R.color.light_grey);
         titleView.setCompoundDrawablesWithIntrinsicBounds(resDrawableTitleID, 0, 0, 0);
 
         return titleView;
@@ -108,11 +108,11 @@ public class ViewCreator {
     }
 
     public static void switchView(final Context context, final TextView viewOne, final TextView viewTwo) {
-        final int green = context.getResources().getColor(R.color.dark_blue);
+        final int dark_blue = context.getResources().getColor(R.color.dark_blue);
         final int white = context.getResources().getColor(android.R.color.white);
 
-        viewOne.setTextColor(green);
-        viewTwo.setTextColor(green);
+        viewOne.setTextColor(dark_blue);
+        viewTwo.setTextColor(dark_blue);
 
         viewOne.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +121,7 @@ public class ViewCreator {
                     viewTwo.setSelected(false);
                     viewOne.setSelected(true);
                     viewOne.setTextColor(white);
-                    viewTwo.setTextColor(green);
+                    viewTwo.setTextColor(dark_blue);
                 }
             }
         });
@@ -132,7 +132,7 @@ public class ViewCreator {
                     viewOne.setSelected(false);
                     viewTwo.setSelected(true);
                     viewTwo.setTextColor(white);
-                    viewOne.setTextColor(green);
+                    viewOne.setTextColor(dark_blue);
                 }
             }
         });

@@ -31,7 +31,7 @@
     <string name="phone_hint">Saisir le numéro</string>
 
     <!--Utiles-->
-    <string name="digits_edittext">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ-</string>
+    <string name="digits_edittext">abcdefghijklmnopqrstuvwxyz .ABCDEFGHIJKLMNOPQRSTUVWXYZ-</string>
     <string name="positive_text">Oui</string>
     <string name="negative_text">Non</string>
     <string name="ok">OK</string>
@@ -40,8 +40,6 @@
     <string name="content">Content</string>
     <string name="euro">€</string>
     <string name="three_points">&#8230;</string>
-    <string name="increasing_amount">Par montant croissant</string>
-    <string name="decreasing_debt">Par montant décroissant</string>
     <string name="error">Erreur pendant l\'opération, veuillez réessayer</string>
     <string name="missing_picture">Aucune photo détectée !</string>
     <string name="fullscreen">Agrandir</string>
@@ -57,11 +55,11 @@
     <string name="negative_amount">Le montant ne peut pas être négatif</string>
 
     <!--Argent-->
-    <string name="add_debt">Ajouter une dette</string>
-    <string name="modify_debt">Modifier une dette</string>
+    <string name="add_element">Ajouter un élément</string>
+    <string name="modify">Modifier</string>
     <string name="money_format">%s €</string>
     <string name="warning_text">Attention !</string>
-    <string name="message_delete_debt_text">Voulez-vous vraiment supprimer cette dette ?</string>
+    <string name="message_delete_element">Voulez-vous vraiment supprimer cet élément ?</string>
     <string name="credence">Créance</string>
     <string name="debt">Dette</string>
     <string name="type_with_points">Type :&#160;</string>
@@ -72,8 +70,8 @@
     <string name="amount">Montant</string>
     <string name="object_hint">Saisir l\'objet</string>
     <string name="amount_hint">Saisir le montant</string>
-    <string name="debt_already_present">Cette dette existe déjà !</string>
-    <string name="toast_add_debt">Dette ajoutée !</string>
-    <string name="toast_delete_debt">Dette supprimée !</string>
+    <string name="debt_already_present">Cet élément existe déjà !</string>
+    <string name="toast_add_element">Elément ajouté !</string>
+    <string name="toast_delete_element">Elément supprimé !</string>
 
 </resources>

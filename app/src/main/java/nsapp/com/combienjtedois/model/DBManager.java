@@ -111,11 +111,20 @@ public class DBManager {
                 + idPerson, null) > 0;
     }
 
-    public boolean modifyPerson(long idPerson, String name, String totalCount, String phoneNumber) {
+    public boolean setModificationDatePerson(long idPerson, String date) {
+        ContentValues args = new ContentValues();
+        args.put(MODIFICATION_DATE_KEY, date);
+
+        return sqLiteDatabase.update(DATABASE_TABLE_PERSON, args, ID_PERSON_KEY + "="
+                + idPerson, null) > 0;
+    }
+
+    public boolean modifyPerson(long idPerson, String name, String totalCount, String phoneNumber, String date) {
         ContentValues args = new ContentValues();
         args.put(NAME_PERSON_KEY, Utils.camelCase(name));
         args.put(TOTAL_COUNT_KEY, totalCount);
         args.put(PHONE_NUMBER_KEY, phoneNumber);
+        args.put(MODIFICATION_DATE_KEY, date);
 
         return sqLiteDatabase.update(DATABASE_TABLE_PERSON, args, ID_PERSON_KEY + "="
                 + idPerson, null) > 0;
@@ -166,11 +175,20 @@ public class DBManager {
         return 0;
     }
 
-    public boolean modifyDebt(long idDebt, String amount) {
+    public boolean modifyDebt(long idDebt, String amount, String date) {
         ContentValues initialValues = new ContentValues();
         initialValues.put(AMOUNT_KEY, amount);
+        initialValues.put(MODIFICATION_DATE_KEY, date);
 
         return sqLiteDatabase.update(DATABASE_TABLE_DEBT, initialValues, ID_DEBT_KEY + "=" + idDebt, null) > 0;
+    }
+
+    public boolean setModificationDateDebt(long idDebt, String date) {
+        ContentValues args = new ContentValues();
+        args.put(MODIFICATION_DATE_KEY, date);
+
+        return sqLiteDatabase.update(DATABASE_TABLE_DEBT, args, ID_DEBT_KEY + "="
+                + idDebt, null) > 0;
     }
 
     public boolean setImageProfileUrlDebt(long idDebt, String url) {

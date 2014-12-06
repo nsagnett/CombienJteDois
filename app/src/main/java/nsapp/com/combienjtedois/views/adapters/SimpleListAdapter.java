@@ -55,7 +55,7 @@ public class SimpleListAdapter extends BaseAdapter {
                 drawableID = R.drawable.gallery;
                 break;
             case 2:
-                drawableID = android.R.drawable.ic_menu_search;
+                drawableID = R.drawable.zoom;
                 break;
             case 3:
                 drawableID = R.drawable.trash;

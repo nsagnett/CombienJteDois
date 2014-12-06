@@ -6,7 +6,9 @@
 
     <include layout="@layout/header" />
 
-    <include layout="@layout/separator" />
+    <include
+        layout="@layout/separator"
+        android:id="@+id/headerSeparator" />
 
     <ListView
         android:id="@+id/listView"

@@ -18,9 +18,10 @@ public class FullScreenImageActivity extends ActionBarActivity implements View.O
         setContentView(R.layout.fullscreen_image);
         String path = getIntent().getStringExtra(Utils.PATH_KEY);
         ImageView imageView = (ImageView) findViewById(R.id.fullScreenImageView);
+        ImageView closeView = (ImageView) findViewById(R.id.closeView);
         Bitmap image = BitmapFactory.decodeFile(path);
         imageView.setImageBitmap(image);
-        imageView.setOnClickListener(this);
+        closeView.setOnClickListener(this);
         getSupportActionBar().hide();
     }
 

@@ -18,8 +18,8 @@ import nsapp.com.combienjtedois.model.DBManager;
 import nsapp.com.combienjtedois.model.Debt;
 import nsapp.com.combienjtedois.model.Person;
 import nsapp.com.combienjtedois.model.Utils;
-import nsapp.com.combienjtedois.views.adapters.DebtListAdapter;
-import nsapp.com.combienjtedois.views.adapters.PersonListAdapter;
+import nsapp.com.combienjtedois.views.adapters.money.DebtListAdapter;
+import nsapp.com.combienjtedois.views.adapters.money.PersonListAdapter;
 import nsapp.com.combienjtedois.views.fragments.AbstractFragment;
 
 public abstract class AbstractMoneyFragment extends AbstractFragment implements View.OnClickListener, AdapterView.OnItemClickListener {
@@ -112,7 +112,7 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                     isDeletingView = false;
                     isEditingView = false;
                     if (listView.getFooterViewsCount() == 0) {
-                        footerView.setText(R.string.add_debt);
+                        footerView.setText(R.string.add_element);
                         footerView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.dark_add, 0, 0);
                         footerView.setOnClickListener(this);
                         listView.addFooterView(footerView);

@@ -47,6 +47,10 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
     public void onResume() {
         super.onResume();
         launchActivity.updateActionBarTitle(getString(R.string.title_section1));
+        View view = getView();
+        if (view != null) {
+            view.findViewById(R.id.headerSeparator).setVisibility(View.GONE);
+        }
         notifyChanges();
     }
 
@@ -120,7 +124,7 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
             public void onClick(View v) {
                 if (checkPersonForm(nameView)) {
                     alert.dismiss();
-                    Utils.dbManager.modifyPerson(person.getId(), nameView.getText().toString(), person.getTotalAmount(), person.getPhoneNumber());
+                    Utils.dbManager.modifyPerson(person.getId(), nameView.getText().toString(), person.getTotalAmount(), person.getPhoneNumber(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
                     notifyChanges();
                     Toast.makeText(getActivity(), getString(R.string.toast_modify), Toast.LENGTH_SHORT).show();
                 }

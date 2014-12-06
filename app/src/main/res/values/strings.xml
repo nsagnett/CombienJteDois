@@ -23,8 +23,8 @@
     <string name="toast_add_person">Person added !</string>
     <string name="toast_modify">Changes done !</string>
     <string name="toast_delete_person">Person deleted !</string>
-    <string name="toast_add_debt">Debt added !</string>
-    <string name="toast_delete_debt">Debt deleted !</string>
+    <string name="toast_add_element">Debt added !</string>
+    <string name="toast_delete_element">Debt deleted !</string>
     <string name="person_name_format">%1$s : %2$s</string>
     <string name="message_delete_person_text">Are you sure to delete this person ?</string>
     <string name="person_already_present_format">%s already exists !</string>
@@ -41,10 +41,10 @@
     <string name="decreasing_debt">By decreasing amount</string>
 
     <!--Argent-->
-    <string name="add_debt">Add debt</string>
+    <string name="add_element">Add debt</string>
     <string name="money_format">%s €</string>
     <string name="warning_text">Warning !</string>
-    <string name="message_delete_debt_text">Are you sure to delete this debt ?</string>
+    <string name="message_delete_element">Are you sure to delete this debt ?</string>
     <string name="credence">Credence</string>
     <string name="debt">Debt</string>
     <string name="type_with_points">Type</string>

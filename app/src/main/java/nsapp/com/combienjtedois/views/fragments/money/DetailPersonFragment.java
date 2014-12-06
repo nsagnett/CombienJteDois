@@ -212,7 +212,7 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
 
     @Override
     public void addItem(String importName, String importPhone) {
-        final AlertDialog alert = ViewCreator.createCustomAddDebtDialogBox(getActivity(), R.string.add_debt, R.drawable.add, R.string.validate);
+        final AlertDialog alert = ViewCreator.createCustomAddDebtDialogBox(getActivity(), R.string.add_element, R.drawable.add, R.string.validate);
         alert.show();
         TextView deviseView = (TextView) alert.findViewById(R.id.deviseView);
         deviseView.setVisibility(View.VISIBLE);
@@ -239,9 +239,9 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
                 }
                 if (checkAddDebtForm(reasonEditText, countEditText, sign)) {
                     alert.dismiss();
-                    selectedPerson.setModificationDate((String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
+                    Utils.dbManager.setModificationDatePerson(selectedPerson.getId(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
                     Utils.dbManager.createDebt(selectedPerson.getId(), sign + countEditText.getText().toString(), reasonEditText.getText().toString(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
-                    Toast.makeText(getActivity(), getString(R.string.toast_add_debt), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.toast_add_element), Toast.LENGTH_SHORT).show();
                     notifyChanges();
                 }
             }
@@ -249,7 +249,7 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
     }
 
     public void modifyItem(final Debt debt) {
-        final AlertDialog alert = ViewCreator.createCustomModifyDebtDialogBox(getActivity(), R.string.modify_debt, R.drawable.edit, R.string.validate);
+        final AlertDialog alert = ViewCreator.createCustomModifyDebtDialogBox(getActivity(), R.string.modify, R.drawable.edit, R.string.validate);
         alert.show();
 
         final TextView increaseTextView = ((TextView) alert.findViewById(R.id.addTextView));
@@ -305,22 +305,22 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
             @Override
             public void onClick(View v) {
                 alert.dismiss();
-                Utils.dbManager.modifyDebt(debt.getId(), finalSign + amountInteger.toString());
+                Utils.dbManager.modifyDebt(debt.getId(), finalSign + amountInteger.toString(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
+                Utils.dbManager.setModificationDatePerson(selectedPerson.getId(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
                 Toast.makeText(getActivity(), getString(R.string.toast_modify), Toast.LENGTH_SHORT).show();
-                selectedPerson.setModificationDate((String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
                 notifyChanges();
             }
         });
     }
 
     private void deleteDebt(final AdapterView<?> parent, final int position, final Debt debt) {
-        final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(getActivity(), R.string.warning_text, R.drawable.warning, R.string.message_delete_debt_text, R.string.positive_text, R.string.negative_text);
+        final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(getActivity(), R.string.warning_text, R.drawable.warning, R.string.message_delete_element, R.string.positive_text, R.string.negative_text);
         alert.show();
         alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alert.dismiss();
-                selectedPerson.setModificationDate((String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
+                Utils.dbManager.setModificationDatePerson(selectedPerson.getId(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
                 final int idDebt = (int) debt.getId();
                 final int idPerson = (int) selectedPerson.getId();
                 ScaleAnimation anim = new ScaleAnimation(1, 0, 1, 0);
@@ -334,7 +334,7 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
                     }
 
                 }, Utils.ANIMATION_DURATION);
-                Toast.makeText(getActivity(), getString(R.string.toast_delete_debt), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.toast_delete_element), Toast.LENGTH_SHORT).show();
             }
         });
         alert.findViewById(R.id.negativeView).setOnClickListener(new View.OnClickListener() {

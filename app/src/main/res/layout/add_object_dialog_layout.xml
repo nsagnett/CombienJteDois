@@ -95,6 +95,7 @@
             android:id="@+id/deviseView"
             android:textSize="17sp"
             android:visibility="gone"
+            android:padding="5dp"
             android:gravity="center"
             android:layout_width="0dp"
             android:layout_weight="0.1"
