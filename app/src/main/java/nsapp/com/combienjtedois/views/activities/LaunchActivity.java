@@ -33,6 +33,7 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
     private CharSequence title;
 
     private boolean isCreatedView = false;
+    private boolean listEmpty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +125,11 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
             if (getCurrentFragment() instanceof LoanObjectsFragment) {
                 getMenuInflater().inflate(R.menu.loan_object, menu);
             } else {
-                getMenuInflater().inflate(R.menu.global, menu);
+                if(listEmpty){
+                    getMenuInflater().inflate(R.menu.add_menu, menu);
+                }else {
+                    getMenuInflater().inflate(R.menu.global, menu);
+                }
             }
             restoreActionBar();
             return true;
@@ -200,5 +205,9 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
     public void updateActionBarTitle(String title) {
         this.title = title;
         restoreActionBar();
+    }
+
+    public void setListEmpty(boolean listEmpty) {
+        this.listEmpty = listEmpty;
     }
 }

@@ -49,6 +49,7 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
 
         listView = (ListView) view.findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
+        listView.setOnTouchListener(swipeListener);
 
 
         headerCountView = (TextView) view.findViewById(R.id.headerCountView);
@@ -90,9 +91,13 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                             }
                         });
                         listView.addFooterView(footerView);
+                        launchActivity.setListEmpty(true);
+                        launchActivity.supportInvalidateOptionsMenu();
                     }
                 } else {
                     listView.removeFooterView(footerView);
+                    launchActivity.setListEmpty(false);
+                    launchActivity.supportInvalidateOptionsMenu();
                 }
 
                 PersonListAdapter personListAdapter = new PersonListAdapter(launchActivity, personArrayList, isDeletingView, isEditingView);
@@ -127,9 +132,13 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                             }
                         });
                         listView.addFooterView(footerView);
+                        launchActivity.setListEmpty(true);
+                        launchActivity.supportInvalidateOptionsMenu();
                     }
                 } else {
                     listView.removeFooterView(footerView);
+                    launchActivity.setListEmpty(false);
+                    launchActivity.supportInvalidateOptionsMenu();
                 }
 
                 DebtListAdapter debtListAdapter = new DebtListAdapter(launchActivity, (DetailPersonFragment) launchActivity.getCurrentFragment(), debtArrayList, isDeletingView, isEditingView);
