@@ -23,6 +23,7 @@ import android.widget.Toast;
 import java.util.Date;
 
 import nsapp.com.combienjtedois.R;
+import nsapp.com.combienjtedois.listeners.SwipeListener;
 import nsapp.com.combienjtedois.model.Person;
 import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.model.ViewCreator;
@@ -56,13 +57,21 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
 
     @Override
     public void onItemClick(final AdapterView<?> parent, View view, final int position, long id) {
-        Person person = personArrayList.get(position);
-        if (isDeletingView) {
-            deletePerson(parent, position, (int) person.getId());
-        } else if (isEditingView) {
-            modifyPerson(person);
-        } else if (!personArrayList.isEmpty()) {
-            prepareOnReplaceTransaction(DetailPersonFragment.newInstance(person));
+        if (!personArrayList.isEmpty()) {
+            Person person = personArrayList.get(position);
+            if (swipeListener.swipeDetected()) {
+                if (swipeListener.getAction() == SwipeListener.Action.RL || swipeListener.getAction() == SwipeListener.Action.LR) {
+                    deletePerson(parent, position, (int) person.getId(), swipeListener.getAction());
+                }
+            } else {
+                if (isDeletingView) {
+                    deletePerson(parent, position, (int) person.getId(), SwipeListener.Action.None);
+                } else if (isEditingView) {
+                    modifyPerson(person);
+                } else if (!personArrayList.isEmpty()) {
+                    prepareOnReplaceTransaction(DetailPersonFragment.newInstance(person));
+                }
+            }
         }
     }
 
@@ -132,15 +141,21 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
         });
     }
 
-    private void deletePerson(final AdapterView<?> parent, final int position, final int idPerson) {
+    private void deletePerson(final AdapterView<?> parent, final int position, final int idPerson, final SwipeListener.Action action) {
         final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(getActivity(), R.string.warning_text, R.drawable.warning, R.string.message_delete_person_text, R.string.positive_text, R.string.negative_text);
         alert.show();
         alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alert.dismiss();
-                TranslateAnimation anim = new TranslateAnimation(0, Utils.getScreenWidth(launchActivity), 0, 0);
+                TranslateAnimation anim;
+                if (action == SwipeListener.Action.LR || action == SwipeListener.Action.None) {
+                    anim = new TranslateAnimation(0, Utils.getScreenWidth(launchActivity), 0, 0);
+                } else {
+                    anim = new TranslateAnimation(0, -Utils.getScreenWidth(launchActivity), 0, 0);
+                }
                 anim.setDuration(Utils.ANIMATION_DURATION);
+
                 parent.getChildAt(position).startAnimation(anim);
                 new Handler().postDelayed(new Runnable() {
 

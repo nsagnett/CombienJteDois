@@ -8,11 +8,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import nsapp.com.combienjtedois.R;
+import nsapp.com.combienjtedois.listeners.SwipeListener;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
 
-public abstract class AbstractFragment extends Fragment {
+public abstract class AbstractFragment extends Fragment implements AdapterView.OnItemClickListener {
 
 
     protected static final String ARG_SECTION_NUMBER = "section_number";
@@ -24,9 +26,12 @@ public abstract class AbstractFragment extends Fragment {
 
     protected LaunchActivity launchActivity;
 
+    protected SwipeListener swipeListener;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         launchActivity = ((LaunchActivity) getActivity());
+        swipeListener = new SwipeListener();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 

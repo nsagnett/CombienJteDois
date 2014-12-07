@@ -1,8 +1,11 @@
 package nsapp.com.combienjtedois.views.fragments;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 
 import nsapp.com.combienjtedois.R;
+import nsapp.com.combienjtedois.listeners.SwipeListener;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
 
 public class PresentFragment extends AbstractFragment {
@@ -24,5 +27,16 @@ public class PresentFragment extends AbstractFragment {
     @Override
     public void addItem(String importName, String importPhone) {
 
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (swipeListener.swipeDetected()) {
+            if (swipeListener.getAction() == SwipeListener.Action.RL || swipeListener.getAction() == SwipeListener.Action.LR) {
+                // delete present
+            }
+        } else if (isDeletingView) {
+            // delete present
+        }
     }
 }

@@ -6,19 +6,21 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import nsapp.com.combienjtedois.R;
+import nsapp.com.combienjtedois.listeners.SwipeListener;
 import nsapp.com.combienjtedois.model.DBManager;
 import nsapp.com.combienjtedois.model.LoanObject;
 import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
 import nsapp.com.combienjtedois.views.adapters.LoanObjectAdapter;
 
-public class LoanObjectsFragment extends AbstractFragment implements View.OnClickListener {
+public class LoanObjectsFragment extends AbstractFragment {
 
     private TextView footerView;
     private ListView listView;
@@ -78,7 +80,12 @@ public class LoanObjectsFragment extends AbstractFragment implements View.OnClic
             if (listView.getFooterViewsCount() == 0) {
                 footerView.setText(R.string.add_element);
                 footerView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.dark_add, 0, 0);
-                footerView.setOnClickListener(this);
+                footerView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        addItem(null, null);
+                    }
+                });
                 listView.addFooterView(footerView);
             }
         } else {
@@ -90,7 +97,13 @@ public class LoanObjectsFragment extends AbstractFragment implements View.OnClic
     }
 
     @Override
-    public void onClick(View v) {
-
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (swipeListener.swipeDetected()) {
+            if (swipeListener.getAction() == SwipeListener.Action.RL || swipeListener.getAction() == SwipeListener.Action.LR) {
+                // delete object
+            }
+        } else if (isDeletingView) {
+            // delete object
+        }
     }
 }

@@ -6,6 +6,7 @@
     <string name="title_section1">Argent</string>
     <string name="title_section2">Objets prêtés</string>
     <string name="title_section3">Cadeaux</string>
+    <string name="title_section4">Faire un don</string>
     <string name="navigation_drawer_open">Ouvrir le menu</string>
     <string name="navigation_drawer_close">Fermer le menu</string>
     <string name="action_settings">Paramètres</string>

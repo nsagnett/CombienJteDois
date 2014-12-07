@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import nsapp.com.combienjtedois.R;
+import nsapp.com.combienjtedois.listeners.SwipeListener;
 import nsapp.com.combienjtedois.model.DBManager;
 import nsapp.com.combienjtedois.model.Debt;
 import nsapp.com.combienjtedois.model.Person;
@@ -22,7 +23,7 @@ import nsapp.com.combienjtedois.views.adapters.money.DebtListAdapter;
 import nsapp.com.combienjtedois.views.adapters.money.PersonListAdapter;
 import nsapp.com.combienjtedois.views.fragments.AbstractFragment;
 
-public abstract class AbstractMoneyFragment extends AbstractFragment implements View.OnClickListener, AdapterView.OnItemClickListener {
+public abstract class AbstractMoneyFragment extends AbstractFragment implements AdapterView.OnItemClickListener {
 
     protected ArrayList<Person> personArrayList = new ArrayList<Person>();
     protected ArrayList<Debt> debtArrayList = new ArrayList<Debt>();
@@ -44,8 +45,11 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_listview, container, false);
 
+        swipeListener = new SwipeListener();
+
         listView = (ListView) view.findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
+
 
         headerCountView = (TextView) view.findViewById(R.id.headerCountView);
         footerView = (TextView) inflater.inflate(R.layout.footer_listview, null, false);
@@ -53,11 +57,6 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
         launchActivity.supportInvalidateOptionsMenu();
 
         return view;
-    }
-
-    @Override
-    public void onClick(View v) {
-        addItem(null, null);
     }
 
     public void notifyChanges() {
@@ -84,7 +83,12 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                     if (listView.getFooterViewsCount() == 0) {
                         footerView.setText(R.string.add_person);
                         footerView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.dark_add, 0, 0);
-                        footerView.setOnClickListener(this);
+                        footerView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                addItem(null, null);
+                            }
+                        });
                         listView.addFooterView(footerView);
                     }
                 } else {
@@ -116,7 +120,12 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                     if (listView.getFooterViewsCount() == 0) {
                         footerView.setText(R.string.add_element);
                         footerView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.dark_add, 0, 0);
-                        footerView.setOnClickListener(this);
+                        footerView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                addItem(null, null);
+                            }
+                        });
                         listView.addFooterView(footerView);
                     }
                 } else {

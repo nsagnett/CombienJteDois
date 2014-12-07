@@ -25,6 +25,7 @@ import android.widget.Toast;
 import java.util.Date;
 
 import nsapp.com.combienjtedois.R;
+import nsapp.com.combienjtedois.listeners.SwipeListener;
 import nsapp.com.combienjtedois.model.Debt;
 import nsapp.com.combienjtedois.model.Person;
 import nsapp.com.combienjtedois.model.Utils;
@@ -33,7 +34,7 @@ import nsapp.com.combienjtedois.views.activities.EditTextAmountActivity;
 import nsapp.com.combienjtedois.views.activities.FullScreenImageActivity;
 import nsapp.com.combienjtedois.views.adapters.SimpleListAdapter;
 
-public class DetailPersonFragment extends AbstractMoneyFragment {
+public class DetailPersonFragment extends AbstractMoneyFragment implements View.OnClickListener {
 
     private static final String RESULT_KEY = "result";
     private static final String OPERATION = "operation";
@@ -78,65 +79,67 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.footerView) {
-            addItem(null, null);
-        } else {
-            ListView listView = new ListView(launchActivity);
-            String[] items = new String[]{getString(R.string.camera), getString(R.string.gallery), getString(R.string.fullscreen), getString(R.string.nothing)};
-            SimpleListAdapter adapter = new SimpleListAdapter(launchActivity, items);
-            listView.setAdapter(adapter);
-            final AlertDialog dialog = ViewCreator.createListViewDialogBox(launchActivity, listView);
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    dialog.dismiss();
-                    switch (position) {
-                        case 0:
-                            String fileName = "temp.jpg";
-                            ContentValues values = new ContentValues();
-                            values.put(MediaStore.Images.Media.TITLE, fileName);
-                            setCapturedImageURI(launchActivity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values));
+        ListView listView = new ListView(launchActivity);
+        String[] items = new String[]{getString(R.string.camera), getString(R.string.gallery), getString(R.string.fullscreen), getString(R.string.nothing)};
+        SimpleListAdapter adapter = new SimpleListAdapter(launchActivity, items);
+        listView.setAdapter(adapter);
+        final AlertDialog dialog = ViewCreator.createListViewDialogBox(launchActivity, listView);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                dialog.dismiss();
+                switch (position) {
+                    case 0:
+                        String fileName = "temp.jpg";
+                        ContentValues values = new ContentValues();
+                        values.put(MediaStore.Images.Media.TITLE, fileName);
+                        setCapturedImageURI(launchActivity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values));
 
-                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                            intent.putExtra(MediaStore.EXTRA_OUTPUT, getCapturedImageURI());
-                            startActivityForResult(intent, Utils.TAKE_PICTURE_FOR_PERSON);
-                            break;
-                        case 1:
-                            Intent galleryPicture = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                            startActivityForResult(galleryPicture, Utils.IMPORT_PERSON_IMAGE_CODE);
-                            break;
-                        case 2:
-                            String path = selectedPerson.getImageProfileUrl();
-                            if (path != null && !path.isEmpty()) {
-                                Intent fullScreenIntent = new Intent(launchActivity, FullScreenImageActivity.class);
-                                fullScreenIntent.putExtra(Utils.PATH_KEY, path);
-                                startActivity(fullScreenIntent);
-                            } else {
-                                Toast.makeText(launchActivity, getString(R.string.missing_picture), Toast.LENGTH_SHORT).show();
-                            }
-                            break;
-                        case 3:
-                            Utils.dbManager.setImageProfileUrlPerson(selectedPerson.getId(), "");
-                            selectedPerson.setImageProfileUrl("");
-                            updateProfileView();
-                            break;
-                        default:
-                            break;
-                    }
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, getCapturedImageURI());
+                        startActivityForResult(intent, Utils.TAKE_PICTURE_FOR_PERSON);
+                        break;
+                    case 1:
+                        Intent galleryPicture = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(galleryPicture, Utils.IMPORT_PERSON_IMAGE_CODE);
+                        break;
+                    case 2:
+                        String path = selectedPerson.getImageProfileUrl();
+                        if (path != null && !path.isEmpty()) {
+                            Intent fullScreenIntent = new Intent(launchActivity, FullScreenImageActivity.class);
+                            fullScreenIntent.putExtra(Utils.PATH_KEY, path);
+                            startActivity(fullScreenIntent);
+                        } else {
+                            Toast.makeText(launchActivity, getString(R.string.missing_picture), Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case 3:
+                        Utils.dbManager.setImageProfileUrlPerson(selectedPerson.getId(), "");
+                        selectedPerson.setImageProfileUrl("");
+                        updateProfileView();
+                        break;
+                    default:
+                        break;
                 }
-            });
-            dialog.show();
-        }
+            }
+        });
+        dialog.show();
     }
 
     @Override
     public void onItemClick(final AdapterView<?> parent, View view, final int position, long id) {
         if (!debtArrayList.isEmpty()) {
             selectedDebt = debtArrayList.get(position);
-            if (isDeletingView) {
-                deleteDebt(parent, position, selectedDebt);
-            } else if (isEditingView) {
-                modifyItem(selectedDebt);
+            if (swipeListener.swipeDetected()) {
+                if (swipeListener.getAction() == SwipeListener.Action.RL || swipeListener.getAction() == SwipeListener.Action.LR) {
+                    deleteDebt(parent, position, selectedDebt, swipeListener.getAction());
+                }
+            } else {
+                if (isDeletingView) {
+                    deleteDebt(parent, position, selectedDebt, SwipeListener.Action.None);
+                } else if (isEditingView) {
+                    modifyItem(selectedDebt);
+                }
             }
         }
     }
@@ -313,7 +316,7 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
         });
     }
 
-    private void deleteDebt(final AdapterView<?> parent, final int position, final Debt debt) {
+    private void deleteDebt(final AdapterView<?> parent, final int position, final Debt debt, final SwipeListener.Action action) {
         final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(getActivity(), R.string.warning_text, R.drawable.warning, R.string.message_delete_element, R.string.positive_text, R.string.negative_text);
         alert.show();
         alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {
@@ -323,7 +326,12 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
                 Utils.dbManager.setModificationDatePerson(selectedPerson.getId(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
                 final int idDebt = (int) debt.getId();
                 final int idPerson = (int) selectedPerson.getId();
-                TranslateAnimation anim = new TranslateAnimation(0, Utils.getScreenWidth(launchActivity), 0, 0);
+                TranslateAnimation anim;
+                if (action == SwipeListener.Action.LR || action == SwipeListener.Action.None) {
+                    anim = new TranslateAnimation(0, Utils.getScreenWidth(launchActivity), 0, 0);
+                } else {
+                    anim = new TranslateAnimation(0, -Utils.getScreenWidth(launchActivity), 0, 0);
+                }
                 anim.setDuration(Utils.ANIMATION_DURATION);
                 parent.getChildAt(position).startAnimation(anim);
                 new Handler().postDelayed(new Runnable() {
@@ -377,4 +385,5 @@ public class DetailPersonFragment extends AbstractMoneyFragment {
     public void setDebtExtra(Debt debtExtra) {
         this.debtExtra = debtExtra;
     }
+
 }

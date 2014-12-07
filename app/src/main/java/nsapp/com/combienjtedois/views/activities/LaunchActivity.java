@@ -15,13 +15,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.model.DBManager;
+import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.fragments.AbstractFragment;
 import nsapp.com.combienjtedois.views.fragments.LoanObjectsFragment;
-import nsapp.com.combienjtedois.views.fragments.money.PersonListForMoneyFragment;
 import nsapp.com.combienjtedois.views.fragments.NavigationDrawerFragment;
 import nsapp.com.combienjtedois.views.fragments.PresentFragment;
+import nsapp.com.combienjtedois.views.fragments.money.PersonListForMoneyFragment;
 
 public class LaunchActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
@@ -53,7 +53,7 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        Fragment fragment;
+        Fragment fragment = null;
 
         switch (position) {
             case 0:
@@ -65,8 +65,10 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
             case 2:
                 fragment = PresentFragment.newInstance(position);
                 break;
-            default:
+            case 3:
                 fragment = PersonListForMoneyFragment.newInstance(position);
+                break;
+            default:
                 break;
         }
 
@@ -89,6 +91,9 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
                 break;
             case 2:
                 title = getString(R.string.title_section3);
+                break;
+            case 3:
+                title = getString(R.string.title_section4);
                 break;
         }
     }
@@ -161,7 +166,7 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
                     if (listView.getChildAt(i) != null) {
                         final ImageView otherView = (ImageView) listView.getChildAt(i).findViewById(R.id.otherView);
 
-                        if (otherView != null) {
+                        if (otherView != null ) {
 
                             TranslateAnimation imageViewTranslation;
                             otherView.setImageResource(resViewID);
