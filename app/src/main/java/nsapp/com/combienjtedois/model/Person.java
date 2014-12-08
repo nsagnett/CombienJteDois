@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 public class Person implements Serializable {
 
-    private long id;
-    private String phoneNumber;
-    private String name;
-    private String modificationDate;
-    private String totalAmount;
+    private final long id;
+    private final String phoneNumber;
+    private final String name;
+    private final String modificationDate;
+    private final String totalAmount;
     private String imageProfileUrl;
 
     public Person(long id, String name, String totalAmount, String phoneNumber, String imageProfileUrl, String modificationDate) {

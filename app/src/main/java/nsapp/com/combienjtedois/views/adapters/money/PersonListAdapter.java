@@ -14,20 +14,18 @@ import java.util.ArrayList;
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.Person;
 import nsapp.com.combienjtedois.model.Utils;
-import nsapp.com.combienjtedois.model.ViewCreator;
+import nsapp.com.combienjtedois.views.ViewCreator;
 
 public class PersonListAdapter extends BaseAdapter {
 
     private final Context context;
     private final ArrayList<Person> personList = new ArrayList<Person>();
 
-    private final boolean isDeletingView;
     private final boolean isEditingView;
 
-    public PersonListAdapter(Context context, ArrayList<Person> personList, boolean isDeletingView, boolean isEditingView) {
+    public PersonListAdapter(Context context, ArrayList<Person> personList, boolean isEditingView) {
         this.context = context;
         this.personList.addAll(personList);
-        this.isDeletingView = isDeletingView;
         this.isEditingView = isEditingView;
     }
 
@@ -37,7 +35,7 @@ public class PersonListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public Person getItem(int position) {
         return null;
     }
 
@@ -76,11 +74,7 @@ public class PersonListAdapter extends BaseAdapter {
             profileImage.setImageBitmap(ViewCreator.getRoundedShape(image));
         }
 
-        if (isDeletingView) {
-            ImageView imageView = (ImageView) convertView.findViewById(R.id.otherView);
-            imageView.setImageResource(R.drawable.dark_delete);
-            imageView.setVisibility(View.VISIBLE);
-        } else if (isEditingView) {
+        if (isEditingView) {
             ImageView imageView = (ImageView) convertView.findViewById(R.id.otherView);
             imageView.setImageResource(R.drawable.dark_edit);
             imageView.setVisibility(View.VISIBLE);

@@ -7,26 +7,25 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Date;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.listeners.SwipeListener;
+import nsapp.com.combienjtedois.listeners.SwipeDismissListViewTouchListener;
 import nsapp.com.combienjtedois.model.Person;
 import nsapp.com.combienjtedois.model.Utils;
-import nsapp.com.combienjtedois.model.ViewCreator;
+import nsapp.com.combienjtedois.views.ViewCreator;
 
 public class PersonListForMoneyFragment extends AbstractMoneyFragment {
 
@@ -48,6 +47,32 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
     public void onResume() {
         super.onResume();
         launchActivity.updateActionBarTitle(getString(R.string.title_section1));
+        SwipeDismissListViewTouchListener swipeDismissListViewTouchListener = new SwipeDismissListViewTouchListener(listView, new SwipeDismissListViewTouchListener.OnDismissCallback() {
+            @Override
+            public void onDismiss(final ListView listView, int[] reverseSortedPositions) {
+                for (final int position : reverseSortedPositions) {
+                    final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(launchActivity, R.string.message_delete_person_text);
+                    alert.show();
+                    alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            alert.dismiss();
+                            Utils.dbManager.deletePerson((int) personArrayList.get(position).getId());
+                            notifyChanges();
+                            Toast.makeText(getActivity(), getString(R.string.toast_delete_person), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    alert.findViewById(R.id.negativeView).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            alert.dismiss();
+                        }
+                    });
+                }
+            }
+        });
+        listView.setOnTouchListener(swipeDismissListViewTouchListener);
+        listView.setOnScrollListener(swipeDismissListViewTouchListener.makeScrollListener());
         View view = getView();
         if (view != null) {
             view.findViewById(R.id.headerSeparator).setVisibility(View.GONE);
@@ -59,18 +84,10 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
     public void onItemClick(final AdapterView<?> parent, View view, final int position, long id) {
         if (!personArrayList.isEmpty()) {
             Person person = personArrayList.get(position);
-            if (swipeListener.swipeDetected()) {
-                if (swipeListener.getAction() == SwipeListener.Action.RL || swipeListener.getAction() == SwipeListener.Action.LR) {
-                    deletePerson(parent, position, (int) person.getId(), swipeListener.getAction());
-                }
+            if (!personArrayList.isEmpty() && isEditingView) {
+                modifyPerson(personArrayList.get(position));
             } else {
-                if (isDeletingView) {
-                    deletePerson(parent, position, (int) person.getId(), SwipeListener.Action.None);
-                } else if (isEditingView) {
-                    modifyPerson(person);
-                } else if (!personArrayList.isEmpty()) {
-                    prepareOnReplaceTransaction(DetailPersonFragment.newInstance(person));
-                }
+                prepareOnReplaceTransaction(DetailPersonFragment.newInstance(person));
             }
         }
     }
@@ -91,7 +108,7 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
 
     @Override
     public void addItem(String importName, String importPhoneNumber) {
-        final AlertDialog alert = ViewCreator.createCustomAddPersonDialogBox(getActivity(), R.string.add_person, R.drawable.add, R.string.validate);
+        final AlertDialog alert = ViewCreator.createCustomPersonDialogBox(launchActivity, R.string.add_person, R.drawable.add);
         alert.show();
         final EditText nameEditView = ((EditText) alert.findViewById(R.id.namePersonEditView));
         final EditText phoneNumberView = ((EditText) alert.findViewById(R.id.phoneNumberEditView));
@@ -122,7 +139,7 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
     }
 
     private void modifyPerson(final Person person) {
-        final AlertDialog alert = ViewCreator.createCustomAddPersonDialogBox(getActivity(), R.string.modify_person, R.drawable.edit, R.string.validate);
+        final AlertDialog alert = ViewCreator.createCustomPersonDialogBox(launchActivity, R.string.modify_person, R.drawable.edit);
         alert.show();
         final EditText nameView = ((EditText) alert.findViewById(R.id.namePersonEditView));
         final EditText phoneNumberView = ((EditText) alert.findViewById(R.id.phoneNumberEditView));
@@ -137,41 +154,6 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
                     notifyChanges();
                     Toast.makeText(getActivity(), getString(R.string.toast_modify), Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-    }
-
-    private void deletePerson(final AdapterView<?> parent, final int position, final int idPerson, final SwipeListener.Action action) {
-        final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(getActivity(), R.string.warning_text, R.drawable.warning, R.string.message_delete_person_text, R.string.positive_text, R.string.negative_text);
-        alert.show();
-        alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alert.dismiss();
-                TranslateAnimation anim;
-                if (action == SwipeListener.Action.LR || action == SwipeListener.Action.None) {
-                    anim = new TranslateAnimation(0, Utils.getScreenWidth(launchActivity), 0, 0);
-                } else {
-                    anim = new TranslateAnimation(0, -Utils.getScreenWidth(launchActivity), 0, 0);
-                }
-                anim.setDuration(Utils.ANIMATION_DURATION);
-
-                parent.getChildAt(position).startAnimation(anim);
-                new Handler().postDelayed(new Runnable() {
-
-                    public void run() {
-                        Utils.dbManager.deletePerson(idPerson);
-                        notifyChanges();
-                    }
-
-                }, Utils.ANIMATION_DURATION);
-                Toast.makeText(getActivity(), getString(R.string.toast_delete_person), Toast.LENGTH_SHORT).show();
-            }
-        });
-        alert.findViewById(R.id.negativeView).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alert.dismiss();
             }
         });
     }
@@ -202,10 +184,7 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
 
     protected boolean checkPersonForm(EditText editText) {
         if (editText.getText().length() == 0) {
-            ViewCreator.showCustomAlertDialogBox(getActivity(),
-                    R.string.warning_text,
-                    R.drawable.warning,
-                    String.format(getString(R.string.empty_field_format), getString(R.string.name)));
+            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.name)));
             return false;
         }
         return true;

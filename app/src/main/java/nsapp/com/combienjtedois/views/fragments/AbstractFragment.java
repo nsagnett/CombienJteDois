@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.listeners.SwipeListener;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
 
 public abstract class AbstractFragment extends Fragment implements AdapterView.OnItemClickListener {
@@ -21,17 +20,13 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
 
     public enum listWantedType {PERSON, DEBT}
 
-    protected boolean isDeletingView;
     protected boolean isEditingView;
 
     protected LaunchActivity launchActivity;
 
-    protected SwipeListener swipeListener;
-
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         launchActivity = ((LaunchActivity) getActivity());
-        swipeListener = new SwipeListener();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -44,16 +39,8 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
 
     public abstract void addItem(String importName, String importPhone);
 
-    public boolean isDeletingView() {
-        return isDeletingView;
-    }
-
     public boolean isEditingView() {
         return isEditingView;
-    }
-
-    public void setDeletingView(boolean isDeletingView) {
-        this.isDeletingView = isDeletingView;
     }
 
     public void setEditingView(boolean isEditingView) {
@@ -61,7 +48,6 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
     }
 
     protected void prepareOnReplaceTransaction(Fragment fragment) {
-        isDeletingView = false;
         isEditingView = false;
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up, R.anim.slide_in_down, R.anim.slide_out_down);

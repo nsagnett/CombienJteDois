@@ -7,14 +7,12 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,11 +23,11 @@ import android.widget.Toast;
 import java.util.Date;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.listeners.SwipeListener;
+import nsapp.com.combienjtedois.listeners.SwipeDismissListViewTouchListener;
 import nsapp.com.combienjtedois.model.Debt;
 import nsapp.com.combienjtedois.model.Person;
 import nsapp.com.combienjtedois.model.Utils;
-import nsapp.com.combienjtedois.model.ViewCreator;
+import nsapp.com.combienjtedois.views.ViewCreator;
 import nsapp.com.combienjtedois.views.activities.EditTextAmountActivity;
 import nsapp.com.combienjtedois.views.activities.FullScreenImageActivity;
 import nsapp.com.combienjtedois.views.adapters.SimpleListAdapter;
@@ -74,6 +72,34 @@ public class DetailPersonFragment extends AbstractMoneyFragment implements View.
     public void onResume() {
         super.onResume();
         updateProfileView();
+        SwipeDismissListViewTouchListener swipeDismissListViewTouchListener = new SwipeDismissListViewTouchListener(listView, new SwipeDismissListViewTouchListener.OnDismissCallback() {
+            @Override
+            public void onDismiss(ListView listView, int[] reverseSortedPositions) {
+                for (final int position : reverseSortedPositions) {
+                    final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(getActivity(), R.string.message_delete_element);
+                    alert.show();
+                    alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            alert.dismiss();
+                            Utils.dbManager.setModificationDatePerson(selectedPerson.getId(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
+                            final int idDebt = (int) debtArrayList.get(position).getId();
+                            final int idPerson = (int) selectedPerson.getId();
+                            Utils.dbManager.deleteDebt(idDebt, idPerson);
+                            notifyChanges();
+                        }
+                    });
+                    alert.findViewById(R.id.negativeView).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            alert.dismiss();
+                        }
+                    });
+                }
+            }
+        });
+        listView.setOnTouchListener(swipeDismissListViewTouchListener);
+        listView.setOnScrollListener(swipeDismissListViewTouchListener.makeScrollListener());
         notifyChanges();
     }
 
@@ -128,19 +154,8 @@ public class DetailPersonFragment extends AbstractMoneyFragment implements View.
 
     @Override
     public void onItemClick(final AdapterView<?> parent, View view, final int position, long id) {
-        if (!debtArrayList.isEmpty()) {
-            selectedDebt = debtArrayList.get(position);
-            if (swipeListener.swipeDetected()) {
-                if (swipeListener.getAction() == SwipeListener.Action.RL || swipeListener.getAction() == SwipeListener.Action.LR) {
-                    deleteDebt(parent, position, selectedDebt, swipeListener.getAction());
-                }
-            } else {
-                if (isDeletingView) {
-                    deleteDebt(parent, position, selectedDebt, SwipeListener.Action.None);
-                } else if (isEditingView) {
-                    modifyItem(selectedDebt);
-                }
-            }
+        if (!debtArrayList.isEmpty() && isEditingView) {
+            modifyItem(debtArrayList.get(position));
         }
     }
 
@@ -215,7 +230,7 @@ public class DetailPersonFragment extends AbstractMoneyFragment implements View.
 
     @Override
     public void addItem(String importName, String importPhone) {
-        final AlertDialog alert = ViewCreator.createCustomAddDebtDialogBox(getActivity(), R.string.add_element, R.drawable.add, R.string.validate);
+        final AlertDialog alert = ViewCreator.createCustomAddDebtDialogBox(getActivity());
         alert.show();
         TextView deviseView = (TextView) alert.findViewById(R.id.deviseView);
         deviseView.setVisibility(View.VISIBLE);
@@ -223,7 +238,7 @@ public class DetailPersonFragment extends AbstractMoneyFragment implements View.
 
         final TextView positiveDebtView = (TextView) alert.findViewById(R.id.positiveDebtView);
         final TextView negativeDebtView = (TextView) alert.findViewById(R.id.negativeDebtView);
-        ViewCreator.switchView(getActivity(), positiveDebtView, negativeDebtView);
+        ViewCreator.switchView(launchActivity, positiveDebtView, negativeDebtView);
 
         ((TextView) alert.findViewById(R.id.typeDebtView)).setText(R.string.type_with_points);
         ((TextView) alert.findViewById(R.id.reasonTextView)).setText(R.string.object_with_points);
@@ -244,7 +259,7 @@ public class DetailPersonFragment extends AbstractMoneyFragment implements View.
                     alert.dismiss();
                     Utils.dbManager.setModificationDatePerson(selectedPerson.getId(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
                     Utils.dbManager.createDebt(selectedPerson.getId(), sign + countEditText.getText().toString(), reasonEditText.getText().toString(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
-                    Toast.makeText(getActivity(), getString(R.string.toast_add_element), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(launchActivity, getString(R.string.toast_add_element), Toast.LENGTH_SHORT).show();
                     notifyChanges();
                 }
             }
@@ -252,7 +267,7 @@ public class DetailPersonFragment extends AbstractMoneyFragment implements View.
     }
 
     public void modifyItem(final Debt debt) {
-        final AlertDialog alert = ViewCreator.createCustomModifyDebtDialogBox(getActivity(), R.string.modify, R.drawable.edit, R.string.validate);
+        final AlertDialog alert = ViewCreator.createCustomModifyDebtDialogBox(launchActivity);
         alert.show();
 
         final TextView increaseTextView = ((TextView) alert.findViewById(R.id.addTextView));
@@ -316,63 +331,17 @@ public class DetailPersonFragment extends AbstractMoneyFragment implements View.
         });
     }
 
-    private void deleteDebt(final AdapterView<?> parent, final int position, final Debt debt, final SwipeListener.Action action) {
-        final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(getActivity(), R.string.warning_text, R.drawable.warning, R.string.message_delete_element, R.string.positive_text, R.string.negative_text);
-        alert.show();
-        alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alert.dismiss();
-                Utils.dbManager.setModificationDatePerson(selectedPerson.getId(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
-                final int idDebt = (int) debt.getId();
-                final int idPerson = (int) selectedPerson.getId();
-                TranslateAnimation anim;
-                if (action == SwipeListener.Action.LR || action == SwipeListener.Action.None) {
-                    anim = new TranslateAnimation(0, Utils.getScreenWidth(launchActivity), 0, 0);
-                } else {
-                    anim = new TranslateAnimation(0, -Utils.getScreenWidth(launchActivity), 0, 0);
-                }
-                anim.setDuration(Utils.ANIMATION_DURATION);
-                parent.getChildAt(position).startAnimation(anim);
-                new Handler().postDelayed(new Runnable() {
-
-                    public void run() {
-                        Utils.dbManager.deleteDebt(idDebt, idPerson);
-                        notifyChanges();
-                    }
-
-                }, Utils.ANIMATION_DURATION);
-                Toast.makeText(getActivity(), getString(R.string.toast_delete_element), Toast.LENGTH_SHORT).show();
-            }
-        });
-        alert.findViewById(R.id.negativeView).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alert.dismiss();
-            }
-        });
-    }
-
     protected boolean checkAddDebtForm(EditText reasonEditText, EditText countEditText, String sign) {
         if (sign != null) {
             if (reasonEditText.getText().length() == 0) {
-                ViewCreator.showCustomAlertDialogBox(getActivity(),
-                        R.string.warning_text,
-                        R.drawable.warning,
-                        String.format(getString(R.string.empty_field_format), getString(R.string.object)));
+                ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.object)));
                 return false;
             } else if (countEditText.getText().length() == 0) {
-                ViewCreator.showCustomAlertDialogBox(getActivity(),
-                        R.string.warning_text,
-                        R.drawable.warning,
-                        String.format(getString(R.string.empty_field_format), getString(R.string.amount)));
+                ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.amount)));
                 return false;
             }
         } else {
-            ViewCreator.showCustomAlertDialogBox(getActivity(),
-                    R.string.warning_text,
-                    R.drawable.warning,
-                    String.format(getString(R.string.empty_field_format), getString(R.string.type)));
+            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.type)));
             return false;
         }
         return true;

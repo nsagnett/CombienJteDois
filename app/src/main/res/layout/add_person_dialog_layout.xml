@@ -42,7 +42,9 @@
         <EditText
             android:id="@+id/phoneNumberEditView"
             android:inputType="phone"
+            android:padding="5dp"
             android:hint="@string/phone_hint"
+            android:background="@null"
             android:layout_weight="0.85"
             android:layout_width="0dp"
             android:layout_height="match_parent" />

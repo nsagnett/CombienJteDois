@@ -8,11 +8,6 @@
         android:icon="@drawable/ic_action_add"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/actionDelete"
-        android:title="@string/action_delete"
-        android:icon="@drawable/ic_action_delete"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/actionEdit"
         android:title="@string/action_edit"
         android:icon="@drawable/ic_action_edit"

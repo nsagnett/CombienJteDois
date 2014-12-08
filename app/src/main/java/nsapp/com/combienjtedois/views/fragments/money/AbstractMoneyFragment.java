@@ -14,7 +14,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.listeners.SwipeListener;
 import nsapp.com.combienjtedois.model.DBManager;
 import nsapp.com.combienjtedois.model.Debt;
 import nsapp.com.combienjtedois.model.Person;
@@ -29,11 +28,12 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
     protected ArrayList<Debt> debtArrayList = new ArrayList<Debt>();
 
     protected ListView listView;
-    protected TextView footerView;
+    private TextView footerView;
 
-    protected TextView headerCountView;
+    private TextView headerCountView;
 
     protected Person selectedPerson;
+
     protected Debt selectedDebt;
 
     protected listWantedType listType;
@@ -45,12 +45,8 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_listview, container, false);
 
-        swipeListener = new SwipeListener();
-
         listView = (ListView) view.findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
-        listView.setOnTouchListener(swipeListener);
-
 
         headerCountView = (TextView) view.findViewById(R.id.headerCountView);
         footerView = (TextView) inflater.inflate(R.layout.footer_listview, null, false);
@@ -79,7 +75,6 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                 }
 
                 if (personArrayList.isEmpty()) {
-                    isDeletingView = false;
                     isEditingView = false;
                     if (listView.getFooterViewsCount() == 0) {
                         footerView.setText(R.string.add_person);
@@ -100,7 +95,7 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                     launchActivity.supportInvalidateOptionsMenu();
                 }
 
-                PersonListAdapter personListAdapter = new PersonListAdapter(launchActivity, personArrayList, isDeletingView, isEditingView);
+                PersonListAdapter personListAdapter = new PersonListAdapter(launchActivity, personArrayList, isEditingView);
                 listView.setAdapter(personListAdapter);
 
                 break;
@@ -120,7 +115,6 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                 }
 
                 if (debtArrayList.isEmpty()) {
-                    isDeletingView = false;
                     isEditingView = false;
                     if (listView.getFooterViewsCount() == 0) {
                         footerView.setText(R.string.add_element);
@@ -141,7 +135,7 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                     launchActivity.supportInvalidateOptionsMenu();
                 }
 
-                DebtListAdapter debtListAdapter = new DebtListAdapter(launchActivity, (DetailPersonFragment) launchActivity.getCurrentFragment(), debtArrayList, isDeletingView, isEditingView);
+                DebtListAdapter debtListAdapter = new DebtListAdapter(launchActivity, (DetailPersonFragment) launchActivity.getCurrentFragment(), debtArrayList, isEditingView);
                 listView.setAdapter(debtListAdapter);
 
                 Double total = Double.parseDouble(Utils.dbManager.getTotalCount(selectedPerson.getId()));

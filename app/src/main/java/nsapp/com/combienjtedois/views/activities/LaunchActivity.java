@@ -26,7 +26,6 @@ import nsapp.com.combienjtedois.views.fragments.money.PersonListForMoneyFragment
 public class LaunchActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private static final int X_ANIMATION = 150;
-    public static final int ANIMATION_DURATION = 400;
 
     private NavigationDrawerFragment navigationDrawerFragment;
 
@@ -122,14 +121,10 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!navigationDrawerFragment.isDrawerOpen()) {
-            if (getCurrentFragment() instanceof LoanObjectsFragment) {
-                getMenuInflater().inflate(R.menu.loan_object, menu);
+            if (getCurrentFragment() instanceof LoanObjectsFragment || listEmpty) {
+                getMenuInflater().inflate(R.menu.add_menu, menu);
             } else {
-                if(listEmpty){
-                    getMenuInflater().inflate(R.menu.add_menu, menu);
-                }else {
-                    getMenuInflater().inflate(R.menu.global, menu);
-                }
+                getMenuInflater().inflate(R.menu.global, menu);
             }
             restoreActionBar();
             return true;
@@ -145,23 +140,15 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
             case R.id.actionAdd:
                 ((AbstractFragment) getCurrentFragment()).addItem(null, null);
                 break;
-            case R.id.actionDelete:
-                if (!((AbstractFragment) getCurrentFragment()).isEditingView()) {
-                    ((AbstractFragment) getCurrentFragment()).setDeletingView(!((AbstractFragment) getCurrentFragment()).isDeletingView());
-                    otherViewToggle(R.drawable.dark_delete);
-                }
-                break;
             case R.id.actionEdit:
-                if (!((AbstractFragment) getCurrentFragment()).isDeletingView()) {
-                    ((AbstractFragment) getCurrentFragment()).setEditingView(!((AbstractFragment) getCurrentFragment()).isEditingView());
-                    otherViewToggle(R.drawable.dark_edit);
-                }
+                ((AbstractFragment) getCurrentFragment()).setEditingView(!((AbstractFragment) getCurrentFragment()).isEditingView());
+                otherViewToggle();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void otherViewToggle(int resViewID) {
+    private void otherViewToggle() {
         View view = getCurrentFragment().getView();
         if (view != null) {
             ListView listView = (ListView) getCurrentFragment().getView().findViewById(R.id.listView);
@@ -171,10 +158,10 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
                     if (listView.getChildAt(i) != null) {
                         final ImageView otherView = (ImageView) listView.getChildAt(i).findViewById(R.id.otherView);
 
-                        if (otherView != null ) {
+                        if (otherView != null) {
 
                             TranslateAnimation imageViewTranslation;
-                            otherView.setImageResource(resViewID);
+                            otherView.setImageResource(R.drawable.dark_edit);
 
                             if (otherView.getVisibility() == View.GONE) {
                                 imageViewTranslation = new TranslateAnimation(otherView.getLeft() - X_ANIMATION, otherView.getLeft(), otherView.getTop(), otherView.getTop());
@@ -187,9 +174,9 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
                                     public void run() {
                                         otherView.setVisibility(View.GONE);
                                     }
-                                }, ANIMATION_DURATION);
+                                }, Utils.ANIMATION_DURATION);
                             }
-                            imageViewTranslation.setDuration(ANIMATION_DURATION);
+                            imageViewTranslation.setDuration(Utils.ANIMATION_DURATION);
                             otherView.startAnimation(imageViewTranslation);
                         }
                     }

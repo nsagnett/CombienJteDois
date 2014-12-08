@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.Debt;
 import nsapp.com.combienjtedois.model.Utils;
-import nsapp.com.combienjtedois.model.ViewCreator;
+import nsapp.com.combienjtedois.views.ViewCreator;
 import nsapp.com.combienjtedois.views.activities.FullScreenImageActivity;
 import nsapp.com.combienjtedois.views.adapters.SimpleListAdapter;
 import nsapp.com.combienjtedois.views.fragments.money.DetailPersonFragment;
@@ -29,17 +29,15 @@ import nsapp.com.combienjtedois.views.fragments.money.DetailPersonFragment;
 public class DebtListAdapter extends BaseAdapter implements View.OnClickListener {
 
     private final Context context;
-    private DetailPersonFragment fragment;
+    private final DetailPersonFragment fragment;
     private final ArrayList<Debt> debtArrayList = new ArrayList<Debt>();
-    private final boolean isDeletingView;
     private final boolean isEditingView;
     private Debt debt;
 
-    public DebtListAdapter(Context context, DetailPersonFragment fragment, ArrayList<Debt> debtArrayList, boolean isDeletingView, boolean isEditingView) {
+    public DebtListAdapter(Context context, DetailPersonFragment fragment, ArrayList<Debt> debtArrayList, boolean isEditingView) {
         this.fragment = fragment;
         this.context = context;
         this.debtArrayList.addAll(debtArrayList);
-        this.isDeletingView = isDeletingView;
         this.isEditingView = isEditingView;
     }
 
@@ -49,7 +47,7 @@ public class DebtListAdapter extends BaseAdapter implements View.OnClickListener
     }
 
     @Override
-    public Object getItem(int position) {
+    public Debt getItem(int position) {
         return null;
     }
 
@@ -90,11 +88,7 @@ public class DebtListAdapter extends BaseAdapter implements View.OnClickListener
         amountView.setText(String.format(context.getString(R.string.money_format), amount));
         amountView.setTextColor(amount >= 0 ? context.getResources().getColor(R.color.green) : context.getResources().getColor(R.color.red));
 
-        if (isDeletingView) {
-            ImageView imageView = (ImageView) convertView.findViewById(R.id.otherView);
-            imageView.setImageResource(R.drawable.dark_delete);
-            imageView.setVisibility(View.VISIBLE);
-        } else if (isEditingView) {
+        if (isEditingView) {
             ImageView imageView = (ImageView) convertView.findViewById(R.id.otherView);
             imageView.setImageResource(R.drawable.dark_edit);
             imageView.setVisibility(View.VISIBLE);

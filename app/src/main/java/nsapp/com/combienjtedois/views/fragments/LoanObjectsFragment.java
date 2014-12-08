@@ -13,7 +13,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.listeners.SwipeListener;
 import nsapp.com.combienjtedois.model.DBManager;
 import nsapp.com.combienjtedois.model.LoanObject;
 import nsapp.com.combienjtedois.model.Utils;
@@ -75,7 +74,6 @@ public class LoanObjectsFragment extends AbstractFragment {
         }
 
         if (loanObjects.isEmpty()) {
-            isDeletingView = false;
             isEditingView = false;
             if (listView.getFooterViewsCount() == 0) {
                 footerView.setText(R.string.add_element);
@@ -92,18 +90,11 @@ public class LoanObjectsFragment extends AbstractFragment {
             listView.removeFooterView(footerView);
         }
 
-        LoanObjectAdapter loanObjectAdapter = new LoanObjectAdapter(launchActivity, loanObjects, isDeletingView);
+        LoanObjectAdapter loanObjectAdapter = new LoanObjectAdapter(launchActivity, loanObjects);
         listView.setAdapter(loanObjectAdapter);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (swipeListener.swipeDetected()) {
-            if (swipeListener.getAction() == SwipeListener.Action.RL || swipeListener.getAction() == SwipeListener.Action.LR) {
-                // delete object
-            }
-        } else if (isDeletingView) {
-            // delete object
-        }
     }
 }

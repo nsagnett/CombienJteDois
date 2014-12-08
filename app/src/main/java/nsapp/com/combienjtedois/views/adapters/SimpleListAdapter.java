@@ -10,8 +10,8 @@ import android.widget.TextView;
 import nsapp.com.combienjtedois.R;
 
 public class SimpleListAdapter extends BaseAdapter {
-    private Context context;
-    private String[] items;
+    private final Context context;
+    private final String[] items;
 
     public SimpleListAdapter(Context context, String[] items) {
         this.context = context;

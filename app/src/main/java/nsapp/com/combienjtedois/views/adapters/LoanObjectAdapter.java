@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,12 +16,10 @@ public class LoanObjectAdapter extends BaseAdapter {
 
     private final Context context;
     private ArrayList<LoanObject> loanObjects = new ArrayList<LoanObject>();
-    private boolean isDeletingView;
 
-    public LoanObjectAdapter(Context context, ArrayList<LoanObject> loanObjects, boolean isDeletingView) {
+    public LoanObjectAdapter(Context context, ArrayList<LoanObject> loanObjects) {
         this.context = context;
         this.loanObjects.addAll(loanObjects);
-        this.isDeletingView = isDeletingView;
     }
 
     @Override
@@ -31,7 +28,7 @@ public class LoanObjectAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public LoanObject getItem(int position) {
         return loanObjects.get(position);
     }
 
@@ -56,11 +53,6 @@ public class LoanObjectAdapter extends BaseAdapter {
         ((TextView) convertView.findViewById(R.id.typeLoanView)).setText(loanObject.getType());
         ((TextView) convertView.findViewById(R.id.dateView)).setText(String.format(context.getString(R.string.add_date_format), loanObject.getDate()));
 
-        if (isDeletingView) {
-            ImageView imageView = (ImageView) convertView.findViewById(R.id.otherView);
-            imageView.setImageResource(R.drawable.dark_delete);
-            imageView.setVisibility(View.VISIBLE);
-        }
         return convertView;
     }
 }

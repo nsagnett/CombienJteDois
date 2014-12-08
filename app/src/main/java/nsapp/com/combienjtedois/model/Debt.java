@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 public class Debt implements Serializable{
 
-    private long id;
+    private final long id;
     private String amount;
-    private String date;
-    private String reason;
-    private String profileImageUrl;
+    private final String date;
+    private final String reason;
+    private final String profileImageUrl;
 
     public Debt(long id, String amount, String reason, String profileImageUrl, String date){
         this.id = id;
@@ -28,10 +28,6 @@ public class Debt implements Serializable{
 
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getProfileImageUrl() {

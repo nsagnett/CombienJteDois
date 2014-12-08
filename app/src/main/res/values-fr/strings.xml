@@ -58,7 +58,7 @@
 
     <!--Argent-->
     <string name="add_element">Ajouter un élément</string>
-    <string name="modify">Modifier</string>
+    <string name="modify_element">Modifier un élément</string>
     <string name="money_format">%s €</string>
     <string name="warning_text">Attention !</string>
     <string name="message_delete_element">Voulez-vous vraiment supprimer cet élément ?</string>

@@ -16,13 +16,13 @@ public class DBManager {
     private static final String ID_PERSON_KEY = "idP";
     public static final String NAME_PERSON_KEY = "name";
     public static final String PHONE_NUMBER_KEY = "phoneNumber";
-    public static final String TOTAL_COUNT_KEY = "totalCount";
+    private static final String TOTAL_COUNT_KEY = "totalCount";
 
 
     // DEBT
     private static final String ID_DEBT_KEY = "idD";
     private static final String ID_PERSON_DEBT_KEY = "idFKP";
-    public static final String AMOUNT_KEY = "amount";
+    private static final String AMOUNT_KEY = "amount";
     public static final String REASON_KEY = "reason";
 
     //OBJECT
