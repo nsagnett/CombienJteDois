@@ -17,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Date;
 
@@ -47,6 +46,11 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
     public void onResume() {
         super.onResume();
         launchActivity.updateActionBarTitle(getString(R.string.title_section1));
+        View view = getView();
+        if (view != null) {
+            view.findViewById(R.id.headerSeparator).setVisibility(View.GONE);
+        }
+        notifyChanges();
         SwipeDismissListViewTouchListener swipeDismissListViewTouchListener = new SwipeDismissListViewTouchListener(listView, new SwipeDismissListViewTouchListener.OnDismissCallback() {
             @Override
             public void onDismiss(final ListView listView, int[] reverseSortedPositions) {
@@ -57,9 +61,8 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
                         @Override
                         public void onClick(View v) {
                             alert.dismiss();
-                            Utils.dbManager.deletePerson((int) personArrayList.get(position).getId());
+                            Utils.dbManager.deletePerson(personArrayList.get(position).getId());
                             notifyChanges();
-                            Toast.makeText(getActivity(), getString(R.string.toast_delete_person), Toast.LENGTH_SHORT).show();
                         }
                     });
                     alert.findViewById(R.id.negativeView).setOnClickListener(new View.OnClickListener() {
@@ -73,11 +76,6 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
         });
         listView.setOnTouchListener(swipeDismissListViewTouchListener);
         listView.setOnScrollListener(swipeDismissListViewTouchListener.makeScrollListener());
-        View view = getView();
-        if (view != null) {
-            view.findViewById(R.id.headerSeparator).setVisibility(View.GONE);
-        }
-        notifyChanges();
     }
 
     @Override
@@ -132,7 +130,6 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
                     alert.dismiss();
                     Utils.dbManager.createPerson(nameEditView.getText().toString(), importContactView.getText().toString(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
                     notifyChanges();
-                    Toast.makeText(getActivity(), getString(R.string.toast_add_person), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -152,7 +149,6 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
                     alert.dismiss();
                     Utils.dbManager.modifyPerson(person.getId(), nameView.getText().toString(), person.getTotalAmount(), person.getPhoneNumber(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
                     notifyChanges();
-                    Toast.makeText(getActivity(), getString(R.string.toast_modify), Toast.LENGTH_SHORT).show();
                 }
             }
         });

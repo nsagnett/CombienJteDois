@@ -1,19 +1,15 @@
 package nsapp.com.combienjtedois.model;
 
-import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Point;
 import android.net.Uri;
-import android.os.Build;
 import android.provider.MediaStore;
-import android.view.Display;
 
 public class Utils {
 
-    public static final String PATTERN_DATE = "dd-MM-yyyy : H:m";
+    public static final String PATTERN_DATE = "dd-MM-yyyy : HH:mm";
 
     public static final String PERSON_KEY = "person_key";
     public static final String PATH_KEY = "path_key";
@@ -56,18 +52,5 @@ public class Utils {
 
     public static Bitmap getImageFromPath(String path) {
         return BitmapFactory.decodeFile(path);
-    }
-
-    public static int getScreenWidth(Activity activity) {
-        Display display = activity.getWindowManager().getDefaultDisplay();
-        int width;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            Point size = new Point();
-            display.getSize(size);
-            width = size.x;
-        } else {
-            width = display.getWidth();
-        }
-        return width;
     }
 }

@@ -2,14 +2,14 @@ package nsapp.com.combienjtedois.model;
 
 public class LoanObject {
 
-    private long idLoanObject;
+    private int idLoanObject;
     private String namePerson;
     private String category;
     private String nameObject;
     private String type;
     private String date;
 
-    public LoanObject(long idLoanObject, String namePerson, String category, String nameObject, String type, String date) {
+    public LoanObject(int idLoanObject, String namePerson, String category, String nameObject, String type, String date) {
         this.idLoanObject = idLoanObject;
         this.namePerson = namePerson;
         this.category = category;
@@ -18,7 +18,7 @@ public class LoanObject {
         this.date = date;
     }
 
-    public long getIdLoanObject() {
+    public int getIdLoanObject() {
         return idLoanObject;
     }
 

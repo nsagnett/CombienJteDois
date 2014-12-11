@@ -14,6 +14,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import nsapp.com.combienjtedois.R;
+import nsapp.com.combienjtedois.views.activities.LaunchActivity;
+import nsapp.com.combienjtedois.views.fragments.LoanObjectsFragment;
 
 public class ViewCreator {
 
@@ -122,6 +124,9 @@ public class ViewCreator {
                     viewOne.setSelected(true);
                     viewOne.setTextColor(white);
                     viewTwo.setTextColor(dark_blue);
+                    if (((LaunchActivity) context).getCurrentFragment() instanceof LoanObjectsFragment) {
+                        ((LoanObjectsFragment) ((LaunchActivity) context).getCurrentFragment()).sort(LoanObjectsFragment.SortType.first_type);
+                    }
                 }
             }
         });
@@ -133,9 +138,24 @@ public class ViewCreator {
                     viewTwo.setSelected(true);
                     viewTwo.setTextColor(white);
                     viewOne.setTextColor(dark_blue);
+                    if (((LaunchActivity) context).getCurrentFragment() instanceof LoanObjectsFragment) {
+                        ((LoanObjectsFragment) ((LaunchActivity) context).getCurrentFragment()).sort(LoanObjectsFragment.SortType.second_type);
+                    }
                 }
             }
         });
+    }
+
+    public static AlertDialog createCustomLoanObjectDialogBox(Context context) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.add_loan_dialog_layout, null);
+
+        builder.setCustomTitle(getCustomTitleDialogBox(context, R.string.add_element, R.drawable.add));
+
+        ((TextView) view.findViewById(R.id.neutralTextView)).setText(R.string.validate);
+
+        builder.setView(view);
+        return builder.create();
     }
 
     public static Bitmap getRoundedShape(Bitmap scaleBitmapImage) {

@@ -11,8 +11,6 @@
     <string name="action_settings">Settings</string>
     <string name="action_add">Add</string>
     <string name="action_edit">Modify</string>
-    <string name="action_delete">Delete</string>
-
 
     <!--Personnes-->
     <string name="add_person">Add person</string>
@@ -24,8 +22,6 @@
     <string name="toast_modify">Changes done !</string>
     <string name="toast_delete_person">Person deleted !</string>
     <string name="toast_add_element">Debt added !</string>
-    <string name="toast_delete_element">Debt deleted !</string>
-    <string name="person_name_format">%1$s : %2$s</string>
     <string name="message_delete_person_text">Are you sure to delete this person ?</string>
     <string name="person_already_present_format">%s already exists !</string>
 
@@ -37,8 +33,6 @@
     <string name="empty_field_format">The field %s is required !</string>
     <string name="content">Content</string>
     <string name="euro">€</string>
-    <string name="increasing_amount">By ascending amount</string>
-    <string name="decreasing_debt">By decreasing amount</string>
 
     <!--Argent-->
     <string name="add_element">Add debt</string>

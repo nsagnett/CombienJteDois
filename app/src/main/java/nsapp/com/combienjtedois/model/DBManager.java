@@ -119,6 +119,7 @@ public class DBManager {
             initialValues.put(DATE_KEY, date);
             initialValues.put(IMAGE_PROFILE, "");
 
+            Toast.makeText(context, context.getString(R.string.toast_add_person), Toast.LENGTH_SHORT).show();
             return sqLiteDatabase.insert(DATABASE_TABLE_PERSON, null, initialValues);
         } else {
             Toast.makeText(context, String.format(context.getString(R.string.person_already_present_format), name), Toast.LENGTH_SHORT).show();
@@ -126,15 +127,16 @@ public class DBManager {
         return 0;
     }
 
-    public boolean setImageProfileUrlPerson(long idPerson, String url) {
+    public boolean setImageProfileUrlPerson(int idPerson, String url) {
         ContentValues args = new ContentValues();
         args.put(IMAGE_PROFILE, url);
 
+        Toast.makeText(context, context.getString(R.string.modify_image), Toast.LENGTH_SHORT).show();
         return sqLiteDatabase.update(DATABASE_TABLE_PERSON, args, ID_PERSON_KEY + "="
                 + idPerson, null) > 0;
     }
 
-    public boolean setModificationDatePerson(long idPerson, String date) {
+    public boolean setModificationDatePerson(int idPerson, String date) {
         ContentValues args = new ContentValues();
         args.put(DATE_KEY, date);
 
@@ -142,18 +144,19 @@ public class DBManager {
                 + idPerson, null) > 0;
     }
 
-    public boolean modifyPerson(long idPerson, String name, String totalCount, String phoneNumber, String date) {
+    public boolean modifyPerson(int idPerson, String name, String totalCount, String phoneNumber, String date) {
         ContentValues args = new ContentValues();
         args.put(NAME_PERSON_KEY, Utils.camelCase(name));
         args.put(TOTAL_COUNT_KEY, totalCount);
         args.put(PHONE_NUMBER_KEY, phoneNumber);
         args.put(DATE_KEY, date);
 
+        Toast.makeText(context, context.getString(R.string.toast_modify), Toast.LENGTH_SHORT).show();
         return sqLiteDatabase.update(DATABASE_TABLE_PERSON, args, ID_PERSON_KEY + "="
                 + idPerson, null) > 0;
     }
 
-    public long fetchIdPerson(String name) {
+    public int fetchIdPerson(String name) {
         Cursor c = sqLiteDatabase.query(DATABASE_TABLE_PERSON, new String[]{
                 ID_PERSON_KEY, NAME_PERSON_KEY, PHONE_NUMBER_KEY, IMAGE_PROFILE, TOTAL_COUNT_KEY, DATE_KEY}, NAME_PERSON_KEY + "= '" + name + "'", null, null, null, null);
 
@@ -172,6 +175,7 @@ public class DBManager {
 
 
     public boolean deletePerson(int idPerson) {
+        Toast.makeText(context, context.getString(R.string.toast_delete_person), Toast.LENGTH_SHORT).show();
         return sqLiteDatabase.delete(DATABASE_TABLE_PERSON, ID_PERSON_KEY + "=" + idPerson,
                 null) > 0 && sqLiteDatabase.delete(DATABASE_TABLE_DEBT, ID_PERSON_DEBT_KEY + "=" + idPerson,
                 null) > 0;
@@ -183,7 +187,7 @@ public class DBManager {
      * *************
      */
 
-    public long createDebt(long idPerson, String amount, String reason, String date) {
+    public long createDebt(int idPerson, String amount, String reason, String date) {
         ContentValues initialValues = new ContentValues();
         reason = Utils.camelCase(reason);
         if (fetchIdDebt(idPerson, reason) == 0) {
@@ -193,6 +197,7 @@ public class DBManager {
             initialValues.put(DATE_KEY, date);
             initialValues.put(IMAGE_PROFILE, "");
 
+            Toast.makeText(context, context.getString(R.string.toast_add_element), Toast.LENGTH_SHORT).show();
             return sqLiteDatabase.insert(DATABASE_TABLE_DEBT, null, initialValues);
         } else {
             Toast.makeText(context, context.getString(R.string.debt_already_present), Toast.LENGTH_SHORT).show();
@@ -200,23 +205,25 @@ public class DBManager {
         return 0;
     }
 
-    public boolean modifyDebt(long idDebt, String amount, String date) {
+    public boolean modifyDebt(int idDebt, String amount, String date) {
         ContentValues initialValues = new ContentValues();
         initialValues.put(AMOUNT_KEY, amount);
         initialValues.put(DATE_KEY, date);
 
+        Toast.makeText(context, context.getString(R.string.toast_modify), Toast.LENGTH_SHORT).show();
         return sqLiteDatabase.update(DATABASE_TABLE_DEBT, initialValues, ID_DEBT_KEY + "=" + idDebt, null) > 0;
     }
 
-    public boolean setImageProfileUrlDebt(long idDebt, String url) {
+    public boolean setImageProfileUrlDebt(int idDebt, String url) {
         ContentValues args = new ContentValues();
         args.put(IMAGE_PROFILE, url);
 
+        Toast.makeText(context, context.getString(R.string.modify_image), Toast.LENGTH_SHORT).show();
         return sqLiteDatabase.update(DATABASE_TABLE_DEBT, args, ID_DEBT_KEY + "="
                 + idDebt, null) > 0;
     }
 
-    public long fetchIdDebt(long idPerson, String reason) {
+    public int fetchIdDebt(int idPerson, String reason) {
         Cursor c = sqLiteDatabase.query(DATABASE_TABLE_DEBT, new String[]{
                 ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, IMAGE_PROFILE, DATE_KEY}, ID_PERSON_DEBT_KEY + "='" + idPerson + "' AND " + REASON_KEY + "='" + reason + "'", null, null, null, null);
 
@@ -226,7 +233,7 @@ public class DBManager {
         return 0;
     }
 
-    private Cursor fetchDebt(long rowIdDebt) {
+    private Cursor fetchDebt(int rowIdDebt) {
         Cursor mCursor = sqLiteDatabase.query(true, DATABASE_TABLE_DEBT, new String[]{
                 ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, IMAGE_PROFILE, DATE_KEY}, ID_DEBT_KEY + "="
                 + rowIdDebt, null, null, null, null, null);
@@ -236,13 +243,13 @@ public class DBManager {
         return mCursor;
     }
 
-    public Cursor fetchAllDebt(long idPerson) {
+    public Cursor fetchAllDebt(int idPerson) {
         return sqLiteDatabase.query(DATABASE_TABLE_DEBT, new String[]{
                         ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, IMAGE_PROFILE, DATE_KEY}, ID_PERSON_DEBT_KEY + "=" + idPerson, null, null, null,
                 null);
     }
 
-    public String getCount(long idDebt) {
+    public String getCount(int idDebt) {
         Cursor c = fetchDebt(idDebt);
 
         if (c != null) {
@@ -252,7 +259,7 @@ public class DBManager {
         return null;
     }
 
-    public String getTotalCount(long idPerson) {
+    public String getTotalCount(int idPerson) {
         Cursor c = fetchAllDebt(idPerson);
         Double total = 0.;
 
@@ -265,6 +272,7 @@ public class DBManager {
     }
 
     public boolean deleteDebt(int idDebt, int idPerson) {
+        Toast.makeText(context, context.getString(R.string.toast_delete_element), Toast.LENGTH_SHORT).show();
         return sqLiteDatabase.delete(DATABASE_TABLE_DEBT, ID_DEBT_KEY + "=" + idDebt + " AND " + ID_PERSON_DEBT_KEY + "=" + idPerson,
                 null) > 0;
     }
@@ -274,20 +282,20 @@ public class DBManager {
      * OBJECT QUERIES
      * **************
      */
-    public long createObject(long idObject, String name, String category, String nameObject, String type, String date) {
+    public long createObject(String name, String category, String nameObject, String type, String date) {
         ContentValues initialValues = new ContentValues();
         name = Utils.camelCase(name);
         category = Utils.camelCase(category);
         nameObject = Utils.camelCase(nameObject);
         type = Utils.camelCase(type);
 
-        initialValues.put(ID_OBJECT_KEY, idObject);
         initialValues.put(NAME_PERSON_KEY, name);
         initialValues.put(CATEGORY_OBJECT_KEY, category);
         initialValues.put(NAME_OBJECT_KEY, nameObject);
         initialValues.put(TYPE_OBJECT_KEY, type);
         initialValues.put(DATE_KEY, date);
 
+        Toast.makeText(context, context.getString(R.string.toast_add_element), Toast.LENGTH_SHORT).show();
         return sqLiteDatabase.insert(DATABASE_TABLE_OBJECT, null, initialValues);
     }
 
@@ -297,7 +305,7 @@ public class DBManager {
                 null);
     }
 
-    public long fetchIdObject(String namePerson, String date) {
+    public int fetchIdObject(String namePerson, String date) {
         Cursor c = sqLiteDatabase.query(DATABASE_TABLE_OBJECT, new String[]{
                 ID_OBJECT_KEY, NAME_PERSON_KEY, CATEGORY_OBJECT_KEY, NAME_OBJECT_KEY, TYPE_OBJECT_KEY, DATE_KEY}, NAME_PERSON_KEY + "='" + namePerson + "'AND " +
                 DATE_KEY + "='" + date + "'", null, null, null, null);
@@ -309,6 +317,7 @@ public class DBManager {
     }
 
     public boolean deleteObject(int idObject) {
+        Toast.makeText(context, context.getString(R.string.toast_delete_element), Toast.LENGTH_SHORT).show();
         return sqLiteDatabase.delete(DATABASE_TABLE_OBJECT, ID_OBJECT_KEY + "=" + idObject, null) > 0;
     }
 }

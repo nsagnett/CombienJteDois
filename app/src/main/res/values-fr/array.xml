@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="objectsArray">
+        <item>Sélectionnez une catégorie&#8230;</item>
         <item>DVD et Blu-Ray</item>
         <item>Livres</item>
         <item>Musique</item>

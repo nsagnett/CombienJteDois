@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 public class Debt implements Serializable{
 
-    private final long id;
+    private final int id;
     private String amount;
     private final String date;
     private final String reason;
     private final String profileImageUrl;
 
-    public Debt(long id, String amount, String reason, String profileImageUrl, String date){
+    public Debt(int id, String amount, String reason, String profileImageUrl, String date){
         this.id = id;
         this.amount = amount;
         this.date = date;
@@ -26,7 +26,7 @@ public class Debt implements Serializable{
         return amount;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 

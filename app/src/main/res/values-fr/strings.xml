@@ -12,8 +12,6 @@
     <string name="action_settings">Paramètres</string>
     <string name="action_add">Ajouter</string>
     <string name="action_edit">Modifier</string>
-    <string name="action_delete">Supprimer</string>
-
 
     <!--Personnes-->
     <string name="add_person">Ajouter une personne</string>
@@ -25,8 +23,6 @@
     <string name="toast_add_person">Personne ajoutée !</string>
     <string name="toast_modify">Changement effectué !</string>
     <string name="toast_delete_person">Personne supprimée !</string>
-    <string name="person_name_format">%s : </string>
-    <string name="person_count_format"> : %s</string>
     <string name="message_delete_person_text">Voulez-vous vraiment supprimer cette personne ?</string>
     <string name="person_already_present_format">%s existe déjà !</string>
     <string name="phone_hint">Saisir le numéro</string>
@@ -41,7 +37,6 @@
     <string name="content">Content</string>
     <string name="euro">€</string>
     <string name="three_points">&#8230;</string>
-    <string name="error">Erreur pendant l\'opération, veuillez réessayer</string>
     <string name="missing_picture">Aucune photo détectée !</string>
     <string name="fullscreen">Agrandir</string>
     <string name="camera">Appareil photo</string>
@@ -75,5 +70,18 @@
     <string name="debt_already_present">Cet élément existe déjà !</string>
     <string name="toast_add_element">Elément ajouté !</string>
     <string name="toast_delete_element">Elément supprimé !</string>
+    <string name="modify_image">Image modifiée !</string>
+
+    <!--Objets-->
+    <string name="person_name_with_points">Nom de la personne concernée :&#160;</string>
+    <string name="person_name">Nom de la personne concernée</string>
+    <string name="object_description_with_points">Description :&#160;</string>
+    <string name="object_description">Description</string>
+    <string name="person_hint">Saisir le nom</string>
+    <string name="description_hint">Saisir la description</string>
+    <string name="category_object_with_points">Catégorie de l\'objet :&#160;</string>
+    <string name="category_object">Catégorie</string>
+    <string name="negative_loan">Emprunt</string>
+    <string name="positive_loan">Prêt</string>
 
 </resources>

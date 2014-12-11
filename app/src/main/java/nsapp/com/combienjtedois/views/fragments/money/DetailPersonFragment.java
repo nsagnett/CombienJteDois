@@ -83,8 +83,8 @@ public class DetailPersonFragment extends AbstractMoneyFragment implements View.
                         public void onClick(View v) {
                             alert.dismiss();
                             Utils.dbManager.setModificationDatePerson(selectedPerson.getId(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
-                            final int idDebt = (int) debtArrayList.get(position).getId();
-                            final int idPerson = (int) selectedPerson.getId();
+                            final int idDebt = debtArrayList.get(position).getId();
+                            final int idPerson = selectedPerson.getId();
                             Utils.dbManager.deleteDebt(idDebt, idPerson);
                             notifyChanges();
                         }
@@ -259,7 +259,6 @@ public class DetailPersonFragment extends AbstractMoneyFragment implements View.
                     alert.dismiss();
                     Utils.dbManager.setModificationDatePerson(selectedPerson.getId(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
                     Utils.dbManager.createDebt(selectedPerson.getId(), sign + countEditText.getText().toString(), reasonEditText.getText().toString(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
-                    Toast.makeText(launchActivity, getString(R.string.toast_add_element), Toast.LENGTH_SHORT).show();
                     notifyChanges();
                 }
             }
@@ -325,7 +324,6 @@ public class DetailPersonFragment extends AbstractMoneyFragment implements View.
                 alert.dismiss();
                 Utils.dbManager.modifyDebt(debt.getId(), finalSign + amountInteger.toString(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
                 Utils.dbManager.setModificationDatePerson(selectedPerson.getId(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
-                Toast.makeText(getActivity(), getString(R.string.toast_modify), Toast.LENGTH_SHORT).show();
                 notifyChanges();
             }
         });

@@ -69,7 +69,7 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                     String imageUrl = c.getString(c.getColumnIndex(DBManager.IMAGE_PROFILE));
                     String date = c.getString(c.getColumnIndex(DBManager.DATE_KEY));
 
-                    long id = Utils.dbManager.fetchIdPerson(name);
+                    int id = Utils.dbManager.fetchIdPerson(name);
                     String total = Utils.dbManager.getTotalCount(id);
                     personArrayList.add(new Person(id, name, total, phoneNumber, imageUrl, date));
                 }
@@ -100,7 +100,7 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
 
                 break;
             case DEBT:
-                long idPerson = selectedPerson.getId();
+                int idPerson = selectedPerson.getId();
                 c = Utils.dbManager.fetchAllDebt(idPerson);
                 debtArrayList = new ArrayList<Debt>();
 
@@ -109,7 +109,7 @@ public abstract class AbstractMoneyFragment extends AbstractFragment implements 
                     String profileImage = c.getString(c.getColumnIndex(DBManager.IMAGE_PROFILE));
                     String date = c.getString(c.getColumnIndex(DBManager.DATE_KEY));
 
-                    long id = Utils.dbManager.fetchIdDebt(idPerson, reason);
+                    int id = Utils.dbManager.fetchIdDebt(idPerson, reason);
                     String amount = Utils.dbManager.getCount(id);
                     debtArrayList.add(new Debt(id, amount, reason, profileImage, date));
                 }
