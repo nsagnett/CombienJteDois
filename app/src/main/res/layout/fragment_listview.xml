@@ -6,8 +6,6 @@
 
     <include layout="@layout/header" />
 
-    <include layout="@layout/sort_view" />
-
     <include
         layout="@layout/separator"
         android:id="@+id/headerSeparator" />

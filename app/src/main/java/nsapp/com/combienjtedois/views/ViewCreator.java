@@ -14,8 +14,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.views.activities.LaunchActivity;
-import nsapp.com.combienjtedois.views.fragments.LoanObjectsFragment;
 
 public class ViewCreator {
 
@@ -124,9 +122,6 @@ public class ViewCreator {
                     viewOne.setSelected(true);
                     viewOne.setTextColor(white);
                     viewTwo.setTextColor(dark_blue);
-                    if (((LaunchActivity) context).getCurrentFragment() instanceof LoanObjectsFragment) {
-                        ((LoanObjectsFragment) ((LaunchActivity) context).getCurrentFragment()).sort(LoanObjectsFragment.SortType.first_type);
-                    }
                 }
             }
         });
@@ -138,9 +133,6 @@ public class ViewCreator {
                     viewTwo.setSelected(true);
                     viewTwo.setTextColor(white);
                     viewOne.setTextColor(dark_blue);
-                    if (((LaunchActivity) context).getCurrentFragment() instanceof LoanObjectsFragment) {
-                        ((LoanObjectsFragment) ((LaunchActivity) context).getCurrentFragment()).sort(LoanObjectsFragment.SortType.second_type);
-                    }
                 }
             }
         });

@@ -94,10 +94,9 @@ public class DBManager {
         this.context = ctx;
     }
 
-    public DBManager open() throws SQLException {
+    public void open() throws SQLException {
         databaseHelper = new DatabaseHelper(context);
         sqLiteDatabase = databaseHelper.getWritableDatabase();
-        return this;
     }
 
     public void close() {
@@ -109,7 +108,7 @@ public class DBManager {
      * PERSON QUERIES
      * **************
      */
-    public long createPerson(String name, String phoneNumber, String date) {
+    public void createPerson(String name, String phoneNumber, String date) {
         ContentValues initialValues = new ContentValues();
         name = Utils.camelCase(name);
         if (fetchIdPerson(name) == 0) {
@@ -120,31 +119,30 @@ public class DBManager {
             initialValues.put(IMAGE_PROFILE, "");
 
             Toast.makeText(context, context.getString(R.string.toast_add_person), Toast.LENGTH_SHORT).show();
-            return sqLiteDatabase.insert(DATABASE_TABLE_PERSON, null, initialValues);
+            sqLiteDatabase.insert(DATABASE_TABLE_PERSON, null, initialValues);
         } else {
             Toast.makeText(context, String.format(context.getString(R.string.person_already_present_format), name), Toast.LENGTH_SHORT).show();
         }
-        return 0;
     }
 
-    public boolean setImageProfileUrlPerson(int idPerson, String url) {
+    public void setImageProfileUrlPerson(int idPerson, String url) {
         ContentValues args = new ContentValues();
         args.put(IMAGE_PROFILE, url);
 
         Toast.makeText(context, context.getString(R.string.modify_image), Toast.LENGTH_SHORT).show();
-        return sqLiteDatabase.update(DATABASE_TABLE_PERSON, args, ID_PERSON_KEY + "="
-                + idPerson, null) > 0;
+        sqLiteDatabase.update(DATABASE_TABLE_PERSON, args, ID_PERSON_KEY + "="
+                + idPerson, null);
     }
 
-    public boolean setModificationDatePerson(int idPerson, String date) {
+    public void setModificationDatePerson(int idPerson, String date) {
         ContentValues args = new ContentValues();
         args.put(DATE_KEY, date);
 
-        return sqLiteDatabase.update(DATABASE_TABLE_PERSON, args, ID_PERSON_KEY + "="
-                + idPerson, null) > 0;
+        sqLiteDatabase.update(DATABASE_TABLE_PERSON, args, ID_PERSON_KEY + "="
+                + idPerson, null);
     }
 
-    public boolean modifyPerson(int idPerson, String name, String totalCount, String phoneNumber, String date) {
+    public void modifyPerson(int idPerson, String name, String totalCount, String phoneNumber, String date) {
         ContentValues args = new ContentValues();
         args.put(NAME_PERSON_KEY, Utils.camelCase(name));
         args.put(TOTAL_COUNT_KEY, totalCount);
@@ -152,8 +150,8 @@ public class DBManager {
         args.put(DATE_KEY, date);
 
         Toast.makeText(context, context.getString(R.string.toast_modify), Toast.LENGTH_SHORT).show();
-        return sqLiteDatabase.update(DATABASE_TABLE_PERSON, args, ID_PERSON_KEY + "="
-                + idPerson, null) > 0;
+        sqLiteDatabase.update(DATABASE_TABLE_PERSON, args, ID_PERSON_KEY + "="
+                + idPerson, null);
     }
 
     public int fetchIdPerson(String name) {
@@ -174,11 +172,10 @@ public class DBManager {
     }
 
 
-    public boolean deletePerson(int idPerson) {
+    public void deletePerson(int idPerson) {
         Toast.makeText(context, context.getString(R.string.toast_delete_person), Toast.LENGTH_SHORT).show();
-        return sqLiteDatabase.delete(DATABASE_TABLE_PERSON, ID_PERSON_KEY + "=" + idPerson,
-                null) > 0 && sqLiteDatabase.delete(DATABASE_TABLE_DEBT, ID_PERSON_DEBT_KEY + "=" + idPerson,
-                null) > 0;
+        sqLiteDatabase.delete(DATABASE_TABLE_PERSON, ID_PERSON_KEY + "=" + idPerson, null);
+        sqLiteDatabase.delete(DATABASE_TABLE_DEBT, ID_PERSON_DEBT_KEY + "=" + idPerson, null);
     }
 
     /**
@@ -187,7 +184,7 @@ public class DBManager {
      * *************
      */
 
-    public long createDebt(int idPerson, String amount, String reason, String date) {
+    public void createDebt(int idPerson, String amount, String reason, String date) {
         ContentValues initialValues = new ContentValues();
         reason = Utils.camelCase(reason);
         if (fetchIdDebt(idPerson, reason) == 0) {
@@ -198,29 +195,27 @@ public class DBManager {
             initialValues.put(IMAGE_PROFILE, "");
 
             Toast.makeText(context, context.getString(R.string.toast_add_element), Toast.LENGTH_SHORT).show();
-            return sqLiteDatabase.insert(DATABASE_TABLE_DEBT, null, initialValues);
+            sqLiteDatabase.insert(DATABASE_TABLE_DEBT, null, initialValues);
         } else {
             Toast.makeText(context, context.getString(R.string.debt_already_present), Toast.LENGTH_SHORT).show();
         }
-        return 0;
     }
 
-    public boolean modifyDebt(int idDebt, String amount, String date) {
+    public void modifyDebt(int idDebt, String amount, String date) {
         ContentValues initialValues = new ContentValues();
         initialValues.put(AMOUNT_KEY, amount);
         initialValues.put(DATE_KEY, date);
 
         Toast.makeText(context, context.getString(R.string.toast_modify), Toast.LENGTH_SHORT).show();
-        return sqLiteDatabase.update(DATABASE_TABLE_DEBT, initialValues, ID_DEBT_KEY + "=" + idDebt, null) > 0;
+        sqLiteDatabase.update(DATABASE_TABLE_DEBT, initialValues, ID_DEBT_KEY + "=" + idDebt, null);
     }
 
-    public boolean setImageProfileUrlDebt(int idDebt, String url) {
+    public void setImageProfileUrlDebt(int idDebt, String url) {
         ContentValues args = new ContentValues();
         args.put(IMAGE_PROFILE, url);
 
         Toast.makeText(context, context.getString(R.string.modify_image), Toast.LENGTH_SHORT).show();
-        return sqLiteDatabase.update(DATABASE_TABLE_DEBT, args, ID_DEBT_KEY + "="
-                + idDebt, null) > 0;
+        sqLiteDatabase.update(DATABASE_TABLE_DEBT, args, ID_DEBT_KEY + "=" + idDebt, null);
     }
 
     public int fetchIdDebt(int idPerson, String reason) {
@@ -271,10 +266,9 @@ public class DBManager {
         return total.toString();
     }
 
-    public boolean deleteDebt(int idDebt, int idPerson) {
+    public void deleteDebt(int idDebt, int idPerson) {
         Toast.makeText(context, context.getString(R.string.toast_delete_element), Toast.LENGTH_SHORT).show();
-        return sqLiteDatabase.delete(DATABASE_TABLE_DEBT, ID_DEBT_KEY + "=" + idDebt + " AND " + ID_PERSON_DEBT_KEY + "=" + idPerson,
-                null) > 0;
+        sqLiteDatabase.delete(DATABASE_TABLE_DEBT, ID_DEBT_KEY + "=" + idDebt + " AND " + ID_PERSON_DEBT_KEY + "=" + idPerson, null);
     }
 
     /**
@@ -282,7 +276,7 @@ public class DBManager {
      * OBJECT QUERIES
      * **************
      */
-    public long createObject(String name, String category, String nameObject, String type, String date) {
+    public void createObject(String name, String category, String nameObject, String type, String date) {
         ContentValues initialValues = new ContentValues();
         name = Utils.camelCase(name);
         category = Utils.camelCase(category);
@@ -296,7 +290,7 @@ public class DBManager {
         initialValues.put(DATE_KEY, date);
 
         Toast.makeText(context, context.getString(R.string.toast_add_element), Toast.LENGTH_SHORT).show();
-        return sqLiteDatabase.insert(DATABASE_TABLE_OBJECT, null, initialValues);
+        sqLiteDatabase.insert(DATABASE_TABLE_OBJECT, null, initialValues);
     }
 
     public Cursor fetchAllObjects() {
@@ -316,8 +310,8 @@ public class DBManager {
         return 0;
     }
 
-    public boolean deleteObject(int idObject) {
+    public void deleteObject(int idObject) {
         Toast.makeText(context, context.getString(R.string.toast_delete_element), Toast.LENGTH_SHORT).show();
-        return sqLiteDatabase.delete(DATABASE_TABLE_OBJECT, ID_OBJECT_KEY + "=" + idObject, null) > 0;
+        sqLiteDatabase.delete(DATABASE_TABLE_OBJECT, ID_OBJECT_KEY + "=" + idObject, null);
     }
 }

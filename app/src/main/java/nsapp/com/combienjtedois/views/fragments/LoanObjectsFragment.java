@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -29,12 +28,6 @@ import nsapp.com.combienjtedois.views.activities.LaunchActivity;
 import nsapp.com.combienjtedois.views.adapters.LoanObjectAdapter;
 
 public class LoanObjectsFragment extends AbstractFragment {
-
-    public enum SortType {
-        first_type, second_type
-    }
-
-    private SortType sortType;
 
     private TextView footerView;
     private ListView listView;
@@ -56,11 +49,6 @@ public class LoanObjectsFragment extends AbstractFragment {
 
         listView = (ListView) view.findViewById(R.id.listView);
         footerView = (TextView) inflater.inflate(R.layout.footer_listview, null, false);
-        LinearLayout sortViewLayout = (LinearLayout) view.findViewById(R.id.switchSortView);
-        sortViewLayout.setVisibility(View.VISIBLE);
-        TextView firstSortView = (TextView) view.findViewById(R.id.firstSortView);
-        TextView secondSortView = (TextView) view.findViewById(R.id.secondSortColor);
-        ViewCreator.switchView(launchActivity, firstSortView, secondSortView);
 
         view.findViewById(R.id.headerSeparator).setVisibility(View.GONE);
         launchActivity.supportInvalidateOptionsMenu();
@@ -74,7 +62,7 @@ public class LoanObjectsFragment extends AbstractFragment {
         ((LaunchActivity) getActivity()).updateActionBarTitle(getString(R.string.title_section2));
         SwipeDismissListViewTouchListener swipeDismissListViewTouchListener = new SwipeDismissListViewTouchListener(listView, new SwipeDismissListViewTouchListener.OnDismissCallback() {
             @Override
-            public void onDismiss(final ListView listView, int[] reverseSortedPositions) {
+            public void onDismiss(int[] reverseSortedPositions) {
                 for (final int position : reverseSortedPositions) {
                     final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(launchActivity, R.string.message_delete_person_text);
                     alert.show();
@@ -181,7 +169,6 @@ public class LoanObjectsFragment extends AbstractFragment {
             }
         } else {
             listView.removeFooterView(footerView);
-            updateList();
         }
 
         LoanObjectAdapter loanObjectAdapter = new LoanObjectAdapter(launchActivity, loanObjects);
@@ -191,26 +178,5 @@ public class LoanObjectsFragment extends AbstractFragment {
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // Required implementation
-    }
-
-    public void sort(SortType sortType) {
-        this.sortType = sortType;
-        notifyChanges();
-    }
-
-    private void updateList() {
-        if (sortType == SortType.first_type) {
-            for (LoanObject obj : loanObjects) {
-                if (obj.getType().equals(getString(R.string.positive_loan))) {
-                    loanObjects.remove(obj);
-                }
-            }
-        } else if (sortType == SortType.second_type) {
-            for (LoanObject obj : loanObjects) {
-                if (obj.getType().equals(getString(R.string.negative_loan))) {
-                    loanObjects.remove(obj);
-                }
-            }
-        }
     }
 }

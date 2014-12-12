@@ -45,7 +45,7 @@ public class SwipeDismissListViewTouchListener implements View.OnTouchListener {
     private boolean mPaused;
 
     public interface OnDismissCallback {
-        void onDismiss(ListView listView, int[] reverseSortedPositions);
+        void onDismiss(int[] reverseSortedPositions);
     }
 
     public SwipeDismissListViewTouchListener(ListView listView, OnDismissCallback callback) {
@@ -59,7 +59,7 @@ public class SwipeDismissListViewTouchListener implements View.OnTouchListener {
         mCallback = callback;
     }
 
-    public void setEnabled(boolean enabled) {
+    void setEnabled(boolean enabled) {
         mPaused = !enabled;
     }
 
@@ -236,7 +236,7 @@ public class SwipeDismissListViewTouchListener implements View.OnTouchListener {
                     for (int i = mPendingDismisses.size() - 1; i >= 0; i--) {
                         dismissPositions[i] = mPendingDismisses.get(i).position;
                     }
-                    mCallback.onDismiss(mListView, dismissPositions);
+                    mCallback.onDismiss(dismissPositions);
 
                     ViewGroup.LayoutParams lp;
                     for (PendingDismissData pendingDismiss : mPendingDismisses) {

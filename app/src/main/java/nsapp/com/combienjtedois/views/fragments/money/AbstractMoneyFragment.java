@@ -24,21 +24,21 @@ import nsapp.com.combienjtedois.views.fragments.AbstractFragment;
 
 public abstract class AbstractMoneyFragment extends AbstractFragment implements AdapterView.OnItemClickListener {
 
-    protected ArrayList<Person> personArrayList = new ArrayList<Person>();
-    protected ArrayList<Debt> debtArrayList = new ArrayList<Debt>();
+    ArrayList<Person> personArrayList = new ArrayList<Person>();
+    ArrayList<Debt> debtArrayList = new ArrayList<Debt>();
 
-    protected ListView listView;
+    ListView listView;
     private TextView footerView;
 
     private TextView headerCountView;
 
-    protected Person selectedPerson;
+    Person selectedPerson;
 
-    protected Debt selectedDebt;
+    Debt selectedDebt;
 
-    protected listWantedType listType;
+    listWantedType listType;
 
-    protected Uri capturedImageURI;
+    Uri capturedImageURI;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -15,7 +15,7 @@ import nsapp.com.combienjtedois.model.LoanObject;
 public class LoanObjectAdapter extends BaseAdapter {
 
     private final Context context;
-    private ArrayList<LoanObject> loanObjects = new ArrayList<LoanObject>();
+    private final ArrayList<LoanObject> loanObjects = new ArrayList<LoanObject>();
 
     public LoanObjectAdapter(Context context, ArrayList<LoanObject> loanObjects) {
         this.context = context;
@@ -52,6 +52,16 @@ public class LoanObjectAdapter extends BaseAdapter {
         ((TextView) convertView.findViewById(R.id.nameObjectView)).setText(loanObject.getNameObject());
         ((TextView) convertView.findViewById(R.id.typeLoanView)).setText(loanObject.getType());
         ((TextView) convertView.findViewById(R.id.dateView)).setText(String.format(context.getString(R.string.add_date_format), loanObject.getDate()));
+        if (loanObject.getType().equals(context.getString(R.string.negative_loan))) {
+            convertView.findViewById(R.id.smsView).setVisibility(View.GONE);
+        } else {
+            convertView.findViewById(R.id.smsView).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+        }
 
         return convertView;
     }

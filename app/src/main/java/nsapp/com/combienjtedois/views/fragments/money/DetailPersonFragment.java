@@ -39,6 +39,7 @@ public class DetailPersonFragment extends AbstractMoneyFragment implements View.
     private static final String TYPE = "type";
     private static final String DEBT_EXTRA = "debt";
     private Debt debtExtra;
+    private String type;
 
     public static DetailPersonFragment newInstance(Person person) {
         DetailPersonFragment fragment = new DetailPersonFragment();
@@ -74,7 +75,7 @@ public class DetailPersonFragment extends AbstractMoneyFragment implements View.
         updateProfileView();
         SwipeDismissListViewTouchListener swipeDismissListViewTouchListener = new SwipeDismissListViewTouchListener(listView, new SwipeDismissListViewTouchListener.OnDismissCallback() {
             @Override
-            public void onDismiss(ListView listView, int[] reverseSortedPositions) {
+            public void onDismiss(int[] reverseSortedPositions) {
                 for (final int position : reverseSortedPositions) {
                     final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(getActivity(), R.string.message_delete_element);
                     alert.show();
@@ -155,7 +156,8 @@ public class DetailPersonFragment extends AbstractMoneyFragment implements View.
     @Override
     public void onItemClick(final AdapterView<?> parent, View view, final int position, long id) {
         if (!debtArrayList.isEmpty() && isEditingView) {
-            modifyItem(debtArrayList.get(position));
+            selectedDebt = debtArrayList.get(position);
+            modifyItem(selectedDebt);
         }
     }
 
@@ -207,7 +209,11 @@ public class DetailPersonFragment extends AbstractMoneyFragment implements View.
     private void updateCountView(String amount) {
         View view = getView();
         if (view != null) {
-            selectedDebt.setAmount(amount);
+            if (type.equals(getString(R.string.credence))) {
+                selectedDebt.setAmount(amount);
+            } else {
+                selectedDebt.setAmount("-" + amount);
+            }
             modifyItem(selectedDebt);
         }
     }
@@ -265,13 +271,12 @@ public class DetailPersonFragment extends AbstractMoneyFragment implements View.
         });
     }
 
-    public void modifyItem(final Debt debt) {
+    void modifyItem(final Debt debt) {
         final AlertDialog alert = ViewCreator.createCustomModifyDebtDialogBox(launchActivity);
         alert.show();
 
         final TextView increaseTextView = ((TextView) alert.findViewById(R.id.addTextView));
         final TextView reduceTextView = ((TextView) alert.findViewById(R.id.subtractTextView));
-        final String type;
         String sign = "";
 
         Double amount = Double.parseDouble(debt.getAmount());
@@ -329,7 +334,7 @@ public class DetailPersonFragment extends AbstractMoneyFragment implements View.
         });
     }
 
-    protected boolean checkAddDebtForm(EditText reasonEditText, EditText countEditText, String sign) {
+    boolean checkAddDebtForm(EditText reasonEditText, EditText countEditText, String sign) {
         if (sign != null) {
             if (reasonEditText.getText().length() == 0) {
                 ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.object)));
@@ -345,7 +350,7 @@ public class DetailPersonFragment extends AbstractMoneyFragment implements View.
         return true;
     }
 
-    public Debt getDebtExtra() {
+    Debt getDebtExtra() {
         return debtExtra;
     }
 

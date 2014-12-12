@@ -18,6 +18,7 @@ public class EditTextAmountActivity extends ActionBarActivity implements View.On
     private static final String TYPE = "type";
     private static final String DEBT_EXTRA = "debt";
 
+
     private EditText editText;
     private int operation;
     private Double amount;

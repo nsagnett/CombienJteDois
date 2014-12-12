@@ -97,6 +97,7 @@
         android:id="@+id/objectDescriptionView"
         android:inputType="text"
         android:layout_margin="5dp"
+        android:maxLength="40"
         android:padding="5dp"
         android:background="@null"
         android:hint="@string/description_hint"

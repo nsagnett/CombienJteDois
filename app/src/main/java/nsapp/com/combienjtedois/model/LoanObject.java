@@ -2,12 +2,12 @@ package nsapp.com.combienjtedois.model;
 
 public class LoanObject {
 
-    private int idLoanObject;
-    private String namePerson;
-    private String category;
-    private String nameObject;
-    private String type;
-    private String date;
+    private final int idLoanObject;
+    private final String namePerson;
+    private final String category;
+    private final String nameObject;
+    private final String type;
+    private final String date;
 
     public LoanObject(int idLoanObject, String namePerson, String category, String nameObject, String type, String date) {
         this.idLoanObject = idLoanObject;

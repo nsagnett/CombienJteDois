@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.Date;
@@ -53,7 +52,7 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
         notifyChanges();
         SwipeDismissListViewTouchListener swipeDismissListViewTouchListener = new SwipeDismissListViewTouchListener(listView, new SwipeDismissListViewTouchListener.OnDismissCallback() {
             @Override
-            public void onDismiss(final ListView listView, int[] reverseSortedPositions) {
+            public void onDismiss(int[] reverseSortedPositions) {
                 for (final int position : reverseSortedPositions) {
                     final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(launchActivity, R.string.message_delete_person_text);
                     alert.show();
@@ -178,7 +177,7 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
         addItem(importName, importPhoneNumber);
     }
 
-    protected boolean checkPersonForm(EditText editText) {
+    boolean checkPersonForm(EditText editText) {
         if (editText.getText().length() == 0) {
             ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.name)));
             return false;
