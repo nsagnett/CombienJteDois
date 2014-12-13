@@ -89,4 +89,14 @@
     <string name="negative_loan">Emprunt</string>
     <string name="positive_loan">Prêt</string>
 
+    <!--Cadeaux-->
+    <string name="consignee_format">Pour : %s</string>
+    <string name="present_format">Cadeau : %s</string>
+    <string name="participant_number_format">Nombre de participants : %s</string>
+    <string name="value_format">Valeur : %s</string>
+    <string name="event_date_format">Pour le : %1$s ( Dans %2$s )</string>
+    <string name="toast_add_present">Cadeau ajouté !</string>
+    <string name="toast_delete_present">Cadeau supprimé !</string>
+
+
 </resources>

@@ -31,6 +31,13 @@ public class DBManager {
     public static final String NAME_OBJECT_KEY = "nameObject";
     public static final String TYPE_OBJECT_KEY = "type";
 
+    //PRESENT
+    private static final String ID_PRESENT_KEY = "idP";
+    public static final String CONSIGNEE_KEY = "consignee";
+    public static final String PARTICIPANT_NUMBER_KEY = "participantNumber";
+    public static final String PRESENT_KEY = "present";
+    public static final String VALUE_KEY = "value";
+
     // COMMON
     public static final String DATE_KEY = "date";
     public static final String IMAGE_PROFILE = "profileImageUrl";
@@ -41,6 +48,7 @@ public class DBManager {
     private static final String DATABASE_TABLE_PERSON = "person";
     private static final String DATABASE_TABLE_DEBT = "debt";
     private static final String DATABASE_TABLE_OBJECT = "loanObject";
+    private static final String DATABASE_TABLE_PRESENT = "presents";
 
     private static final String CREATE_TABLE_PERSON_QUERY = "create table person (idP integer primary key autoincrement, "
             + "name text not null, "
@@ -64,7 +72,13 @@ public class DBManager {
             + "type text not null, "
             + "date text) ";
 
-    private DatabaseHelper databaseHelper;
+    private static final String CREATE_TABLE_PRESENT_QUERY = "create table presents (idP integer primary key autoincrement, "
+            + "consignee text not null, "
+            + "participantNumber text not null, "
+            + "present text not null, "
+            + "value text not null, "
+            + "date text) ";
+
     private SQLiteDatabase sqLiteDatabase;
     private final Context context;
 
@@ -79,6 +93,7 @@ public class DBManager {
             db.execSQL(CREATE_TABLE_PERSON_QUERY);
             db.execSQL(CREATE_TABLE_DEBT_QUERY);
             db.execSQL(CREATE_TABLE_LOAN_OBJECT_QUERY);
+            db.execSQL(CREATE_TABLE_PRESENT_QUERY);
         }
 
         @Override
@@ -86,6 +101,7 @@ public class DBManager {
             db.execSQL("DROP TABLE IF EXISTS person");
             db.execSQL("DROP TABLE IF EXISTS debt");
             db.execSQL("DROP TABLE IF EXISTS loanObject");
+            db.execSQL("DROP TABLE IF EXISTS presents");
             onCreate(db);
         }
     }
@@ -95,12 +111,8 @@ public class DBManager {
     }
 
     public void open() throws SQLException {
-        databaseHelper = new DatabaseHelper(context);
+        DatabaseHelper databaseHelper = new DatabaseHelper(context);
         sqLiteDatabase = databaseHelper.getWritableDatabase();
-    }
-
-    public void close() {
-        databaseHelper.close();
     }
 
     /**
@@ -313,5 +325,54 @@ public class DBManager {
     public void deleteObject(int idObject) {
         Toast.makeText(context, context.getString(R.string.toast_delete_element), Toast.LENGTH_SHORT).show();
         sqLiteDatabase.delete(DATABASE_TABLE_OBJECT, ID_OBJECT_KEY + "=" + idObject, null);
+    }
+
+    /**
+     * *************
+     * PRESENT QUERIES
+     * **************
+     */
+    public void createPresent(String consigneeName, String present, String value, String date) {
+        ContentValues initialValues = new ContentValues();
+        consigneeName = Utils.camelCase(consigneeName);
+        present = Utils.camelCase(present);
+
+        initialValues.put(CONSIGNEE_KEY, consigneeName);
+        initialValues.put(PARTICIPANT_NUMBER_KEY, "0");
+        initialValues.put(PRESENT_KEY, present);
+        initialValues.put(VALUE_KEY, value + context.getString(R.string.euro));
+        initialValues.put(DATE_KEY, date);
+
+        Toast.makeText(context, context.getString(R.string.toast_add_present), Toast.LENGTH_SHORT).show();
+        sqLiteDatabase.insert(DATABASE_TABLE_PRESENT, null, initialValues);
+    }
+
+    public Cursor fetchAllPresents() {
+        return sqLiteDatabase.query(DATABASE_TABLE_PRESENT, new String[]{
+                ID_PRESENT_KEY, CONSIGNEE_KEY, PARTICIPANT_NUMBER_KEY, PRESENT_KEY, VALUE_KEY, DATE_KEY}, null, null, null, null, null);
+    }
+
+    public int fetchIdPresent(String present, String date) {
+        Cursor c = sqLiteDatabase.query(DATABASE_TABLE_PRESENT, new String[]{
+                ID_PRESENT_KEY, CONSIGNEE_KEY, PARTICIPANT_NUMBER_KEY, PRESENT_KEY, VALUE_KEY, DATE_KEY}, PRESENT_KEY + "='" + present + "'AND " +
+                DATE_KEY + "='" + date + "'", null, null, null, null);
+
+        if (c != null && c.moveToFirst()) {
+            return c.getInt(c.getColumnIndex(ID_PRESENT_KEY));
+        }
+        return 0;
+    }
+
+    public void updateParticipantNumber(String idPresent, String participantNumber) {
+        ContentValues args = new ContentValues();
+        args.put(PARTICIPANT_NUMBER_KEY, participantNumber);
+
+        sqLiteDatabase.update(DATABASE_TABLE_PRESENT, args, ID_PRESENT_KEY + "="
+                + idPresent, null);
+    }
+
+    public void deletePresent(int idPresent) {
+        Toast.makeText(context, context.getString(R.string.toast_delete_present), Toast.LENGTH_SHORT).show();
+        sqLiteDatabase.delete(DATABASE_TABLE_PRESENT, ID_PRESENT_KEY + "=" + idPresent, null);
     }
 }
