@@ -131,4 +131,14 @@ public class Utils {
             }
         }
     }
+
+    public static long getTimeBeforeEvent(Present present) {
+        try {
+            long eventDate = new SimpleDateFormat(Utils.EVENT_PATTERN_DATE).parse(present.getDate()).getTime();
+            return eventDate - (new Date().getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

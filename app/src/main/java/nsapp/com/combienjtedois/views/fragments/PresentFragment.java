@@ -13,8 +13,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.listeners.SwipeDismissListViewTouchListener;
@@ -183,8 +187,19 @@ public class PresentFragment extends AbstractFragment {
                     date += "-" + month + "-" + year;
                 }
 
-                Utils.dbManager.createPresent(namePersonView.getText().toString(), presentView.getText().toString(), valueView.getText().toString(), date);
-                notifyChanges();
+                long beforeEventTime = -1;
+                try {
+                    beforeEventTime = new SimpleDateFormat(Utils.EVENT_PATTERN_DATE).parse(date).getTime() - new Date().getTime();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                if (beforeEventTime < 0){
+                    Toast.makeText(launchActivity, "Impossible", Toast.LENGTH_SHORT).show();
+                }else {
+                    Utils.dbManager.createPresent(namePersonView.getText().toString(), presentView.getText().toString(), valueView.getText().toString(), date);
+                    notifyChanges();
+                }
             }
         });
     }

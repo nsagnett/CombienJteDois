@@ -43,15 +43,9 @@
       <file leaf-file-name="PresentFragment.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/fragments/PresentFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3152174" vertical-offset="1804" max-vertical-offset="2370">
-              <caret line="171" column="62" selection-start-line="171" selection-start-column="62" selection-end-line="171" selection-end-column="62" />
-              <folding>
-                <element signature="e#2249#2283#0" expanded="true" />
-                <element signature="e#2731#2766#0" expanded="true" />
-                <element signature="e#4719#4739#0" expanded="true" />
-                <element signature="e#7201#8096#0" expanded="true" />
-                <element signature="e#8085#8086#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.87659574" vertical-offset="1924" max-vertical-offset="2490">
+              <caret line="191" column="129" selection-start-line="191" selection-start-column="129" selection-end-line="191" selection-end-column="129" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -59,8 +53,8 @@
       <file leaf-file-name="PresentAdapter.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/adapters/PresentAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="244" max-vertical-offset="960">
-              <caret line="71" column="53" selection-start-line="71" selection-start-column="53" selection-end-line="71" selection-end-column="53" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="244" max-vertical-offset="810">
+              <caret line="43" column="13" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -69,8 +63,8 @@
       <file leaf-file-name="Utils.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/model/Utils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1311" max-vertical-offset="1890">
-              <caret line="109" column="30" selection-start-line="109" selection-start-column="30" selection-end-line="109" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1371" max-vertical-offset="2040">
+              <caret line="134" column="17" selection-start-line="134" selection-start-column="17" selection-end-line="134" selection-end-column="17" />
               <folding>
                 <element signature="e#2976#3010#0" expanded="true" />
                 <element signature="e#3118#3151#0" expanded="true" />
@@ -87,16 +81,6 @@
                 <element signature="e#4613#4644#0" expanded="true" />
                 <element signature="e#4697#4728#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LoanObjectsFragment.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/fragments/LoanObjectsFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="799" max-vertical-offset="2220">
-              <caret line="116" column="28" selection-start-line="116" selection-start-column="28" selection-end-line="116" selection-end-column="98" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -1562,14 +1546,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="723" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956383" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3261944" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3261944" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294893" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3970346" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294893" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -1578,7 +1562,7 @@
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294893" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5453048" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.5453048" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1615,13 +1599,13 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/adapters/PresentAdapter.java</url>
-          <line>70</line>
+          <url>file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/fragments/PresentFragment.java</url>
+          <line>189</line>
           <properties />
-          <option name="timeStamp" value="61" />
+          <option name="timeStamp" value="63" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="62" />
+      <option name="time" value="64" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -2060,16 +2044,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/fragments/LoanObjectsFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="799" max-vertical-offset="2220">
-          <caret line="116" column="28" selection-start-line="116" selection-start-column="28" selection-end-line="116" selection-end-column="98" />
+        <state vertical-scroll-proportion="0.65547705" vertical-offset="799" max-vertical-offset="2220">
+          <caret line="114" column="61" selection-start-line="114" selection-start-column="61" selection-end-line="114" selection-end-column="61" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/model/Utils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1311" max-vertical-offset="1890">
-          <caret line="109" column="30" selection-start-line="109" selection-start-column="30" selection-end-line="109" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1371" max-vertical-offset="2040">
+          <caret line="134" column="17" selection-start-line="134" selection-start-column="17" selection-end-line="134" selection-end-column="17" />
           <folding>
             <element signature="e#2976#3010#0" expanded="true" />
             <element signature="e#3118#3151#0" expanded="true" />
@@ -2091,23 +2075,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/adapters/PresentAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="244" max-vertical-offset="960">
-          <caret line="71" column="53" selection-start-line="71" selection-start-column="53" selection-end-line="71" selection-end-column="53" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="244" max-vertical-offset="810">
+          <caret line="43" column="13" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/nsapp/com/combienjtedois/views/fragments/PresentFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3152174" vertical-offset="1804" max-vertical-offset="2370">
-          <caret line="171" column="62" selection-start-line="171" selection-start-column="62" selection-end-line="171" selection-end-column="62" />
-          <folding>
-            <element signature="e#2249#2283#0" expanded="true" />
-            <element signature="e#2731#2766#0" expanded="true" />
-            <element signature="e#4719#4739#0" expanded="true" />
-            <element signature="e#7201#8096#0" expanded="true" />
-            <element signature="e#8085#8086#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.87659574" vertical-offset="1924" max-vertical-offset="2490">
+          <caret line="191" column="129" selection-start-line="191" selection-start-column="129" selection-end-line="191" selection-end-column="129" />
+          <folding />
         </state>
       </provider>
     </entry>
