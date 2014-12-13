@@ -22,10 +22,13 @@
     <string name="debt">Debt</string>
     <string name="debt_already_present">Element always exists !</string>
     <string name="description_hint">Tap the description</string>
+    <string name="value_hint">Tap the value</string>
+    <string name="present_hint">Tap the present</string>
     <string name="digits_edittext">abcdefghijklmnopqrstuvwxyz .ABCDEFGHIJKLMNOPQRSTUVWXYZ-</string>
     <string name="empty_field_format">%s field required !</string>
     <string name="euro">€</string>
     <string name="event_date_format">For  : %1$s ( Dans %2$s )</string>
+    <string name="event_date">Event date</string>
     <string name="fullscreen">Grow up</string>
     <string name="gallery">Gallery</string>
     <string name="hour">&#160;hour</string>
@@ -55,6 +58,7 @@
     <string name="object_with_points">Object :&#160;</string>
     <string name="ok">OK</string>
     <string name="participant_number_format">Number of participant : %s</string>
+    <string name="participant_number">Number of participant</string>
     <string name="person_already_present_format">%s always exists !</string>
     <string name="person_hint">Tap the name</string>
     <string name="person_name">Person name</string>
@@ -64,7 +68,9 @@
     <string name="positive_loan">Lending</string>
     <string name="positive_text">Yes</string>
     <string name="present_format">Present : %s</string>
+    <string name="present">Present</string>
     <string name="value_format">Value : %s</string>
+    <string name="value">Value</string>
     <string name="reduce">Reduce</string>
     <string name="second">&#160;second</string>
     <string name="subtract_hint">to subtract</string>
@@ -76,6 +82,7 @@
     <string name="toast_add_element">Element added !</string>
     <string name="toast_add_person">Person added !</string>
     <string name="toast_add_present">Present added !</string>
+    <string name="add_present">Add a present</string>
     <string name="toast_delete_element">Element deleted !</string>
     <string name="toast_delete_person">Person deleted</string>
     <string name="toast_delete_present">Present deleted !</string>
@@ -85,4 +92,6 @@
     <string name="type_with_points">Type :&#160;</string>
     <string name="validate">Validate</string>
     <string name="warning_text">Warning !</string>
+    <string name="minus">-</string>
+    <string name="more">+</string>
 </resources>

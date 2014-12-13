@@ -94,6 +94,13 @@
     <string name="present_format">Cadeau : %s</string>
     <string name="participant_number_format">Nombre de participants : %s</string>
     <string name="value_format">Valeur : %s</string>
+    <string name="value">Valeur</string>
+    <string name="value_hint">Saisir la valeur</string>
+    <string name="present">Cadeau</string>
+    <string name="participant_number">Nombre de participants</string>
+    <string name="present_hint">Saisir le cadeau</string>
+    <string name="add_present">Ajouter un cadeau</string>
+    <string name="event_date">Date de l\'évènement</string>
     <string name="event_date_format">Pour le : %1$s ( Dans %2$s )</string>
     <string name="toast_add_present">Cadeau ajouté !</string>
     <string name="toast_delete_present">Cadeau supprimé !</string>

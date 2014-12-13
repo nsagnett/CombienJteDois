@@ -2,12 +2,15 @@ package nsapp.com.combienjtedois.views.fragments;
 
 import android.app.AlertDialog;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,10 +25,13 @@ import nsapp.com.combienjtedois.views.ViewCreator;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
 import nsapp.com.combienjtedois.views.adapters.PresentAdapter;
 
+import static android.os.Build.VERSION_CODES.HONEYCOMB;
+
 public class PresentFragment extends AbstractFragment {
 
     private TextView footerView;
     private ListView listView;
+    private Integer numberParticipantCount;
 
     private ArrayList<Present> presentsArray = new ArrayList<Present>();
 
@@ -122,7 +128,65 @@ public class PresentFragment extends AbstractFragment {
 
     @Override
     public void addItem(String importName, String importPhone) {
+        final AlertDialog alert = ViewCreator.createCustomPresentDialogBox(launchActivity);
+        alert.show();
+        numberParticipantCount = 0;
+        final EditText namePersonView = (EditText) alert.findViewById(R.id.namePersonEditView);
+        final EditText valueView = (EditText) alert.findViewById(R.id.valueView);
+        final EditText presentView = (EditText) alert.findViewById(R.id.presentView);
+        final TextView validateView = (TextView) alert.findViewById(R.id.neutralTextView);
+        final TextView minusView = (TextView) alert.findViewById(R.id.minusView);
+        final TextView moreView = (TextView) alert.findViewById(R.id.moreView);
+        final TextView numberParticipantView = (TextView) alert.findViewById(R.id.participantNumberView);
+        final DatePicker datePickerEventView = (DatePicker) alert.findViewById(R.id.datePickerEventView);
 
+        if (Build.VERSION.SDK_INT >= HONEYCOMB) {
+            datePickerEventView.setCalendarViewShown(false);
+        }
+
+        numberParticipantView.setText(numberParticipantCount.toString());
+
+        minusView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (numberParticipantCount != 0) {
+                    numberParticipantCount--;
+                }
+                numberParticipantView.setText(numberParticipantCount.toString());
+            }
+        });
+
+        moreView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                numberParticipantCount++;
+                numberParticipantView.setText(numberParticipantCount.toString());
+            }
+        });
+
+        validateView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alert.dismiss();
+                int days = datePickerEventView.getDayOfMonth();
+                int month = datePickerEventView.getMonth() + 1;
+                int year = datePickerEventView.getYear();
+                String date = "";
+                if (days < 10) {
+                    date += "0" + days;
+                } else {
+                    date += days;
+                }
+                if (month < 10) {
+                    date += "-0" + month + "-" + year;
+                } else {
+                    date += "-" + month + "-" + year;
+                }
+
+                Utils.dbManager.createPresent(namePersonView.getText().toString(), presentView.getText().toString(), valueView.getText().toString(), date);
+                notifyChanges();
+            }
+        });
     }
 
     @Override

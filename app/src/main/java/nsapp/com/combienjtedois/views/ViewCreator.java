@@ -179,4 +179,16 @@ public class ViewCreator {
 
         return builder.create();
     }
+
+    public static AlertDialog createCustomPresentDialogBox(Context context) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.add_present_dialog_layout, null);
+
+        builder.setCustomTitle(getCustomTitleDialogBox(context, R.string.add_present, R.drawable.add));
+
+        ((TextView) view.findViewById(R.id.neutralTextView)).setText(R.string.validate);
+
+        builder.setView(view);
+        return builder.create();
+    }
 }

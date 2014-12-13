@@ -17,6 +17,7 @@ import nsapp.com.combienjtedois.R;
 public class Utils {
 
     public static final String PATTERN_DATE = "dd-MM-yyyy : HH:mm";
+    public static final String EVENT_PATTERN_DATE = "dd-MM-yyyy";
 
     public static final String PERSON_KEY = "person_key";
     public static final String PATH_KEY = "path_key";
@@ -78,6 +79,35 @@ public class Utils {
         Long minutes = TimeUnit.MILLISECONDS.toMinutes(getLifeTimeInMillis(date));
         Long hours = TimeUnit.MILLISECONDS.toHours(getLifeTimeInMillis(date));
         Long days = TimeUnit.MILLISECONDS.toDays(getLifeTimeInMillis(date));
+
+        if (seconds < 60) {
+            return seconds + context.getString(R.string.second) + "s";
+        } else if (minutes < 60) {
+            if (minutes == 1) {
+                return minutes + context.getString(R.string.minut);
+            } else {
+                return minutes + context.getString(R.string.minut) + "s";
+            }
+        } else if (hours < 24) {
+            if (hours == 1) {
+                return hours + context.getString(R.string.hour);
+            } else {
+                return hours + context.getString(R.string.hour) + "s";
+            }
+        } else {
+            if (days == 1) {
+                return days + context.getString(R.string.day);
+            } else {
+                return days + context.getString(R.string.day) + "s";
+            }
+        }
+    }
+
+    public static String convertLifeTimeFromMillis(Context context, long dateMillis) {
+        Long seconds = dateMillis / 1000;
+        Long minutes = seconds / 60;
+        Long hours = minutes / 60;
+        Long days = hours / 24;
 
         if (seconds < 60) {
             return seconds + context.getString(R.string.second) + "s";
