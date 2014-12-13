@@ -43,13 +43,18 @@
     <string name="gallery">Galerie</string>
     <string name="nothing">Ne rien mettre</string>
     <string name="choose">Choisir</string>
-    <string name="modification_date_format">Dernière modification : %s</string>
-    <string name="add_date_format">Ajouté le : %s</string>
+    <string name="modification_date_format">Dernière modification : %s&#160;</string>
+    <string name="add_date_format">Ajouté le : %s&#160;</string>
+    <string name="lifetime_format">( il y a %s )</string>
     <string name="increase">Augmenter</string>
     <string name="add_hint">à ajouter</string>
     <string name="reduce">Réduire</string>
     <string name="subtract_hint">à soustraire</string>
     <string name="negative_amount">Le montant ne peut pas être négatif</string>
+    <string name="second">&#160;seconde</string>
+    <string name="minut">&#160;minute</string>
+    <string name="hour">&#160;heure</string>
+    <string name="day">&#160;jour</string>
 
     <!--Argent-->
     <string name="add_element">Ajouter un élément</string>

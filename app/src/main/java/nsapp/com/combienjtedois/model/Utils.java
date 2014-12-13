@@ -7,6 +7,13 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
+import nsapp.com.combienjtedois.R;
+
 public class Utils {
 
     public static final String PATTERN_DATE = "dd-MM-yyyy : HH:mm";
@@ -52,5 +59,46 @@ public class Utils {
 
     public static Bitmap getImageFromPath(String path) {
         return BitmapFactory.decodeFile(path);
+    }
+
+    private static long getLifeTimeInMillis(String date) {
+        long now = new Date().getTime();
+        long dateSaved = 0;
+        SimpleDateFormat format = new SimpleDateFormat(PATTERN_DATE);
+        try {
+            dateSaved = format.parse(date).getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return now - dateSaved;
+    }
+
+    public static String convertLifeTime(Context context, String date) {
+        Long seconds = TimeUnit.MILLISECONDS.toSeconds(getLifeTimeInMillis(date));
+        Long minutes = TimeUnit.MILLISECONDS.toMinutes(getLifeTimeInMillis(date));
+        Long hours = TimeUnit.MILLISECONDS.toHours(getLifeTimeInMillis(date));
+        Long days = TimeUnit.MILLISECONDS.toDays(getLifeTimeInMillis(date));
+
+        if (seconds < 60) {
+            return seconds + context.getString(R.string.second) + "s";
+        } else if (minutes < 60) {
+            if (minutes == 1) {
+                return minutes + context.getString(R.string.minut);
+            } else {
+                return minutes + context.getString(R.string.minut) + "s";
+            }
+        } else if (hours < 24) {
+            if (hours == 1) {
+                return hours + context.getString(R.string.hour);
+            } else {
+                return hours + context.getString(R.string.hour) + "s";
+            }
+        } else {
+            if (days == 1) {
+                return days + context.getString(R.string.day);
+            } else {
+                return days + context.getString(R.string.day) + "s";
+            }
+        }
     }
 }

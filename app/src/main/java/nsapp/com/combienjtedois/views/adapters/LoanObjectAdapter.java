@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.LoanObject;
+import nsapp.com.combienjtedois.model.Utils;
 
 public class LoanObjectAdapter extends BaseAdapter {
 
@@ -51,7 +52,9 @@ public class LoanObjectAdapter extends BaseAdapter {
         ((TextView) convertView.findViewById(R.id.categoryView)).setText(loanObject.getCategory());
         ((TextView) convertView.findViewById(R.id.nameObjectView)).setText(loanObject.getNameObject());
         ((TextView) convertView.findViewById(R.id.typeLoanView)).setText(loanObject.getType());
-        ((TextView) convertView.findViewById(R.id.dateView)).setText(String.format(context.getString(R.string.add_date_format), loanObject.getDate()));
+        TextView dateView = ((TextView) convertView.findViewById(R.id.dateView));
+        dateView.setText(String.format(context.getString(R.string.add_date_format), loanObject.getDate()));
+        dateView.setText(dateView.getText() + String.format(context.getString(R.string.lifetime_format), Utils.convertLifeTime(context, loanObject.getDate())));
         if (loanObject.getType().equals(context.getString(R.string.negative_loan))) {
             convertView.findViewById(R.id.smsView).setVisibility(View.GONE);
         } else {
