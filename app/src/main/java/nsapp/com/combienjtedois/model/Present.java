@@ -1,6 +1,8 @@
 package nsapp.com.combienjtedois.model;
 
-public class Present {
+import java.io.Serializable;
+
+public class Present implements Serializable{
 
     private final int idPresent;
     private final String consignee;

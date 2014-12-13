@@ -13,7 +13,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -56,7 +55,6 @@ public class PresentFragment extends AbstractFragment {
         footerView = (TextView) inflater.inflate(R.layout.footer_listview, null, false);
 
         view.findViewById(R.id.headerSeparator).setVisibility(View.GONE);
-        launchActivity.supportInvalidateOptionsMenu();
 
         return view;
     }
@@ -120,9 +118,13 @@ public class PresentFragment extends AbstractFragment {
                     }
                 });
                 listView.addFooterView(footerView);
+                launchActivity.setListEmpty(true);
+                launchActivity.supportInvalidateOptionsMenu();
             }
         } else {
             listView.removeFooterView(footerView);
+            launchActivity.setListEmpty(false);
+            launchActivity.supportInvalidateOptionsMenu();
         }
 
         PresentAdapter presentAdapter = new PresentAdapter(launchActivity, presentsArray);
@@ -171,7 +173,6 @@ public class PresentFragment extends AbstractFragment {
         validateView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alert.dismiss();
                 int days = datePickerEventView.getDayOfMonth();
                 int month = datePickerEventView.getMonth() + 1;
                 int year = datePickerEventView.getYear();
@@ -193,10 +194,8 @@ public class PresentFragment extends AbstractFragment {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
-                if (beforeEventTime < 0){
-                    Toast.makeText(launchActivity, "Impossible", Toast.LENGTH_SHORT).show();
-                }else {
+                if (checkAddForm(namePersonView, presentView, valueView, beforeEventTime)) {
+                    alert.dismiss();
                     Utils.dbManager.createPresent(namePersonView.getText().toString(), presentView.getText().toString(), valueView.getText().toString(), date);
                     notifyChanges();
                 }
@@ -204,7 +203,32 @@ public class PresentFragment extends AbstractFragment {
         });
     }
 
+    private boolean checkAddForm(EditText namePersonView, EditText presentView, EditText valueView, long beforeEventTime) {
+        if (namePersonView.getText().length() == 0) {
+            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.person_name)));
+            return false;
+        } else if (presentView.getText().length() == 0) {
+            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.present)));
+            return false;
+        } else if (valueView.getText().length() == 0) {
+            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.value)));
+            return false;
+        } else if (beforeEventTime < 0) {
+            ViewCreator.showCustomAlertDialogBox(launchActivity, getString(R.string.impossible_date));
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (!presentsArray.isEmpty()) {
+            Present present = presentsArray.get(position);
+            if (isEditingView) {
+                // MODIFY PRESENT
+            } else {
+                prepareOnReplaceTransaction(DetailPresentFragment.newInstance(present));
+            }
+        }
     }
 }

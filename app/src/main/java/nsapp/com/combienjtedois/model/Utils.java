@@ -20,6 +20,7 @@ public class Utils {
     public static final String EVENT_PATTERN_DATE = "dd-MM-yyyy";
 
     public static final String PERSON_KEY = "person_key";
+    public static final String PRESENT_KEY = "present_key";
     public static final String PATH_KEY = "path_key";
 
     public static final int ANIMATION_DURATION = 400;

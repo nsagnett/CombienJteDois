@@ -81,7 +81,7 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
     public void onItemClick(final AdapterView<?> parent, View view, final int position, long id) {
         if (!personArrayList.isEmpty()) {
             Person person = personArrayList.get(position);
-            if (!personArrayList.isEmpty() && isEditingView) {
+            if (isEditingView) {
                 modifyPerson(personArrayList.get(position));
             } else {
                 prepareOnReplaceTransaction(DetailPersonFragment.newInstance(person));
