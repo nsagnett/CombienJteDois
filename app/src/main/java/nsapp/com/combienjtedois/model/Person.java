@@ -9,15 +9,13 @@ public class Person implements Serializable {
     private final String name;
     private final String modificationDate;
     private final String totalAmount;
-    private String imageProfileUrl;
 
-    public Person(int id, String name, String totalAmount, String phoneNumber, String imageProfileUrl, String modificationDate) {
+    public Person(int id, String name, String totalAmount, String phoneNumber, String modificationDate) {
         this.id = id;
         this.name = name;
         this.modificationDate = modificationDate;
         this.phoneNumber = phoneNumber;
         this.totalAmount = totalAmount;
-        this.imageProfileUrl = imageProfileUrl;
     }
 
     public int getId() {
@@ -34,14 +32,6 @@ public class Person implements Serializable {
 
     public String getPhoneNumber() {
         return phoneNumber;
-    }
-
-    public String getImageProfileUrl() {
-        return imageProfileUrl;
-    }
-
-    public void setImageProfileUrl(String imageProfileUrl) {
-        this.imageProfileUrl = imageProfileUrl;
     }
 
     public String getModificationDate() {

@@ -1,7 +1,6 @@
-package nsapp.com.combienjtedois.views.adapters.money;
+package nsapp.com.combienjtedois.views.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.Person;
 import nsapp.com.combienjtedois.model.Utils;
-import nsapp.com.combienjtedois.views.ViewCreator;
 
 public class PersonListAdapter extends BaseAdapter {
 
@@ -50,7 +48,7 @@ public class PersonListAdapter extends BaseAdapter {
         LayoutInflater inflater = LayoutInflater.from(context);
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.person_holder, null);
+            convertView = inflater.inflate(R.layout.money_holder, null);
         }
 
         Person person = personList.get(position);
@@ -66,15 +64,6 @@ public class PersonListAdapter extends BaseAdapter {
         TextView countView = ((TextView) convertView.findViewById(R.id.countView));
         countView.setText(String.format(context.getString(R.string.money_format), total));
         countView.setTextColor(total >= 0 ? context.getResources().getColor(R.color.green) : context.getResources().getColor(R.color.red));
-
-        String pathImage = person.getImageProfileUrl();
-        Bitmap image = Utils.getImageFromPath(pathImage);
-
-        ImageView profileImage = ((ImageView) convertView.findViewById(R.id.profileView));
-
-        if (image != null) {
-            profileImage.setImageBitmap(ViewCreator.getRoundedShape(image));
-        }
 
         if (isEditingView) {
             ImageView imageView = (ImageView) convertView.findViewById(R.id.otherView);

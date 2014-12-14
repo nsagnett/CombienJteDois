@@ -2,15 +2,10 @@ package nsapp.com.combienjtedois.views;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Path;
-import android.graphics.Rect;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import nsapp.com.combienjtedois.R;
@@ -81,7 +76,7 @@ public class ViewCreator {
 
     public static AlertDialog createCustomAddDebtDialogBox(Context context) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        View view = LayoutInflater.from(context).inflate(R.layout.add_object_dialog_layout, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.add_debt_dialog_layout, null);
 
         builder.setCustomTitle(getCustomTitleDialogBox(context, R.string.add_element, R.drawable.add));
 
@@ -147,36 +142,6 @@ public class ViewCreator {
         ((TextView) view.findViewById(R.id.neutralTextView)).setText(R.string.validate);
 
         builder.setView(view);
-        return builder.create();
-    }
-
-    public static Bitmap getRoundedShape(Bitmap scaleBitmapImage) {
-        int targetWidth = 50;
-        int targetHeight = 50;
-        Bitmap targetBitmap = Bitmap.createBitmap(targetWidth,
-                targetHeight, Bitmap.Config.ARGB_8888);
-
-        Canvas canvas = new Canvas(targetBitmap);
-        Path path = new Path();
-        path.addCircle(((float) targetWidth - 1) / 2,
-                ((float) targetHeight - 1) / 2,
-                (Math.min(((float) targetWidth),
-                        ((float) targetHeight)) / 2),
-                Path.Direction.CCW);
-
-        canvas.clipPath(path);
-        canvas.drawBitmap(scaleBitmapImage,
-                new Rect(0, 0, scaleBitmapImage.getWidth(),
-                        scaleBitmapImage.getHeight()),
-                new Rect(0, 0, targetWidth, targetHeight), null);
-        return targetBitmap;
-    }
-
-    public static AlertDialog createListViewDialogBox(Context context, ListView listView) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setCustomTitle(getCustomTitleDialogBox(context, R.string.choose, R.drawable.question));
-        builder.setView(listView);
-
         return builder.create();
     }
 

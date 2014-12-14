@@ -1,4 +1,4 @@
-package nsapp.com.combienjtedois.views.fragments.present;
+package nsapp.com.combienjtedois.views.fragments;
 
 import android.app.AlertDialog;
 import android.database.Cursor;
@@ -27,7 +27,6 @@ import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.ViewCreator;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
 import nsapp.com.combienjtedois.views.adapters.PresentAdapter;
-import nsapp.com.combienjtedois.views.fragments.AbstractFragment;
 
 import static android.os.Build.VERSION_CODES.HONEYCOMB;
 
@@ -59,6 +58,10 @@ public class PresentFragment extends AbstractFragment {
         return view;
     }
 
+    private void notifyChanges() {
+
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -74,7 +77,7 @@ public class PresentFragment extends AbstractFragment {
                         public void onClick(View v) {
                             alert.dismiss();
                             Utils.dbManager.deletePresent(presentsArray.get(position).getIdPresent());
-                            notifyChanges();
+                            notifyPresentChanges();
                         }
                     });
                     alert.findViewById(R.id.negativeView).setOnClickListener(new View.OnClickListener() {
@@ -89,10 +92,10 @@ public class PresentFragment extends AbstractFragment {
         listView.setOnTouchListener(swipeDismissListViewTouchListener);
         listView.setOnScrollListener(swipeDismissListViewTouchListener.makeScrollListener());
         listView.setOnItemClickListener(this);
-        notifyChanges();
+        notifyPresentChanges();
     }
 
-    private void notifyChanges() {
+    private void notifyPresentChanges() {
         Cursor c = Utils.dbManager.fetchAllPresents();
         presentsArray = new ArrayList<Present>();
 
@@ -167,14 +170,14 @@ public class PresentFragment extends AbstractFragment {
 
                 long beforeEventTime = -1;
                 try {
-                    beforeEventTime = new SimpleDateFormat(Utils.EVENT_PATTERN_DATE).parse(date).getTime() - new Date().getTime();
+                    beforeEventTime = new SimpleDateFormat(Utils.PATTERN_DATE).parse(date).getTime() - new Date().getTime();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 if (checkAddForm(namePersonView, presentView, valueView, beforeEventTime)) {
                     alert.dismiss();
                     Utils.dbManager.createPresent(namePersonView.getText().toString(), presentView.getText().toString(), valueView.getText().toString(), date);
-                    notifyChanges();
+                    notifyPresentChanges();
                 }
             }
         });

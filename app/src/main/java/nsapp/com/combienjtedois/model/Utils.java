@@ -1,11 +1,6 @@
 package nsapp.com.combienjtedois.model;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.provider.MediaStore;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,21 +11,15 @@ import nsapp.com.combienjtedois.R;
 
 public class Utils {
 
-    public static final String PATTERN_DATE = "dd-MM-yyyy : HH:mm";
-    public static final String EVENT_PATTERN_DATE = "dd-MM-yyyy";
+    public static final String PATTERN_DATE = "dd-MM-yyyy";
 
     public static final String PERSON_KEY = "person_key";
     public static final String PRESENT_KEY = "present_key";
-    public static final String PATH_KEY = "path_key";
 
     public static final int ANIMATION_DURATION = 400;
 
     public static final int IMPORT_CONTACT_CODE = 0;
-    public static final int IMPORT_PERSON_IMAGE_CODE = 1;
-    public static final int IMPORT_DEBT_IMAGE_CODE = 2;
-    public static final int TAKE_PICTURE_FOR_PERSON = 3;
-    public static final int TAKE_PICTURE_FOR_DEBT = 4;
-    public static final int UPDATE_DEBT_COUNT = 5;
+    public static final int UPDATE_DEBT_COUNT = 1;
 
     public static DBManager dbManager = null;
 
@@ -46,21 +35,6 @@ public class Utils {
             }
         }
         return result;
-    }
-
-    public static String getPathImage(Context context, Uri uri) {
-        String[] projection = {MediaStore.Images.Media.DATA};
-        if (context.getContentResolver() != null && uri != null) {
-            Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
-            int column_index_data = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index_data);
-        }
-        return "";
-    }
-
-    public static Bitmap getImageFromPath(String path) {
-        return BitmapFactory.decodeFile(path);
     }
 
     private static long getLifeTimeInMillis(String date) {
@@ -135,7 +109,7 @@ public class Utils {
 
     public static long getTimeBeforeEvent(Present present) {
         try {
-            long eventDate = new SimpleDateFormat(Utils.EVENT_PATTERN_DATE).parse(present.getDate()).getTime();
+            long eventDate = new SimpleDateFormat(Utils.PATTERN_DATE).parse(present.getDate()).getTime();
             return eventDate - (new Date().getTime());
         } catch (ParseException e) {
             e.printStackTrace();

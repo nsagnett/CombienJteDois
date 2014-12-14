@@ -1,4 +1,4 @@
-package nsapp.com.combienjtedois.views.fragments.present;
+package nsapp.com.combienjtedois.views.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,19 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.Present;
 import nsapp.com.combienjtedois.model.Utils;
-import nsapp.com.combienjtedois.views.fragments.AbstractFragment;
 
 public class DetailPresentFragment extends AbstractFragment {
 
     private Present selectedPresent;
-    ListView listView;
-    private TextView footerView;
 
     public static DetailPresentFragment newInstance(Present present) {
         DetailPresentFragment fragment = new DetailPresentFragment();
@@ -42,8 +40,8 @@ public class DetailPresentFragment extends AbstractFragment {
 
         selectedPresent = (Present) getArguments().getSerializable(Utils.PRESENT_KEY);
         view.findViewById(R.id.headerLayout).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.headerProfileView).setVisibility(View.GONE);
         ((TextView) view.findViewById(R.id.headerNameView)).setText(selectedPresent.getPresent());
+        ((ImageView) view.findViewById(R.id.headerProfileView)).setImageResource(R.drawable.presents);
         ((TextView) view.findViewById(R.id.valueTextView)).setText(String.format(getString(R.string.value_format), selectedPresent.getValue()));
 
         view.findViewById(R.id.smsView).setOnClickListener(new View.OnClickListener() {
@@ -54,6 +52,10 @@ public class DetailPresentFragment extends AbstractFragment {
         });
 
         return view;
+    }
+
+    private void notifyChanges() {
+
     }
 
     @Override

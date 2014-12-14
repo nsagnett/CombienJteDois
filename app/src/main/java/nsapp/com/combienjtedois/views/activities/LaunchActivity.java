@@ -20,8 +20,8 @@ import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.fragments.AbstractFragment;
 import nsapp.com.combienjtedois.views.fragments.LoanObjectsFragment;
 import nsapp.com.combienjtedois.views.fragments.NavigationDrawerFragment;
-import nsapp.com.combienjtedois.views.fragments.present.PresentFragment;
-import nsapp.com.combienjtedois.views.fragments.money.PersonListForMoneyFragment;
+import nsapp.com.combienjtedois.views.fragments.PresentFragment;
+import nsapp.com.combienjtedois.views.fragments.PersonListForMoneyFragment;
 
 public class LaunchActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
@@ -185,7 +185,7 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
         }
     }
 
-    public Fragment getCurrentFragment() {
+    Fragment getCurrentFragment() {
         return getSupportFragmentManager().findFragmentById(R.id.container);
     }
 

@@ -40,8 +40,6 @@ public class DBManager {
 
     // COMMON
     public static final String DATE_KEY = "date";
-    public static final String IMAGE_PROFILE = "profileImageUrl";
-
 
     private static final String DATABASE_NAME = "dataBaseApp";
     private static final int DATABASE_VERSION = 1;
@@ -54,7 +52,6 @@ public class DBManager {
             + "name text not null, "
             + "phoneNumber text, "
             + "date text, "
-            + "profileImageUrl text,"
             + "totalCount text not null); ";
 
     private static final String CREATE_TABLE_DEBT_QUERY = "create table debt (idD integer primary key autoincrement, "
@@ -62,7 +59,6 @@ public class DBManager {
             + "amount text not null, "
             + "reason text not null, "
             + "date text, "
-            + "profileImageUrl text,"
             + "foreign key(idFKP) references person(idP)); ";
 
     private static final String CREATE_TABLE_LOAN_OBJECT_QUERY = "create table loanObject (idO integer primary key autoincrement, "
@@ -128,22 +124,12 @@ public class DBManager {
             initialValues.put(TOTAL_COUNT_KEY, "");
             initialValues.put(PHONE_NUMBER_KEY, phoneNumber);
             initialValues.put(DATE_KEY, date);
-            initialValues.put(IMAGE_PROFILE, "");
 
             Toast.makeText(context, context.getString(R.string.toast_add_person), Toast.LENGTH_SHORT).show();
             sqLiteDatabase.insert(DATABASE_TABLE_PERSON, null, initialValues);
         } else {
             Toast.makeText(context, String.format(context.getString(R.string.person_already_present_format), name), Toast.LENGTH_SHORT).show();
         }
-    }
-
-    public void setImageProfileUrlPerson(int idPerson, String url) {
-        ContentValues args = new ContentValues();
-        args.put(IMAGE_PROFILE, url);
-
-        Toast.makeText(context, context.getString(R.string.modify_image), Toast.LENGTH_SHORT).show();
-        sqLiteDatabase.update(DATABASE_TABLE_PERSON, args, ID_PERSON_KEY + "="
-                + idPerson, null);
     }
 
     public void setModificationDatePerson(int idPerson, String date) {
@@ -168,7 +154,7 @@ public class DBManager {
 
     public int fetchIdPerson(String name) {
         Cursor c = sqLiteDatabase.query(DATABASE_TABLE_PERSON, new String[]{
-                ID_PERSON_KEY, NAME_PERSON_KEY, PHONE_NUMBER_KEY, IMAGE_PROFILE, TOTAL_COUNT_KEY, DATE_KEY}, NAME_PERSON_KEY + "= '" + name + "'", null, null, null, null);
+                ID_PERSON_KEY, NAME_PERSON_KEY, PHONE_NUMBER_KEY, TOTAL_COUNT_KEY, DATE_KEY}, NAME_PERSON_KEY + "= '" + name + "'", null, null, null, null);
 
         if (c != null && c.moveToFirst()) {
             return c.getInt(c.getColumnIndex(ID_PERSON_KEY));
@@ -179,7 +165,7 @@ public class DBManager {
 
     public Cursor fetchAllPersons() {
         return sqLiteDatabase.query(DATABASE_TABLE_PERSON, new String[]{
-                        ID_PERSON_KEY, NAME_PERSON_KEY, PHONE_NUMBER_KEY, IMAGE_PROFILE, TOTAL_COUNT_KEY, DATE_KEY}, null, null, null, null,
+                        ID_PERSON_KEY, NAME_PERSON_KEY, PHONE_NUMBER_KEY, TOTAL_COUNT_KEY, DATE_KEY}, null, null, null, null,
                 null);
     }
 
@@ -204,7 +190,6 @@ public class DBManager {
             initialValues.put(AMOUNT_KEY, amount);
             initialValues.put(REASON_KEY, reason);
             initialValues.put(DATE_KEY, date);
-            initialValues.put(IMAGE_PROFILE, "");
 
             Toast.makeText(context, context.getString(R.string.toast_add_element), Toast.LENGTH_SHORT).show();
             sqLiteDatabase.insert(DATABASE_TABLE_DEBT, null, initialValues);
@@ -222,17 +207,9 @@ public class DBManager {
         sqLiteDatabase.update(DATABASE_TABLE_DEBT, initialValues, ID_DEBT_KEY + "=" + idDebt, null);
     }
 
-    public void setImageProfileUrlDebt(int idDebt, String url) {
-        ContentValues args = new ContentValues();
-        args.put(IMAGE_PROFILE, url);
-
-        Toast.makeText(context, context.getString(R.string.modify_image), Toast.LENGTH_SHORT).show();
-        sqLiteDatabase.update(DATABASE_TABLE_DEBT, args, ID_DEBT_KEY + "=" + idDebt, null);
-    }
-
     public int fetchIdDebt(int idPerson, String reason) {
         Cursor c = sqLiteDatabase.query(DATABASE_TABLE_DEBT, new String[]{
-                ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, IMAGE_PROFILE, DATE_KEY}, ID_PERSON_DEBT_KEY + "='" + idPerson + "' AND " + REASON_KEY + "='" + reason + "'", null, null, null, null);
+                ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, DATE_KEY}, ID_PERSON_DEBT_KEY + "='" + idPerson + "' AND " + REASON_KEY + "='" + reason + "'", null, null, null, null);
 
         if (c != null && c.moveToFirst()) {
             return c.getInt(c.getColumnIndex(ID_DEBT_KEY));
@@ -242,7 +219,7 @@ public class DBManager {
 
     private Cursor fetchDebt(int rowIdDebt) {
         Cursor mCursor = sqLiteDatabase.query(true, DATABASE_TABLE_DEBT, new String[]{
-                ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, IMAGE_PROFILE, DATE_KEY}, ID_DEBT_KEY + "="
+                ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, DATE_KEY}, ID_DEBT_KEY + "="
                 + rowIdDebt, null, null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
@@ -252,7 +229,7 @@ public class DBManager {
 
     public Cursor fetchAllDebt(int idPerson) {
         return sqLiteDatabase.query(DATABASE_TABLE_DEBT, new String[]{
-                        ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, IMAGE_PROFILE, DATE_KEY}, ID_PERSON_DEBT_KEY + "=" + idPerson, null, null, null,
+                        ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, DATE_KEY}, ID_PERSON_DEBT_KEY + "=" + idPerson, null, null, null,
                 null);
     }
 

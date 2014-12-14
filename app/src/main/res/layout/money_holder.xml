@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:padding="10dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
     android:background="@drawable/custom_button"
     android:layout_height="wrap_content">
 
@@ -24,10 +27,10 @@
         <ImageView
             android:id="@+id/profileView"
             android:layout_width="50dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="5dp"
             android:layout_marginEnd="15dp"
             android:adjustViewBounds="true"
-            style="@style/ImageViewDarkBackground"
+            style="@style/ImageViewGreyBackground"
             android:src="@drawable/profile"
             android:contentDescription="@string/content"
             android:layout_height="50dp" />
@@ -47,6 +50,7 @@
             <TextView
                 android:id="@+id/dateView"
                 android:textSize="10sp"
+                android:paddingBottom="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>

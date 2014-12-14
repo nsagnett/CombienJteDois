@@ -71,7 +71,7 @@
                 <EditText
                     android:id="@+id/valueView"
                     android:inputType="numberSigned"
-                    android:hint="@string/amount_hint"
+                    android:hint="@string/value_hint"
                     android:layout_width="0dp"
                     android:layout_margin="5dp"
                     android:padding="5dp"

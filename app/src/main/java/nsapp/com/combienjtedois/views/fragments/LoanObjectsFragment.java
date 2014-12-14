@@ -121,23 +121,6 @@ public class LoanObjectsFragment extends AbstractFragment {
         });
     }
 
-    private boolean checkAddLoanForm(EditText namePersonView, Spinner categories, TextView positiveLoanView, TextView negativeLoanView, EditText descriptionView) {
-        if (namePersonView.getText().length() == 0) {
-            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.person_name)));
-            return false;
-        } else if (categories.getSelectedItemPosition() == 0) {
-            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.category_object)));
-            return false;
-        } else if (!positiveLoanView.isSelected() && !negativeLoanView.isSelected()) {
-            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.type)));
-            return false;
-        } else if (descriptionView.getText().length() == 0) {
-            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.object_description)));
-            return false;
-        }
-        return true;
-    }
-
     private void notifyChanges() {
         Cursor c = Utils.dbManager.fetchAllObjects();
         loanObjects = new ArrayList<LoanObject>();
@@ -173,6 +156,23 @@ public class LoanObjectsFragment extends AbstractFragment {
 
         LoanObjectAdapter loanObjectAdapter = new LoanObjectAdapter(launchActivity, loanObjects);
         listView.setAdapter(loanObjectAdapter);
+    }
+
+    private boolean checkAddLoanForm(EditText namePersonView, Spinner categories, TextView positiveLoanView, TextView negativeLoanView, EditText descriptionView) {
+        if (namePersonView.getText().length() == 0) {
+            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.person_name)));
+            return false;
+        } else if (categories.getSelectedItemPosition() == 0) {
+            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.category_object)));
+            return false;
+        } else if (!positiveLoanView.isSelected() && !negativeLoanView.isSelected()) {
+            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.type)));
+            return false;
+        } else if (descriptionView.getText().length() == 0) {
+            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.object_description)));
+            return false;
+        }
+        return true;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package nsapp.com.combienjtedois.views.fragments.money;
+package nsapp.com.combienjtedois.views.fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -8,24 +8,24 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.annotation.Nullable;
 import android.text.format.DateFormat;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.listeners.SwipeDismissListViewTouchListener;
+import nsapp.com.combienjtedois.model.DBManager;
 import nsapp.com.combienjtedois.model.Person;
 import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.ViewCreator;
+import nsapp.com.combienjtedois.views.adapters.PersonListAdapter;
 
-public class PersonListForMoneyFragment extends AbstractMoneyFragment {
+public class PersonListForMoneyFragment extends AbstractFragment {
 
     public static PersonListForMoneyFragment newInstance(int sectionNumber) {
         PersonListForMoneyFragment fragment = new PersonListForMoneyFragment();
@@ -36,12 +36,6 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        listType = listWantedType.PERSON;
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         launchActivity.updateActionBarTitle(getString(R.string.title_section1));
@@ -49,7 +43,6 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
         if (view != null) {
             view.findViewById(R.id.headerSeparator).setVisibility(View.GONE);
         }
-        notifyChanges();
         SwipeDismissListViewTouchListener swipeDismissListViewTouchListener = new SwipeDismissListViewTouchListener(listView, new SwipeDismissListViewTouchListener.OnDismissCallback() {
             @Override
             public void onDismiss(int[] reverseSortedPositions) {
@@ -75,6 +68,7 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
         });
         listView.setOnTouchListener(swipeDismissListViewTouchListener);
         listView.setOnScrollListener(swipeDismissListViewTouchListener.makeScrollListener());
+        notifyChanges();
     }
 
     @Override
@@ -84,10 +78,11 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
             if (isEditingView) {
                 modifyPerson(personArrayList.get(position));
             } else {
-                prepareOnReplaceTransaction(DetailPersonFragment.newInstance(person));
+                prepareOnReplaceTransaction(DetailPersonForMoneyFragment.newInstance(person));
             }
         }
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -132,6 +127,45 @@ public class PersonListForMoneyFragment extends AbstractMoneyFragment {
                 }
             }
         });
+    }
+
+    protected void notifyChanges() {
+        Cursor c = Utils.dbManager.fetchAllPersons();
+        personArrayList = new ArrayList<Person>();
+
+        while (c.moveToNext()) {
+            String name = c.getString(c.getColumnIndex(DBManager.NAME_PERSON_KEY));
+            String phoneNumber = c.getString(c.getColumnIndex(DBManager.PHONE_NUMBER_KEY));
+            String date = c.getString(c.getColumnIndex(DBManager.DATE_KEY));
+
+            int id = Utils.dbManager.fetchIdPerson(name);
+            String total = Utils.dbManager.getTotalCount(id);
+            personArrayList.add(new Person(id, name, total, phoneNumber, date));
+        }
+
+        if (personArrayList.isEmpty()) {
+            isEditingView = false;
+            if (listView.getFooterViewsCount() == 0) {
+                footerView.setText(R.string.add_person);
+                footerView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.dark_add, 0, 0);
+                footerView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        addItem(null, null);
+                    }
+                });
+                listView.addFooterView(footerView);
+                launchActivity.setListEmpty(true);
+                launchActivity.supportInvalidateOptionsMenu();
+            }
+        } else {
+            listView.removeFooterView(footerView);
+            launchActivity.setListEmpty(false);
+            launchActivity.supportInvalidateOptionsMenu();
+        }
+
+        PersonListAdapter personListAdapter = new PersonListAdapter(launchActivity, personArrayList, isEditingView);
+        listView.setAdapter(personListAdapter);
     }
 
     private void modifyPerson(final Person person) {

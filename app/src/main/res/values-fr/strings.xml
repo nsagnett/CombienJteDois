@@ -38,12 +38,6 @@
     <string name="content">Content</string>
     <string name="euro">€</string>
     <string name="three_points">&#8230;</string>
-    <string name="missing_picture">Aucune photo détectée !</string>
-    <string name="fullscreen">Agrandir</string>
-    <string name="camera">Appareil photo</string>
-    <string name="gallery">Galerie</string>
-    <string name="nothing">Ne rien mettre</string>
-    <string name="choose">Choisir</string>
     <string name="modification_date_format">Dernière modification : %s&#160;</string>
     <string name="add_date_format">Ajouté le : %s&#160;</string>
     <string name="lifetime_format">( il y a %s )</string>
@@ -76,7 +70,6 @@
     <string name="debt_already_present">Cet élément existe déjà !</string>
     <string name="toast_add_element">Elément ajouté !</string>
     <string name="toast_delete_element">Elément supprimé !</string>
-    <string name="modify_image">Image modifiée !</string>
 
     <!--Objets-->
     <string name="person_name_with_points">Nom de la personne concernée :&#160;</string>
