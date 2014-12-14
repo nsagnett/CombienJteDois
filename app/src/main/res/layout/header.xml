@@ -25,7 +25,7 @@
             android:layout_gravity="center"
             android:id="@+id/headerProfileView"
             android:contentDescription="@string/content"
-            style="@style/myImageView"
+            style="@style/ImageViewDarkBackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -39,6 +39,7 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/valueTextView"
             android:layout_width="wrap_content"
             android:gravity="center"
             android:text="@string/total"

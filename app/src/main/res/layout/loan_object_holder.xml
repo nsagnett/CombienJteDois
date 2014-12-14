@@ -26,6 +26,7 @@
             android:layout_marginRight="15dp"
             android:layout_marginEnd="15dp"
             android:adjustViewBounds="true"
+            style="@style/ImageViewGreyBackground"
             android:src="@drawable/document"
             android:contentDescription="@string/content"
             android:layout_height="50dp" />

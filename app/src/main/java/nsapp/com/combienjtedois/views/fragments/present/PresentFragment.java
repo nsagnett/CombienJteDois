@@ -1,4 +1,4 @@
-package nsapp.com.combienjtedois.views.fragments;
+package nsapp.com.combienjtedois.views.fragments.present;
 
 import android.app.AlertDialog;
 import android.database.Cursor;
@@ -27,6 +27,7 @@ import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.ViewCreator;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
 import nsapp.com.combienjtedois.views.adapters.PresentAdapter;
+import nsapp.com.combienjtedois.views.fragments.AbstractFragment;
 
 import static android.os.Build.VERSION_CODES.HONEYCOMB;
 
@@ -34,7 +35,6 @@ public class PresentFragment extends AbstractFragment {
 
     private TextView footerView;
     private ListView listView;
-    private Integer numberParticipantCount;
 
     private ArrayList<Present> presentsArray = new ArrayList<Present>();
 
@@ -88,6 +88,7 @@ public class PresentFragment extends AbstractFragment {
         });
         listView.setOnTouchListener(swipeDismissListViewTouchListener);
         listView.setOnScrollListener(swipeDismissListViewTouchListener.makeScrollListener());
+        listView.setOnItemClickListener(this);
         notifyChanges();
     }
 
@@ -136,39 +137,15 @@ public class PresentFragment extends AbstractFragment {
     public void addItem(String importName, String importPhone) {
         final AlertDialog alert = ViewCreator.createCustomPresentDialogBox(launchActivity);
         alert.show();
-        numberParticipantCount = 0;
         final EditText namePersonView = (EditText) alert.findViewById(R.id.namePersonEditView);
         final EditText valueView = (EditText) alert.findViewById(R.id.valueView);
         final EditText presentView = (EditText) alert.findViewById(R.id.presentView);
         final TextView validateView = (TextView) alert.findViewById(R.id.neutralTextView);
-        final TextView minusView = (TextView) alert.findViewById(R.id.minusView);
-        final TextView moreView = (TextView) alert.findViewById(R.id.moreView);
-        final TextView numberParticipantView = (TextView) alert.findViewById(R.id.participantNumberView);
         final DatePicker datePickerEventView = (DatePicker) alert.findViewById(R.id.datePickerEventView);
 
         if (Build.VERSION.SDK_INT >= HONEYCOMB) {
             datePickerEventView.setCalendarViewShown(false);
         }
-
-        numberParticipantView.setText(numberParticipantCount.toString());
-
-        minusView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (numberParticipantCount != 0) {
-                    numberParticipantCount--;
-                }
-                numberParticipantView.setText(numberParticipantCount.toString());
-            }
-        });
-
-        moreView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                numberParticipantCount++;
-                numberParticipantView.setText(numberParticipantCount.toString());
-            }
-        });
 
         validateView.setOnClickListener(new View.OnClickListener() {
             @Override

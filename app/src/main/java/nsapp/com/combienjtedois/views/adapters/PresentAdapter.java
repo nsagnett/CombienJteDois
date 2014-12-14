@@ -7,10 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.Present;
@@ -56,12 +53,6 @@ public class PresentAdapter extends BaseAdapter {
         ((TextView) convertView.findViewById(R.id.participantNumberView)).setText(String.format(context.getString(R.string.participant_number_format), present.getParticipantNumber()));
         ((TextView) convertView.findViewById(R.id.valueView)).setText(String.format(context.getString(R.string.value_format), present.getValue()));
         ((TextView) convertView.findViewById(R.id.dateView)).setText(String.format(context.getString(R.string.event_date_format), present.getDate(), Utils.convertLifeTimeFromMillis(context, Utils.getTimeBeforeEvent(present))));
-        convertView.findViewById(R.id.smsView).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         return convertView;
     }

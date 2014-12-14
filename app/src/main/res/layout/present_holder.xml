@@ -26,6 +26,7 @@
             android:layout_marginRight="15dp"
             android:layout_marginEnd="15dp"
             android:adjustViewBounds="true"
+            style="@style/ImageViewGreyBackground"
             android:src="@drawable/presents"
             android:contentDescription="@string/content"
             android:layout_height="50dp" />
@@ -75,17 +76,5 @@
 
 
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/smsView"
-        android:layout_width="wrap_content"
-        android:padding="15dp"
-        android:background="@drawable/custom_button"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true"
-        android:src="@drawable/sms"
-        android:contentDescription="@string/content"
-        android:layout_height="wrap_content" />
 
 </RelativeLayout>

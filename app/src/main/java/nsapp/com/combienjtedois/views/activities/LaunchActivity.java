@@ -20,7 +20,7 @@ import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.fragments.AbstractFragment;
 import nsapp.com.combienjtedois.views.fragments.LoanObjectsFragment;
 import nsapp.com.combienjtedois.views.fragments.NavigationDrawerFragment;
-import nsapp.com.combienjtedois.views.fragments.PresentFragment;
+import nsapp.com.combienjtedois.views.fragments.present.PresentFragment;
 import nsapp.com.combienjtedois.views.fragments.money.PersonListForMoneyFragment;
 
 public class LaunchActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {

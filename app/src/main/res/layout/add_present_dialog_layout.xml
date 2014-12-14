@@ -95,54 +95,6 @@
             <TextView
                 android:textSize="17sp"
                 android:gravity="center"
-                android:text="@string/participant_number"
-                android:layout_margin="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_margin="5dp"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/minusView"
-                    android:text="@string/minus"
-                    android:gravity="center"
-                    android:padding="15dp"
-                    android:textColor="@color/dark_blue"
-                    android:background="@drawable/custom_button"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.5"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/participantNumberView"
-                    android:gravity="center"
-                    android:padding="15dp"
-                    android:textColor="@color/dark_blue"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.5"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/moreView"
-                    android:text="@string/more"
-                    android:gravity="center"
-                    android:padding="15dp"
-                    android:textColor="@color/dark_blue"
-                    android:background="@drawable/custom_button"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.5"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <include layout="@layout/separator" />
-
-            <TextView
-                android:textSize="17sp"
-                android:gravity="center"
                 android:text="@string/event_date"
                 android:layout_margin="20dp"
                 android:layout_width="match_parent"

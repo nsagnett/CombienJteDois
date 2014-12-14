@@ -48,10 +48,10 @@ public class LoanObjectAdapter extends BaseAdapter {
         }
         LoanObject loanObject = loanObjects.get(position);
 
-        ((TextView) convertView.findViewById(R.id.nameView)).setText(loanObject.getNamePerson());
-        ((TextView) convertView.findViewById(R.id.categoryView)).setText(loanObject.getCategory());
-        ((TextView) convertView.findViewById(R.id.nameObjectView)).setText(loanObject.getNameObject());
-        ((TextView) convertView.findViewById(R.id.typeLoanView)).setText(loanObject.getType());
+        ((TextView) convertView.findViewById(R.id.nameView)).setText(String.format(context.getString(R.string.name_with_points), loanObject.getNamePerson()));
+        ((TextView) convertView.findViewById(R.id.categoryView)).setText(context.getString(R.string.category_object_with_points) + loanObject.getCategory());
+        ((TextView) convertView.findViewById(R.id.nameObjectView)).setText(context.getString(R.string.object_description_with_points) + loanObject.getNameObject());
+        ((TextView) convertView.findViewById(R.id.typeLoanView)).setText(context.getString(R.string.type_with_points) + loanObject.getType());
         TextView dateView = ((TextView) convertView.findViewById(R.id.dateView));
         dateView.setText(String.format(context.getString(R.string.add_date_format), loanObject.getDate()));
         dateView.setText(dateView.getText() + String.format(context.getString(R.string.lifetime_format), Utils.convertLifeTime(context, loanObject.getDate())));

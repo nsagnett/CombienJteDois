@@ -58,8 +58,7 @@
     <string name="object_hint">Tap the object</string>
     <string name="object_with_points">Object :&#160;</string>
     <string name="ok">OK</string>
-    <string name="participant_number_format">Number of participant : %s</string>
-    <string name="participant_number">Number of participant</string>
+    <string name="participant_number_format">Participants : %s</string>
     <string name="person_already_present_format">%s always exists !</string>
     <string name="person_hint">Tap the name</string>
     <string name="person_name">Person name</string>
