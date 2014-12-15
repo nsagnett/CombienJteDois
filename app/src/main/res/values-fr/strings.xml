@@ -68,6 +68,7 @@
     <string name="object_hint">Saisir l\'objet</string>
     <string name="amount_hint">Saisir le montant</string>
     <string name="debt_already_present">Cet élément existe déjà !</string>
+    <string name="participant_already_present">Ce participant existe déjà !</string>
     <string name="toast_add_element">Elément ajouté !</string>
     <string name="toast_delete_element">Elément supprimé !</string>
 
@@ -96,7 +97,11 @@
     <string name="event_date">Date de l\'évènement</string>
     <string name="event_date_format">Pour le : %1$s ( Dans %2$s )</string>
     <string name="toast_add_present">Cadeau ajouté !</string>
+    <string name="toast_add_participant">Participant ajouté !</string>
+    <string name="budget_format">Budget : %s</string>
+    <string name="add_participant">Ajouter un participant</string>
     <string name="toast_delete_present">Cadeau supprimé !</string>
+    <string name="toast_delete_participant">Participant supprimé !</string>
     <string name="impossible_date">Vous ne pouvez pas mettre une date avant demain !</string>
 
 </resources>

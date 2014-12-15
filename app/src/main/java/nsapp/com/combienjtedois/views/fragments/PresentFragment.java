@@ -58,10 +58,6 @@ public class PresentFragment extends AbstractFragment {
         return view;
     }
 
-    private void notifyChanges() {
-
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -77,7 +73,7 @@ public class PresentFragment extends AbstractFragment {
                         public void onClick(View v) {
                             alert.dismiss();
                             Utils.dbManager.deletePresent(presentsArray.get(position).getIdPresent());
-                            notifyPresentChanges();
+                            notifyChanges();
                         }
                     });
                     alert.findViewById(R.id.negativeView).setOnClickListener(new View.OnClickListener() {
@@ -92,10 +88,10 @@ public class PresentFragment extends AbstractFragment {
         listView.setOnTouchListener(swipeDismissListViewTouchListener);
         listView.setOnScrollListener(swipeDismissListViewTouchListener.makeScrollListener());
         listView.setOnItemClickListener(this);
-        notifyPresentChanges();
+        notifyChanges();
     }
 
-    private void notifyPresentChanges() {
+    private void notifyChanges() {
         Cursor c = Utils.dbManager.fetchAllPresents();
         presentsArray = new ArrayList<Present>();
 
@@ -153,31 +149,12 @@ public class PresentFragment extends AbstractFragment {
         validateView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int days = datePickerEventView.getDayOfMonth();
-                int month = datePickerEventView.getMonth() + 1;
-                int year = datePickerEventView.getYear();
-                String date = "";
-                if (days < 10) {
-                    date += "0" + days;
-                } else {
-                    date += days;
-                }
-                if (month < 10) {
-                    date += "-0" + month + "-" + year;
-                } else {
-                    date += "-" + month + "-" + year;
-                }
-
-                long beforeEventTime = -1;
-                try {
-                    beforeEventTime = new SimpleDateFormat(Utils.PATTERN_DATE).parse(date).getTime() - new Date().getTime();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                String date = formattingDate(datePickerEventView);
+                long beforeEventTime = getTimeBeforeEvent(date);
                 if (checkAddForm(namePersonView, presentView, valueView, beforeEventTime)) {
                     alert.dismiss();
                     Utils.dbManager.createPresent(namePersonView.getText().toString(), presentView.getText().toString(), valueView.getText().toString(), date);
-                    notifyPresentChanges();
+                    notifyChanges();
                 }
             }
         });
@@ -198,6 +175,35 @@ public class PresentFragment extends AbstractFragment {
             return false;
         }
         return true;
+    }
+
+    private String formattingDate(DatePicker datePickerEventView) {
+        int days = datePickerEventView.getDayOfMonth();
+        int month = datePickerEventView.getMonth() + 1;
+        int year = datePickerEventView.getYear();
+        String date = "";
+        if (days < 10) {
+            date += "0" + days;
+        } else {
+            date += days;
+        }
+        if (month < 10) {
+            date += "-0" + month + "-" + year;
+        } else {
+            date += "-" + month + "-" + year;
+        }
+
+        return date;
+    }
+
+    private long getTimeBeforeEvent(String date) {
+        long beforeEventTime = -1;
+        try {
+            beforeEventTime = new SimpleDateFormat(Utils.PATTERN_DATE).parse(date).getTime() - new Date().getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return beforeEventTime;
     }
 
     @Override

@@ -55,13 +55,13 @@ public class DebtListAdapter extends BaseAdapter {
         Double amount = Double.parseDouble(debt.getAmount());
 
         TextView reasonView = (TextView) convertView.findViewById(R.id.nameView);
-        TextView dateView = ((TextView) convertView.findViewById(R.id.dateView));
+        TextView dateView = ((TextView) convertView.findViewById(R.id.subTitleView));
         dateView.setText(String.format(context.getString(R.string.modification_date_format), debt.getDate()));
         dateView.setText(dateView.getText() + String.format(context.getString(R.string.lifetime_format), Utils.convertLifeTime(context, debt.getDate())));
 
         reasonView.setText(reason);
 
-        TextView amountView = ((TextView) convertView.findViewById(R.id.countView));
+        TextView amountView = ((TextView) convertView.findViewById(R.id.rightView));
         amountView.setText(String.format(context.getString(R.string.money_format), amount));
         amountView.setTextColor(amount >= 0 ? context.getResources().getColor(R.color.green) : context.getResources().getColor(R.color.red));
 

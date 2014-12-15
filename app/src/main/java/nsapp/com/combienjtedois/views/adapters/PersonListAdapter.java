@@ -56,12 +56,12 @@ public class PersonListAdapter extends BaseAdapter {
         Double total = Double.parseDouble(person.getTotalAmount());
 
         ((TextView) convertView.findViewById(R.id.nameView)).setText(name);
-        TextView dateView = ((TextView) convertView.findViewById(R.id.dateView));
+        TextView dateView = ((TextView) convertView.findViewById(R.id.subTitleView));
         dateView.setText(String.format(context.getString(R.string.modification_date_format), person.getModificationDate()));
         dateView.setText(dateView.getText() + String.format(context.getString(R.string.lifetime_format), Utils.convertLifeTime(context, person.getModificationDate())));
 
 
-        TextView countView = ((TextView) convertView.findViewById(R.id.countView));
+        TextView countView = ((TextView) convertView.findViewById(R.id.rightView));
         countView.setText(String.format(context.getString(R.string.money_format), total));
         countView.setTextColor(total >= 0 ? context.getResources().getColor(R.color.green) : context.getResources().getColor(R.color.red));
 

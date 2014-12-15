@@ -134,7 +134,7 @@ public class PersonListForMoneyFragment extends AbstractFragment {
         personArrayList = new ArrayList<Person>();
 
         while (c.moveToNext()) {
-            String name = c.getString(c.getColumnIndex(DBManager.NAME_PERSON_KEY));
+            String name = c.getString(c.getColumnIndex(DBManager.NAME_KEY));
             String phoneNumber = c.getString(c.getColumnIndex(DBManager.PHONE_NUMBER_KEY));
             String date = c.getString(c.getColumnIndex(DBManager.DATE_KEY));
 

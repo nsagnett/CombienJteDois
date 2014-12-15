@@ -126,7 +126,7 @@ public class LoanObjectsFragment extends AbstractFragment {
         loanObjects = new ArrayList<LoanObject>();
 
         while (c.moveToNext()) {
-            String name = c.getString(c.getColumnIndex(DBManager.NAME_PERSON_KEY));
+            String name = c.getString(c.getColumnIndex(DBManager.NAME_KEY));
             String nameObject = c.getString(c.getColumnIndex(DBManager.NAME_OBJECT_KEY));
             String category = c.getString(c.getColumnIndex(DBManager.CATEGORY_OBJECT_KEY));
             String type = c.getString(c.getColumnIndex(DBManager.TYPE_OBJECT_KEY));
