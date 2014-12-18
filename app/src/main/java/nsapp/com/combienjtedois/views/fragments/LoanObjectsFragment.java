@@ -114,7 +114,7 @@ public class LoanObjectsFragment extends AbstractFragment {
                             categories.getSelectedItem().toString(),
                             descriptionView.getText().toString(),
                             positiveLoanView.isSelected() ? positiveLoanView.getText().toString() : negativeLoanView.getText().toString(),
-                            (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
+                            (String) DateFormat.format(Utils.SPECIFIC_PATTERN_DATE, new Date().getTime()));
                     notifyChanges();
                 }
             }

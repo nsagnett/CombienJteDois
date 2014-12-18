@@ -87,14 +87,8 @@ public class PersonListForMoneyFragment extends AbstractFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case Utils.IMPORT_CONTACT_CODE:
-                if (resultCode == Activity.RESULT_OK) {
-                    importContact(data);
-                }
-                break;
-            default:
-                break;
+        if (requestCode == Utils.IMPORT_CONTACT_CODE && resultCode == Activity.RESULT_OK){
+            importContact(data);
         }
     }
 
@@ -122,14 +116,14 @@ public class PersonListForMoneyFragment extends AbstractFragment {
             public void onClick(View v) {
                 if (checkPersonForm(nameEditView)) {
                     alert.dismiss();
-                    Utils.dbManager.createPerson(nameEditView.getText().toString(), importContactView.getText().toString(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
+                    Utils.dbManager.createPerson(nameEditView.getText().toString(), importContactView.getText().toString(), (String) DateFormat.format(Utils.SPECIFIC_PATTERN_DATE, new Date().getTime()));
                     notifyChanges();
                 }
             }
         });
     }
 
-    protected void notifyChanges() {
+    private void notifyChanges() {
         Cursor c = Utils.dbManager.fetchAllPersons();
         personArrayList = new ArrayList<Person>();
 
@@ -180,7 +174,7 @@ public class PersonListForMoneyFragment extends AbstractFragment {
             public void onClick(View v) {
                 if (checkPersonForm(nameView)) {
                     alert.dismiss();
-                    Utils.dbManager.modifyPerson(person.getId(), nameView.getText().toString(), person.getTotalAmount(), person.getPhoneNumber(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
+                    Utils.dbManager.modifyPerson(person.getId(), nameView.getText().toString(), person.getTotalAmount(), person.getPhoneNumber(), (String) DateFormat.format(Utils.SPECIFIC_PATTERN_DATE, new Date().getTime()));
                     notifyChanges();
                 }
             }

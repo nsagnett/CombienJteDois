@@ -11,7 +11,8 @@ import nsapp.com.combienjtedois.R;
 
 public class Utils {
 
-    public static final String PATTERN_DATE = "dd-MM-yyyy";
+    public static final String EVENT_PATTERN_DATE = "dd-MM-yyyy";
+    public static final String SPECIFIC_PATTERN_DATE = "dd-MM-yyyy HH:mm";
 
     public static final String PERSON_KEY = "person_key";
     public static final String PRESENT_KEY = "present_key";
@@ -40,7 +41,7 @@ public class Utils {
     private static long getLifeTimeInMillis(String date) {
         long now = new Date().getTime();
         long dateSaved = 0;
-        SimpleDateFormat format = new SimpleDateFormat(PATTERN_DATE);
+        SimpleDateFormat format = new SimpleDateFormat(SPECIFIC_PATTERN_DATE);
         try {
             dateSaved = format.parse(date).getTime();
         } catch (ParseException e) {
@@ -109,7 +110,7 @@ public class Utils {
 
     public static long getTimeBeforeEvent(Present present) {
         try {
-            long eventDate = new SimpleDateFormat(Utils.PATTERN_DATE).parse(present.getDate()).getTime();
+            long eventDate = new SimpleDateFormat(Utils.EVENT_PATTERN_DATE).parse(present.getDate()).getTime();
             return eventDate - (new Date().getTime());
         } catch (ParseException e) {
             e.printStackTrace();

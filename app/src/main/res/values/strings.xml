@@ -41,6 +41,7 @@
     <string name="money_format">%s €</string>
     <string name="name">Name</string>
     <string name="name_hint">Tap the name</string>
+    <string name="budget_hint">Tap the budget</string>
     <string name="navigation_drawer_close">Close menu</string>
     <string name="navigation_drawer_open">Open menu</string>
     <string name="negative_amount">Amount doesn\'t be negative </string>
@@ -89,5 +90,8 @@
     <string name="participant_already_present">Participant always exists !</string>
     <string name="toast_add_participant">Participant added !</string>
     <string name="toast_delete_participant">Participant deleted !</string>
+    <string name="budget">Budget</string>
+    <string name="to_pay">To pay</string>
+    <string name="paid">Paid</string>
     <string name="budget_format">Budget : %s</string>
 </resources>

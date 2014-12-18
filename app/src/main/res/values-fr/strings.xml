@@ -98,6 +98,9 @@
     <string name="event_date_format">Pour le : %1$s ( Dans %2$s )</string>
     <string name="toast_add_present">Cadeau ajouté !</string>
     <string name="toast_add_participant">Participant ajouté !</string>
+    <string name="budget_hint">Saisir le budget</string>
+    <string name="to_pay">A payer</string>
+    <string name="paid">Payé</string>
     <string name="budget_format">Budget : %s</string>
     <string name="add_participant">Ajouter un participant</string>
     <string name="toast_delete_present">Cadeau supprimé !</string>

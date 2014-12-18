@@ -1,13 +1,19 @@
 package nsapp.com.combienjtedois.views.fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -137,6 +143,14 @@ public class DetailPresentFragment extends AbstractFragment {
         listView.setAdapter(participantListAdapter);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Utils.IMPORT_CONTACT_CODE && resultCode == Activity.RESULT_OK) {
+            importContact(data);
+        }
+    }
+
 
     @Override
     public void onItemClick(final AdapterView<?> parent, View view, final int position, long id) {
@@ -144,5 +158,70 @@ public class DetailPresentFragment extends AbstractFragment {
 
     @Override
     public void addItem(String importName, String importPhone) {
+        final AlertDialog alert = ViewCreator.createCustomParticipantDialogBox(launchActivity);
+        alert.show();
+        final EditText namePersonView = (EditText) alert.findViewById(R.id.namePersonEditView);
+        final EditText budgetEditView = (EditText) alert.findViewById(R.id.budgetEditView);
+        final EditText phoneNumberEditView = (EditText) alert.findViewById(R.id.phoneNumberEditView);
+        final TextView importContactView = (TextView) alert.findViewById(R.id.importContactView);
+        final TextView validateView = (TextView) alert.findViewById(R.id.neutralTextView);
+
+        namePersonView.setText(importName);
+        phoneNumberEditView.setText(importPhone);
+
+        importContactView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI), Utils.IMPORT_CONTACT_CODE);
+                alert.dismiss();
+            }
+        });
+
+
+        validateView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkPersonForm(namePersonView, budgetEditView)) {
+                    alert.dismiss();
+                    Utils.dbManager.createParticipant(selectedPresent.getIdPresent(), namePersonView.getText().toString(), phoneNumberEditView.getText().toString(), budgetEditView.getText().toString());
+                    notifyChanges();
+                }
+            }
+        });
+    }
+
+    boolean checkPersonForm(EditText namePersonView, EditText budgetEditView) {
+        if (namePersonView.getText().length() == 0) {
+            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.name)));
+            return false;
+        }else if (budgetEditView.getText().length() == 0) {
+            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.budget)));
+            return false;
+        }
+        return true;
+    }
+
+    private void importContact(Intent data) {
+        ContentResolver contentResolver = getActivity().getContentResolver();
+        Uri dataUri = data.getData();
+        Cursor c = contentResolver.query(dataUri, null, null, null, null);
+        String importName = null;
+        String importPhoneNumber = null;
+        if (c.getCount() > 0) {
+            if (c.moveToFirst()) {
+                String id = c.getString(c.getColumnIndex(ContactsContract.Contacts._ID));
+                c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                if (Integer.parseInt(c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+                    Cursor phones = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                            new String[]{id}, null);
+                    phones.moveToFirst();
+                    importName = c.getString(c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+                    importPhoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    phones.close();
+                }
+            }
+        }
+        c.close();
+        addItem(importName, importPhoneNumber);
     }
 }

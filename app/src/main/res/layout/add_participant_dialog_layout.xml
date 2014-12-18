@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@android:color/white"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="@string/name"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/namePersonEditView"
+        android:inputType="text"
+        android:background="@null"
+        android:padding="5dp"
+        android:digits="@string/digits_edittext"
+        android:hint="@string/name_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include layout="@layout/separator" />
+
+    <TextView
+        android:text="@string/budget"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/budgetEditView"
+        android:inputType="number"
+        android:background="@null"
+        android:padding="5dp"
+        android:hint="@string/budget_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include layout="@layout/separator" />
+
+    <TextView
+        android:text="@string/phone_number"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/phoneNumberEditView"
+            android:inputType="phone"
+            android:padding="5dp"
+            android:hint="@string/phone_hint"
+            android:background="@null"
+            android:layout_weight="0.85"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/importContactView"
+            android:text="@string/three_points"
+            android:gravity="center|bottom"
+            android:background="@drawable/custom_button"
+            android:layout_weight="0.15"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <include layout="@layout/separator" />
+
+
+    <TextView
+        android:id="@+id/neutralTextView"
+        android:textColor="@color/dark_blue"
+        android:padding="15dp"
+        android:gravity="center"
+        android:background="@drawable/custom_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

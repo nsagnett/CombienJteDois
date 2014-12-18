@@ -199,7 +199,7 @@ public class PresentFragment extends AbstractFragment {
     private long getTimeBeforeEvent(String date) {
         long beforeEventTime = -1;
         try {
-            beforeEventTime = new SimpleDateFormat(Utils.PATTERN_DATE).parse(date).getTime() - new Date().getTime();
+            beforeEventTime = new SimpleDateFormat(Utils.EVENT_PATTERN_DATE).parse(date).getTime() - new Date().getTime();
         } catch (ParseException e) {
             e.printStackTrace();
         }

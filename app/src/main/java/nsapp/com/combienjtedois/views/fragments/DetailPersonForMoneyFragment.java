@@ -72,7 +72,7 @@ public class DetailPersonForMoneyFragment extends AbstractFragment {
                         @Override
                         public void onClick(View v) {
                             alert.dismiss();
-                            Utils.dbManager.setModificationDatePerson(selectedPerson.getId(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
+                            Utils.dbManager.setModificationDatePerson(selectedPerson.getId(), (String) DateFormat.format(Utils.SPECIFIC_PATTERN_DATE, new Date().getTime()));
                             final int idDebt = debtArrayList.get(position).getId();
                             final int idPerson = selectedPerson.getId();
                             Utils.dbManager.deleteDebt(idDebt, idPerson);
@@ -154,8 +154,8 @@ public class DetailPersonForMoneyFragment extends AbstractFragment {
                 }
                 if (checkAddDebtForm(reasonEditText, countEditText, sign)) {
                     alert.dismiss();
-                    Utils.dbManager.setModificationDatePerson(selectedPerson.getId(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
-                    Utils.dbManager.createDebt(selectedPerson.getId(), sign + countEditText.getText().toString(), reasonEditText.getText().toString(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
+                    Utils.dbManager.setModificationDatePerson(selectedPerson.getId(), (String) DateFormat.format(Utils.SPECIFIC_PATTERN_DATE, new Date().getTime()));
+                    Utils.dbManager.createDebt(selectedPerson.getId(), sign + countEditText.getText().toString(), reasonEditText.getText().toString(), (String) DateFormat.format(Utils.SPECIFIC_PATTERN_DATE, new Date().getTime()));
                     notifyChanges();
                 }
             }
@@ -267,8 +267,8 @@ public class DetailPersonForMoneyFragment extends AbstractFragment {
             @Override
             public void onClick(View v) {
                 alert.dismiss();
-                Utils.dbManager.modifyDebt(debt.getId(), finalSign + amountInteger.toString(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
-                Utils.dbManager.setModificationDatePerson(selectedPerson.getId(), (String) DateFormat.format(Utils.PATTERN_DATE, new Date().getTime()));
+                Utils.dbManager.modifyDebt(debt.getId(), finalSign + amountInteger.toString(), (String) DateFormat.format(Utils.SPECIFIC_PATTERN_DATE, new Date().getTime()));
+                Utils.dbManager.setModificationDatePerson(selectedPerson.getId(), (String) DateFormat.format(Utils.SPECIFIC_PATTERN_DATE, new Date().getTime()));
                 notifyChanges();
             }
         });

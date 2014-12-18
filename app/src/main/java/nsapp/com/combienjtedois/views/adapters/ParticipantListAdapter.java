@@ -59,6 +59,15 @@ public class ParticipantListAdapter extends BaseAdapter {
 
         TextView rightView = ((TextView) convertView.findViewById(R.id.rightView));
 
+        if (participant.isPaid()) {
+            rightView.setText(context.getString(R.string.paid));
+            rightView.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_menu_search, 0, 0, 0);
+        } else {
+            rightView.setText(context.getString(R.string.to_pay));
+            rightView.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_delete, 0, 0, 0);
+        }
+
+
         if (isEditingView) {
             ImageView imageView = (ImageView) convertView.findViewById(R.id.otherView);
             imageView.setImageResource(R.drawable.dark_edit);

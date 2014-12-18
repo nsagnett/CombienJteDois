@@ -156,4 +156,16 @@ public class ViewCreator {
         builder.setView(view);
         return builder.create();
     }
+
+    public static AlertDialog createCustomParticipantDialogBox(Context context) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.add_participant_dialog_layout, null);
+
+        builder.setCustomTitle(getCustomTitleDialogBox(context, R.string.add_participant, R.drawable.add));
+
+        ((TextView) view.findViewById(R.id.neutralTextView)).setText(R.string.validate);
+
+        builder.setView(view);
+        return builder.create();
+    }
 }

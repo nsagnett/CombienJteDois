@@ -13,36 +13,32 @@ import nsapp.com.combienjtedois.R;
 public class DBManager {
 
     // PERSON
-    private static final String ID_PERSON_KEY = "idP";
     private static final String TOTAL_COUNT_KEY = "totalCount";
 
 
     // DEBT
-    private static final String ID_DEBT_KEY = "idD";
     private static final String ID_PERSON_DEBT_KEY = "idFKP";
     private static final String AMOUNT_KEY = "amount";
     public static final String REASON_KEY = "reason";
 
     //OBJECT
-    private static final String ID_OBJECT_KEY = "idO";
     public static final String CATEGORY_OBJECT_KEY = "category";
     public static final String NAME_OBJECT_KEY = "nameObject";
     public static final String TYPE_OBJECT_KEY = "type";
 
     //PRESENT
-    private static final String ID_PRESENT_KEY = "idP";
     public static final String CONSIGNEE_KEY = "consignee";
     public static final String PARTICIPANT_NUMBER_KEY = "participantNumber";
     public static final String PRESENT_KEY = "present";
     public static final String VALUE_KEY = "value";
 
     //PARTICIPANT
-    private static final String ID_PARTICIPANT_KEY = "idPart";
     private static final String ID_PRESENT_PARTICIPANT_KEY = "idFKPresent";
     public static final String BUDGET_KEY = "budget";
     public static final String PAID_KEY = "paid";
 
     // COMMON
+    private static final String IDENTIFIER_KEY = "id";
     public static final String DATE_KEY = "date";
     public static final String NAME_KEY = "name";
     public static final String PHONE_NUMBER_KEY = "phoneNumber";
@@ -55,40 +51,40 @@ public class DBManager {
     private static final String DATABASE_TABLE_PRESENT = "presents";
     private static final String DATABASE_TABLE_PARTICIPANT = "participant";
 
-    private static final String CREATE_TABLE_PERSON_QUERY = "create table person (idP integer primary key autoincrement, "
+    private static final String CREATE_TABLE_PERSON_QUERY = "create table person (id integer primary key autoincrement, "
             + "name text not null, "
             + "phoneNumber text, "
             + "date text, "
             + "totalCount text not null); ";
 
-    private static final String CREATE_TABLE_DEBT_QUERY = "create table debt (idD integer primary key autoincrement, "
+    private static final String CREATE_TABLE_DEBT_QUERY = "create table debt (id integer primary key autoincrement, "
             + "idFKP integer not null, "
             + "amount text not null, "
             + "reason text not null, "
             + "date text, "
-            + "foreign key(idFKP) references person(idP)); ";
+            + "foreign key(idFKP) references person(id)); ";
 
-    private static final String CREATE_TABLE_LOAN_OBJECT_QUERY = "create table loanObject (idO integer primary key autoincrement, "
+    private static final String CREATE_TABLE_LOAN_OBJECT_QUERY = "create table loanObject (id integer primary key autoincrement, "
             + "name text not null, "
             + "category text not null, "
             + "nameObject text not null, "
             + "type text not null, "
             + "date text) ";
 
-    private static final String CREATE_TABLE_PRESENT_QUERY = "create table presents (idP integer primary key autoincrement, "
+    private static final String CREATE_TABLE_PRESENT_QUERY = "create table presents (id integer primary key autoincrement, "
             + "consignee text not null, "
             + "participantNumber integer, "
             + "present text not null, "
             + "value text not null, "
             + "date text) ";
 
-    private static final String CREATE_TABLE_PARTICIPANT_QUERY = "create table participant (idPart integer primary key autoincrement, "
+    private static final String CREATE_TABLE_PARTICIPANT_QUERY = "create table participant (id integer primary key autoincrement, "
             + "idFKPresent integer not null, "
             + "name text not null, "
             + "budget text not null, "
             + "paid integer not null, "
-            + "phoneNumber text; "
-            + "foreign key(idFKPresent) references presents(idP))";
+            + "phoneNumber text, "
+            + "foreign key(idFKPresent) references presents(id))";
 
     private SQLiteDatabase sqLiteDatabase;
     private final Context context;
@@ -153,7 +149,7 @@ public class DBManager {
         ContentValues args = new ContentValues();
         args.put(DATE_KEY, date);
 
-        sqLiteDatabase.update(DATABASE_TABLE_PERSON, args, ID_PERSON_KEY + "="
+        sqLiteDatabase.update(DATABASE_TABLE_PERSON, args, IDENTIFIER_KEY + "="
                 + idPerson, null);
     }
 
@@ -165,16 +161,16 @@ public class DBManager {
         args.put(DATE_KEY, date);
 
         Toast.makeText(context, context.getString(R.string.toast_modify), Toast.LENGTH_SHORT).show();
-        sqLiteDatabase.update(DATABASE_TABLE_PERSON, args, ID_PERSON_KEY + "="
+        sqLiteDatabase.update(DATABASE_TABLE_PERSON, args, IDENTIFIER_KEY + "="
                 + idPerson, null);
     }
 
     public int fetchIdPerson(String name) {
         Cursor c = sqLiteDatabase.query(DATABASE_TABLE_PERSON, new String[]{
-                ID_PERSON_KEY, NAME_KEY, PHONE_NUMBER_KEY, TOTAL_COUNT_KEY, DATE_KEY}, NAME_KEY + "= '" + name + "'", null, null, null, null);
+                IDENTIFIER_KEY, NAME_KEY, PHONE_NUMBER_KEY, TOTAL_COUNT_KEY, DATE_KEY}, NAME_KEY + "= '" + name + "'", null, null, null, null);
 
         if (c != null && c.moveToFirst()) {
-            return c.getInt(c.getColumnIndex(ID_PERSON_KEY));
+            return c.getInt(c.getColumnIndex(IDENTIFIER_KEY));
         }
         return 0;
     }
@@ -182,14 +178,14 @@ public class DBManager {
 
     public Cursor fetchAllPersons() {
         return sqLiteDatabase.query(DATABASE_TABLE_PERSON, new String[]{
-                        ID_PERSON_KEY, NAME_KEY, PHONE_NUMBER_KEY, TOTAL_COUNT_KEY, DATE_KEY}, null, null, null, null,
+                        IDENTIFIER_KEY, NAME_KEY, PHONE_NUMBER_KEY, TOTAL_COUNT_KEY, DATE_KEY}, null, null, null, null,
                 null);
     }
 
 
     public void deletePerson(int idPerson) {
         Toast.makeText(context, context.getString(R.string.toast_delete_person), Toast.LENGTH_SHORT).show();
-        sqLiteDatabase.delete(DATABASE_TABLE_PERSON, ID_PERSON_KEY + "=" + idPerson, null);
+        sqLiteDatabase.delete(DATABASE_TABLE_PERSON, IDENTIFIER_KEY + "=" + idPerson, null);
         sqLiteDatabase.delete(DATABASE_TABLE_DEBT, ID_PERSON_DEBT_KEY + "=" + idPerson, null);
     }
 
@@ -221,22 +217,22 @@ public class DBManager {
         initialValues.put(DATE_KEY, date);
 
         Toast.makeText(context, context.getString(R.string.toast_modify), Toast.LENGTH_SHORT).show();
-        sqLiteDatabase.update(DATABASE_TABLE_DEBT, initialValues, ID_DEBT_KEY + "=" + idDebt, null);
+        sqLiteDatabase.update(DATABASE_TABLE_DEBT, initialValues, IDENTIFIER_KEY + "=" + idDebt, null);
     }
 
     public int fetchIdDebt(int idPerson, String reason) {
         Cursor c = sqLiteDatabase.query(DATABASE_TABLE_DEBT, new String[]{
-                ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, DATE_KEY}, ID_PERSON_DEBT_KEY + "='" + idPerson + "' AND " + REASON_KEY + "='" + reason + "'", null, null, null, null);
+                IDENTIFIER_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, DATE_KEY}, ID_PERSON_DEBT_KEY + "='" + idPerson + "' AND " + REASON_KEY + "='" + reason + "'", null, null, null, null);
 
         if (c != null && c.moveToFirst()) {
-            return c.getInt(c.getColumnIndex(ID_DEBT_KEY));
+            return c.getInt(c.getColumnIndex(IDENTIFIER_KEY));
         }
         return 0;
     }
 
     private Cursor fetchDebt(int rowIdDebt) {
         Cursor mCursor = sqLiteDatabase.query(true, DATABASE_TABLE_DEBT, new String[]{
-                ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, DATE_KEY}, ID_DEBT_KEY + "="
+                IDENTIFIER_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, DATE_KEY}, IDENTIFIER_KEY + "="
                 + rowIdDebt, null, null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
@@ -246,7 +242,7 @@ public class DBManager {
 
     public Cursor fetchAllDebt(int idPerson) {
         return sqLiteDatabase.query(DATABASE_TABLE_DEBT, new String[]{
-                        ID_DEBT_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, DATE_KEY}, ID_PERSON_DEBT_KEY + "=" + idPerson, null, null, null,
+                        IDENTIFIER_KEY, ID_PERSON_DEBT_KEY, AMOUNT_KEY, REASON_KEY, DATE_KEY}, ID_PERSON_DEBT_KEY + "=" + idPerson, null, null, null,
                 null);
     }
 
@@ -274,7 +270,7 @@ public class DBManager {
 
     public void deleteDebt(int idDebt, int idPerson) {
         Toast.makeText(context, context.getString(R.string.toast_delete_element), Toast.LENGTH_SHORT).show();
-        sqLiteDatabase.delete(DATABASE_TABLE_DEBT, ID_DEBT_KEY + "=" + idDebt + " AND " + ID_PERSON_DEBT_KEY + "=" + idPerson, null);
+        sqLiteDatabase.delete(DATABASE_TABLE_DEBT, IDENTIFIER_KEY + "=" + idDebt + " AND " + ID_PERSON_DEBT_KEY + "=" + idPerson, null);
     }
 
     /**
@@ -301,24 +297,24 @@ public class DBManager {
 
     public Cursor fetchAllObjects() {
         return sqLiteDatabase.query(DATABASE_TABLE_OBJECT, new String[]{
-                        ID_OBJECT_KEY, NAME_KEY, CATEGORY_OBJECT_KEY, NAME_OBJECT_KEY, TYPE_OBJECT_KEY, DATE_KEY}, null, null, null, null,
+                        IDENTIFIER_KEY, NAME_KEY, CATEGORY_OBJECT_KEY, NAME_OBJECT_KEY, TYPE_OBJECT_KEY, DATE_KEY}, null, null, null, null,
                 null);
     }
 
     public int fetchIdObject(String namePerson, String date) {
         Cursor c = sqLiteDatabase.query(DATABASE_TABLE_OBJECT, new String[]{
-                ID_OBJECT_KEY, NAME_KEY, CATEGORY_OBJECT_KEY, NAME_OBJECT_KEY, TYPE_OBJECT_KEY, DATE_KEY}, NAME_KEY + "='" + namePerson + "'AND " +
+                IDENTIFIER_KEY, NAME_KEY, CATEGORY_OBJECT_KEY, NAME_OBJECT_KEY, TYPE_OBJECT_KEY, DATE_KEY}, NAME_KEY + "='" + namePerson + "'AND " +
                 DATE_KEY + "='" + date + "'", null, null, null, null);
 
         if (c != null && c.moveToFirst()) {
-            return c.getInt(c.getColumnIndex(ID_OBJECT_KEY));
+            return c.getInt(c.getColumnIndex(IDENTIFIER_KEY));
         }
         return 0;
     }
 
     public void deleteObject(int idObject) {
         Toast.makeText(context, context.getString(R.string.toast_delete_element), Toast.LENGTH_SHORT).show();
-        sqLiteDatabase.delete(DATABASE_TABLE_OBJECT, ID_OBJECT_KEY + "=" + idObject, null);
+        sqLiteDatabase.delete(DATABASE_TABLE_OBJECT, IDENTIFIER_KEY + "=" + idObject, null);
     }
 
     /**
@@ -343,16 +339,16 @@ public class DBManager {
 
     public Cursor fetchAllPresents() {
         return sqLiteDatabase.query(DATABASE_TABLE_PRESENT, new String[]{
-                ID_PRESENT_KEY, CONSIGNEE_KEY, PARTICIPANT_NUMBER_KEY, PRESENT_KEY, VALUE_KEY, DATE_KEY}, null, null, null, null, null);
+                IDENTIFIER_KEY, CONSIGNEE_KEY, PARTICIPANT_NUMBER_KEY, PRESENT_KEY, VALUE_KEY, DATE_KEY}, null, null, null, null, null);
     }
 
     public int fetchIdPresent(String present, String date) {
         Cursor c = sqLiteDatabase.query(DATABASE_TABLE_PRESENT, new String[]{
-                ID_PRESENT_KEY, CONSIGNEE_KEY, PARTICIPANT_NUMBER_KEY, PRESENT_KEY, VALUE_KEY, DATE_KEY}, PRESENT_KEY + "='" + present + "'AND " +
+                IDENTIFIER_KEY, CONSIGNEE_KEY, PARTICIPANT_NUMBER_KEY, PRESENT_KEY, VALUE_KEY, DATE_KEY}, PRESENT_KEY + "='" + present + "'AND " +
                 DATE_KEY + "='" + date + "'", null, null, null, null);
 
         if (c != null && c.moveToFirst()) {
-            return c.getInt(c.getColumnIndex(ID_PRESENT_KEY));
+            return c.getInt(c.getColumnIndex(IDENTIFIER_KEY));
         }
         return 0;
     }
@@ -361,13 +357,13 @@ public class DBManager {
         ContentValues args = new ContentValues();
         args.put(PARTICIPANT_NUMBER_KEY, participantNumber);
 
-        sqLiteDatabase.update(DATABASE_TABLE_PRESENT, args, ID_PRESENT_KEY + "="
+        sqLiteDatabase.update(DATABASE_TABLE_PRESENT, args, IDENTIFIER_KEY + "="
                 + idPresent, null);
     }
 
     public void deletePresent(int idPresent) {
         Toast.makeText(context, context.getString(R.string.toast_delete_present), Toast.LENGTH_SHORT).show();
-        sqLiteDatabase.delete(DATABASE_TABLE_PRESENT, ID_PRESENT_KEY + "=" + idPresent, null);
+        sqLiteDatabase.delete(DATABASE_TABLE_PRESENT, IDENTIFIER_KEY + "=" + idPresent, null);
     }
 
     /**
@@ -395,16 +391,16 @@ public class DBManager {
 
     public Cursor fetchAllParticipants(int idPresent) {
         return sqLiteDatabase.query(DATABASE_TABLE_PARTICIPANT, new String[]{
-                ID_PARTICIPANT_KEY, ID_PRESENT_PARTICIPANT_KEY, NAME_KEY, PHONE_NUMBER_KEY, BUDGET_KEY, PAID_KEY}, ID_PRESENT_PARTICIPANT_KEY + "=" + idPresent, null, null, null, null);
+                IDENTIFIER_KEY, ID_PRESENT_PARTICIPANT_KEY, NAME_KEY, PHONE_NUMBER_KEY, BUDGET_KEY, PAID_KEY}, ID_PRESENT_PARTICIPANT_KEY + "=" + idPresent, null, null, null, null);
     }
 
     public int fetchIdParticipant(int idPresent, String participantName) {
         Cursor c = sqLiteDatabase.query(DATABASE_TABLE_PARTICIPANT, new String[]{
-                ID_PARTICIPANT_KEY, ID_PRESENT_PARTICIPANT_KEY, NAME_KEY, PHONE_NUMBER_KEY, BUDGET_KEY, PAID_KEY}, ID_PRESENT_PARTICIPANT_KEY + "='" + idPresent + "' AND " +
+                IDENTIFIER_KEY, ID_PRESENT_PARTICIPANT_KEY, NAME_KEY, PHONE_NUMBER_KEY, BUDGET_KEY, PAID_KEY}, ID_PRESENT_PARTICIPANT_KEY + "='" + idPresent + "' AND " +
                 NAME_KEY + "='" + participantName + "'", null, null, null, null);
 
         if (c != null && c.moveToFirst()) {
-            return c.getInt(c.getColumnIndex(ID_PARTICIPANT_KEY));
+            return c.getInt(c.getColumnIndex(IDENTIFIER_KEY));
         }
         return 0;
     }
@@ -413,7 +409,7 @@ public class DBManager {
         ContentValues args = new ContentValues();
         args.put(PHONE_NUMBER_KEY, phoneNumber);
 
-        sqLiteDatabase.update(DATABASE_TABLE_PARTICIPANT, args, ID_PARTICIPANT_KEY + "="
+        sqLiteDatabase.update(DATABASE_TABLE_PARTICIPANT, args, IDENTIFIER_KEY + "="
                 + idParticipant, null);
     }
 
@@ -421,12 +417,12 @@ public class DBManager {
         ContentValues args = new ContentValues();
         args.put(PAID_KEY, isPaid);
 
-        sqLiteDatabase.update(DATABASE_TABLE_PARTICIPANT, args, ID_PARTICIPANT_KEY + "="
+        sqLiteDatabase.update(DATABASE_TABLE_PARTICIPANT, args, IDENTIFIER_KEY + "="
                 + idParticipant, null);
     }
 
     public void deleteParticipant(int idParticipant) {
         Toast.makeText(context, context.getString(R.string.toast_delete_participant), Toast.LENGTH_SHORT).show();
-        sqLiteDatabase.delete(DATABASE_TABLE_PARTICIPANT, ID_PARTICIPANT_KEY + "=" + idParticipant, null);
+        sqLiteDatabase.delete(DATABASE_TABLE_PARTICIPANT, IDENTIFIER_KEY + "=" + idParticipant, null);
     }
 }
