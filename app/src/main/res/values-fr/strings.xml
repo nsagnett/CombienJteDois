@@ -99,12 +99,14 @@
     <string name="toast_add_present">Cadeau ajouté !</string>
     <string name="toast_add_participant">Participant ajouté !</string>
     <string name="budget_hint">Saisir le budget</string>
-    <string name="to_pay">A payer</string>
-    <string name="paid">Payé</string>
+    <string name="waiting">En attente</string>
+    <string name="check">Payé</string>
+    <string name="update_payment">Mettre à jour</string>
     <string name="budget_format">Budget : %s</string>
     <string name="add_participant">Ajouter un participant</string>
     <string name="toast_delete_present">Cadeau supprimé !</string>
     <string name="toast_delete_participant">Participant supprimé !</string>
     <string name="impossible_date">Vous ne pouvez pas mettre une date avant demain !</string>
+    <string name="impossible_budget">Vous ne pouvez pas mettre un budget supérieur ou égal à la valeur du cadeau !</string>
 
 </resources>

@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -130,13 +131,9 @@ public class DetailPresentFragment extends AbstractFragment {
                     }
                 });
                 listView.addFooterView(footerView);
-                launchActivity.setListEmpty(true);
-                launchActivity.supportInvalidateOptionsMenu();
             }
         } else {
             listView.removeFooterView(footerView);
-            launchActivity.setListEmpty(false);
-            launchActivity.supportInvalidateOptionsMenu();
         }
 
         ParticipantListAdapter participantListAdapter = new ParticipantListAdapter(launchActivity, participants, isEditingView);
@@ -154,6 +151,34 @@ public class DetailPresentFragment extends AbstractFragment {
 
     @Override
     public void onItemClick(final AdapterView<?> parent, View view, final int position, long id) {
+        if (!participants.isEmpty()) {
+            final Participant participant = participants.get(position);
+            final AlertDialog alert = ViewCreator.createCustomUpdatePaymentDialogBox(launchActivity);
+            alert.show();
+            final TextView checkView = (TextView) alert.findViewById(R.id.checkView);
+            final TextView uncheckView = (TextView) alert.findViewById(R.id.uncheckView);
+
+            checkView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.paid, 0, 0, 0);
+            uncheckView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.clock, 0, 0, 0);
+
+            checkView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alert.dismiss();
+                    Utils.dbManager.updateParticipantPaid(participant.getId(), 1);
+                    notifyChanges();
+                }
+            });
+
+            uncheckView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alert.dismiss();
+                    Utils.dbManager.updateParticipantPaid(participant.getId(), 0);
+                    notifyChanges();
+                }
+            });
+        }
     }
 
     @Override
@@ -184,6 +209,7 @@ public class DetailPresentFragment extends AbstractFragment {
                 if (checkPersonForm(namePersonView, budgetEditView)) {
                     alert.dismiss();
                     Utils.dbManager.createParticipant(selectedPresent.getIdPresent(), namePersonView.getText().toString(), phoneNumberEditView.getText().toString(), budgetEditView.getText().toString());
+                    Utils.dbManager.updateParticipantNumber(selectedPresent.getIdPresent(), Integer.parseInt(selectedPresent.getParticipantNumber()) + 1);
                     notifyChanges();
                 }
             }
@@ -194,8 +220,11 @@ public class DetailPresentFragment extends AbstractFragment {
         if (namePersonView.getText().length() == 0) {
             ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.name)));
             return false;
-        }else if (budgetEditView.getText().length() == 0) {
+        } else if (budgetEditView.getText().length() == 0) {
             ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.budget)));
+            return false;
+        } else if (Integer.parseInt(budgetEditView.getText().toString()) >= Integer.parseInt(selectedPresent.getValue())) {
+            Toast.makeText(launchActivity, getString(R.string.impossible_budget), Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

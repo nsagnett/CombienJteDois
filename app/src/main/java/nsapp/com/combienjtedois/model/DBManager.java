@@ -353,7 +353,7 @@ public class DBManager {
         return 0;
     }
 
-    public void updateParticipantNumber(String idPresent, int participantNumber) {
+    public void updateParticipantNumber(int idPresent, int participantNumber) {
         ContentValues args = new ContentValues();
         args.put(PARTICIPANT_NUMBER_KEY, participantNumber);
 
@@ -413,7 +413,7 @@ public class DBManager {
                 + idParticipant, null);
     }
 
-    public void updateParticipantPaid(String idParticipant, int isPaid) {
+    public void updateParticipantPaid(int idParticipant, int isPaid) {
         ContentValues args = new ContentValues();
         args.put(PAID_KEY, isPaid);
 

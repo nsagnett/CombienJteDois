@@ -91,7 +91,9 @@
     <string name="toast_add_participant">Participant added !</string>
     <string name="toast_delete_participant">Participant deleted !</string>
     <string name="budget">Budget</string>
-    <string name="to_pay">To pay</string>
-    <string name="paid">Paid</string>
+    <string name="waiting">Waiting for payment</string>
+    <string name="update_payment">Update</string>
+    <string name="impossible_budget">You can\'t put a budget greater than or equal to the present value !</string>
+    <string name="check">Check</string>
     <string name="budget_format">Budget : %s</string>
 </resources>

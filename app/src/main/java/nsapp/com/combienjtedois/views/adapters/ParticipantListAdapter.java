@@ -47,7 +47,7 @@ public class ParticipantListAdapter extends BaseAdapter {
         LayoutInflater inflater = LayoutInflater.from(context);
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.money_holder, null);
+            convertView = inflater.inflate(R.layout.participant_holder, null);
         }
 
         Participant participant = participants.get(position);
@@ -60,11 +60,11 @@ public class ParticipantListAdapter extends BaseAdapter {
         TextView rightView = ((TextView) convertView.findViewById(R.id.rightView));
 
         if (participant.isPaid()) {
-            rightView.setText(context.getString(R.string.paid));
-            rightView.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_menu_search, 0, 0, 0);
+            rightView.setText(context.getString(R.string.check));
+            rightView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.paid, 0, 0, 0);
         } else {
-            rightView.setText(context.getString(R.string.to_pay));
-            rightView.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_delete, 0, 0, 0);
+            rightView.setText(context.getString(R.string.waiting));
+            rightView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.clock, 0, 0, 0);
         }
 
 

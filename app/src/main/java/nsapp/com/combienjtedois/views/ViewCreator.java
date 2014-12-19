@@ -90,7 +90,7 @@ public class ViewCreator {
 
     public static AlertDialog createCustomModifyDebtDialogBox(Context context) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        View view = LayoutInflater.from(context).inflate(R.layout.modify_object_dialog_layout, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.modify_money_dialog_layout, null);
 
         builder.setCustomTitle(getCustomTitleDialogBox(context, R.string.modify_element, R.drawable.edit));
 
@@ -164,6 +164,16 @@ public class ViewCreator {
         builder.setCustomTitle(getCustomTitleDialogBox(context, R.string.add_participant, R.drawable.add));
 
         ((TextView) view.findViewById(R.id.neutralTextView)).setText(R.string.validate);
+
+        builder.setView(view);
+        return builder.create();
+    }
+
+    public static AlertDialog createCustomUpdatePaymentDialogBox(Context context) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.change_payment_present_dialog_layout, null);
+
+        builder.setCustomTitle(getCustomTitleDialogBox(context, R.string.update_payment, R.drawable.edit));
 
         builder.setView(view);
         return builder.create();
