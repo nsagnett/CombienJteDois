@@ -1,7 +1,9 @@
 package nsapp.com.combienjtedois.views.fragments;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import nsapp.com.combienjtedois.R;
+import nsapp.com.combienjtedois.listeners.SwipeDismissListViewTouchListener;
 import nsapp.com.combienjtedois.model.Debt;
 import nsapp.com.combienjtedois.model.Person;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
@@ -32,6 +35,7 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
 
     ArrayList<Person> personArrayList = new ArrayList<Person>();
     ArrayList<Debt> debtArrayList = new ArrayList<Debt>();
+    SharedPreferences preferences;
 
     ListView listView;
     TextView footerView;
@@ -53,6 +57,7 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
 
         listView.setOnItemClickListener(this);
         launchActivity.supportInvalidateOptionsMenu();
+        preferences = PreferenceManager.getDefaultSharedPreferences(launchActivity);
 
         return view;
     }
@@ -64,7 +69,24 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
                 getArguments().getInt(ARG_SECTION_NUMBER));
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        SwipeDismissListViewTouchListener swipeDismissListViewTouchListener = new SwipeDismissListViewTouchListener(listView, new SwipeDismissListViewTouchListener.OnDismissCallback() {
+            @Override
+            public void onDismiss(int[] reverseSortedPositions) {
+                for (final int position : reverseSortedPositions) {
+                    deleteItem(position);
+                }
+            }
+        });
+        listView.setOnTouchListener(swipeDismissListViewTouchListener);
+        listView.setOnScrollListener(swipeDismissListViewTouchListener.makeScrollListener());
+    }
+
     public abstract void addItem(String importName, String importPhone);
+
+    public abstract void deleteItem(final int position);
 
     public boolean isEditingView() {
         return isEditingView;

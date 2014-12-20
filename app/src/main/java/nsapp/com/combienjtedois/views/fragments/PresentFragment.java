@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.text.ParseException;
@@ -20,8 +19,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.listeners.SwipeDismissListViewTouchListener;
 import nsapp.com.combienjtedois.model.DBManager;
+import nsapp.com.combienjtedois.model.Preferences;
 import nsapp.com.combienjtedois.model.Present;
 import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.ViewCreator;
@@ -31,9 +30,6 @@ import nsapp.com.combienjtedois.views.adapters.PresentAdapter;
 import static android.os.Build.VERSION_CODES.HONEYCOMB;
 
 public class PresentFragment extends AbstractFragment {
-
-    private TextView footerView;
-    private ListView listView;
 
     private ArrayList<Present> presentsArray = new ArrayList<Present>();
 
@@ -47,14 +43,8 @@ public class PresentFragment extends AbstractFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_listview, container, false);
-
-        listView = (ListView) view.findViewById(R.id.listView);
-        footerView = (TextView) inflater.inflate(R.layout.footer_listview, null, false);
-
+        View view = super.onCreateView(inflater, container, savedInstanceState);
         view.findViewById(R.id.headerSeparator).setVisibility(View.GONE);
-
         return view;
     }
 
@@ -62,32 +52,6 @@ public class PresentFragment extends AbstractFragment {
     public void onResume() {
         super.onResume();
         ((LaunchActivity) getActivity()).updateActionBarTitle(getString(R.string.title_section3));
-        SwipeDismissListViewTouchListener swipeDismissListViewTouchListener = new SwipeDismissListViewTouchListener(listView, new SwipeDismissListViewTouchListener.OnDismissCallback() {
-            @Override
-            public void onDismiss(int[] reverseSortedPositions) {
-                for (final int position : reverseSortedPositions) {
-                    final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(launchActivity, R.string.message_delete_person_text);
-                    alert.show();
-                    alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            alert.dismiss();
-                            Utils.dbManager.deletePresent(presentsArray.get(position).getIdPresent());
-                            notifyChanges();
-                        }
-                    });
-                    alert.findViewById(R.id.negativeView).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            alert.dismiss();
-                        }
-                    });
-                }
-            }
-        });
-        listView.setOnTouchListener(swipeDismissListViewTouchListener);
-        listView.setOnScrollListener(swipeDismissListViewTouchListener.makeScrollListener());
-        listView.setOnItemClickListener(this);
         notifyChanges();
     }
 
@@ -158,6 +122,31 @@ public class PresentFragment extends AbstractFragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void deleteItem(final int position) {
+        if (preferences.getBoolean(Preferences.CONFIRM_DISMISS_KEY, true)) {
+            final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(launchActivity, R.string.message_delete_person_text);
+            alert.show();
+            alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alert.dismiss();
+                    Utils.dbManager.deletePresent(presentsArray.get(position).getIdPresent());
+                    notifyChanges();
+                }
+            });
+            alert.findViewById(R.id.negativeView).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alert.dismiss();
+                }
+            });
+        } else {
+            Utils.dbManager.deletePresent(presentsArray.get(position).getIdPresent());
+            notifyChanges();
+        }
     }
 
     private boolean checkAddForm(EditText namePersonView, EditText presentView, EditText valueView, long beforeEventTime) {

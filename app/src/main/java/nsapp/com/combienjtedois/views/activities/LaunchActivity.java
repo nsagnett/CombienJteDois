@@ -1,5 +1,6 @@
 package nsapp.com.combienjtedois.views.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -145,6 +146,9 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
             case R.id.actionEdit:
                 ((AbstractFragment) getCurrentFragment()).setEditingView(!((AbstractFragment) getCurrentFragment()).isEditingView());
                 otherViewToggle();
+                break;
+            case R.id.actionSettings:
+                startActivity(new Intent(this, SettingsActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);

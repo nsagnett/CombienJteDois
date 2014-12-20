@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.listeners.SwipeDismissListViewTouchListener;
 import nsapp.com.combienjtedois.model.DBManager;
 import nsapp.com.combienjtedois.model.Person;
+import nsapp.com.combienjtedois.model.Preferences;
 import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.ViewCreator;
 import nsapp.com.combienjtedois.views.adapters.PersonListAdapter;
@@ -43,31 +43,6 @@ public class PersonListForMoneyFragment extends AbstractFragment {
         if (view != null) {
             view.findViewById(R.id.headerSeparator).setVisibility(View.GONE);
         }
-        SwipeDismissListViewTouchListener swipeDismissListViewTouchListener = new SwipeDismissListViewTouchListener(listView, new SwipeDismissListViewTouchListener.OnDismissCallback() {
-            @Override
-            public void onDismiss(int[] reverseSortedPositions) {
-                for (final int position : reverseSortedPositions) {
-                    final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(launchActivity, R.string.message_delete_person_text);
-                    alert.show();
-                    alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            alert.dismiss();
-                            Utils.dbManager.deletePerson(personArrayList.get(position).getId());
-                            notifyChanges();
-                        }
-                    });
-                    alert.findViewById(R.id.negativeView).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            alert.dismiss();
-                        }
-                    });
-                }
-            }
-        });
-        listView.setOnTouchListener(swipeDismissListViewTouchListener);
-        listView.setOnScrollListener(swipeDismissListViewTouchListener.makeScrollListener());
         notifyChanges();
     }
 
@@ -121,6 +96,31 @@ public class PersonListForMoneyFragment extends AbstractFragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void deleteItem(final int position) {
+        if (preferences.getBoolean(Preferences.CONFIRM_DISMISS_KEY, true)) {
+            final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(launchActivity, R.string.message_delete_person_text);
+            alert.show();
+            alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alert.dismiss();
+                    Utils.dbManager.deletePerson(personArrayList.get(position).getId());
+                    notifyChanges();
+                }
+            });
+            alert.findViewById(R.id.negativeView).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alert.dismiss();
+                }
+            });
+        } else {
+            Utils.dbManager.deletePerson(personArrayList.get(position).getId());
+            notifyChanges();
+        }
     }
 
     private void notifyChanges() {

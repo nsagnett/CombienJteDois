@@ -22,9 +22,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.listeners.SwipeDismissListViewTouchListener;
 import nsapp.com.combienjtedois.model.DBManager;
 import nsapp.com.combienjtedois.model.Participant;
+import nsapp.com.combienjtedois.model.Preferences;
 import nsapp.com.combienjtedois.model.Present;
 import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.ViewCreator;
@@ -54,8 +54,6 @@ public class DetailPresentFragment extends AbstractFragment {
 
         footerView = (TextView) inflater.inflate(R.layout.footer_listview, null, false);
 
-        launchActivity.supportInvalidateOptionsMenu();
-
         selectedPresent = (Present) getArguments().getSerializable(Utils.PRESENT_KEY);
         view.findViewById(R.id.headerLayout).setVisibility(View.VISIBLE);
         ((TextView) view.findViewById(R.id.headerNameView)).setText(selectedPresent.getPresent());
@@ -71,32 +69,6 @@ public class DetailPresentFragment extends AbstractFragment {
     public void onResume() {
         super.onResume();
         launchActivity.updateActionBarTitle(String.format(getString(R.string.consignee_format), selectedPresent.getConsignee()));
-        SwipeDismissListViewTouchListener swipeDismissListViewTouchListener = new SwipeDismissListViewTouchListener(listView, new SwipeDismissListViewTouchListener.OnDismissCallback() {
-            @Override
-            public void onDismiss(int[] reverseSortedPositions) {
-                for (final int position : reverseSortedPositions) {
-                    final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(launchActivity, R.string.message_delete_person_text);
-                    alert.show();
-                    alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            alert.dismiss();
-                            Utils.dbManager.deleteParticipant(participants.get(position).getId());
-                            Utils.dbManager.updateParticipantNumber(selectedPresent.getIdPresent(), Integer.parseInt(selectedPresent.getParticipantNumber()) - 1);
-                            notifyChanges();
-                        }
-                    });
-                    alert.findViewById(R.id.negativeView).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            alert.dismiss();
-                        }
-                    });
-                }
-            }
-        });
-        listView.setOnTouchListener(swipeDismissListViewTouchListener);
-        listView.setOnScrollListener(swipeDismissListViewTouchListener.makeScrollListener());
         notifyChanges();
     }
 
@@ -211,6 +183,33 @@ public class DetailPresentFragment extends AbstractFragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void deleteItem(final int position) {
+        if (preferences.getBoolean(Preferences.CONFIRM_DISMISS_KEY, true)) {
+            final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(launchActivity, R.string.message_delete_person_text);
+            alert.show();
+            alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alert.dismiss();
+                    Utils.dbManager.deleteParticipant(participants.get(position).getId());
+                    Utils.dbManager.updateParticipantNumber(selectedPresent.getIdPresent(), Integer.parseInt(selectedPresent.getParticipantNumber()) - 1);
+                    notifyChanges();
+                }
+            });
+            alert.findViewById(R.id.negativeView).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alert.dismiss();
+                }
+            });
+        } else {
+            Utils.dbManager.deleteParticipant(participants.get(position).getId());
+            Utils.dbManager.updateParticipantNumber(selectedPresent.getIdPresent(), Integer.parseInt(selectedPresent.getParticipantNumber()) - 1);
+            notifyChanges();
+        }
     }
 
     boolean checkPersonForm(EditText namePersonView, EditText budgetEditView) {

@@ -18,10 +18,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.listeners.SwipeDismissListViewTouchListener;
 import nsapp.com.combienjtedois.model.DBManager;
 import nsapp.com.combienjtedois.model.Debt;
 import nsapp.com.combienjtedois.model.Person;
+import nsapp.com.combienjtedois.model.Preferences;
 import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.ViewCreator;
 import nsapp.com.combienjtedois.views.activities.EditTextAmountActivity;
@@ -62,34 +62,6 @@ public class DetailPersonForMoneyFragment extends AbstractFragment {
     @Override
     public void onResume() {
         super.onResume();
-        SwipeDismissListViewTouchListener swipeDismissListViewTouchListener = new SwipeDismissListViewTouchListener(listView, new SwipeDismissListViewTouchListener.OnDismissCallback() {
-            @Override
-            public void onDismiss(int[] reverseSortedPositions) {
-                for (final int position : reverseSortedPositions) {
-                    final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(getActivity(), R.string.message_delete_element);
-                    alert.show();
-                    alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            alert.dismiss();
-                            Utils.dbManager.setModificationDatePerson(selectedPerson.getId(), (String) DateFormat.format(Utils.SPECIFIC_PATTERN_DATE, new Date().getTime()));
-                            final int idDebt = debtArrayList.get(position).getId();
-                            final int idPerson = selectedPerson.getId();
-                            Utils.dbManager.deleteDebt(idDebt, idPerson);
-                            notifyChanges();
-                        }
-                    });
-                    alert.findViewById(R.id.negativeView).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            alert.dismiss();
-                        }
-                    });
-                }
-            }
-        });
-        listView.setOnTouchListener(swipeDismissListViewTouchListener);
-        listView.setOnScrollListener(swipeDismissListViewTouchListener.makeScrollListener());
         notifyChanges();
     }
 
@@ -160,6 +132,37 @@ public class DetailPersonForMoneyFragment extends AbstractFragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void deleteItem(final int position) {
+        if (preferences.getBoolean(Preferences.CONFIRM_DISMISS_KEY, true)) {
+            final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(getActivity(), R.string.message_delete_element);
+            alert.show();
+            alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alert.dismiss();
+                    Utils.dbManager.setModificationDatePerson(selectedPerson.getId(), (String) DateFormat.format(Utils.SPECIFIC_PATTERN_DATE, new Date().getTime()));
+                    final int idDebt = debtArrayList.get(position).getId();
+                    final int idPerson = selectedPerson.getId();
+                    Utils.dbManager.deleteDebt(idDebt, idPerson);
+                    notifyChanges();
+                }
+            });
+            alert.findViewById(R.id.negativeView).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alert.dismiss();
+                }
+            });
+        } else {
+            Utils.dbManager.setModificationDatePerson(selectedPerson.getId(), (String) DateFormat.format(Utils.SPECIFIC_PATTERN_DATE, new Date().getTime()));
+            final int idDebt = debtArrayList.get(position).getId();
+            final int idPerson = selectedPerson.getId();
+            Utils.dbManager.deleteDebt(idDebt, idPerson);
+            notifyChanges();
+        }
     }
 
     private void notifyChanges() {

@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -19,18 +18,15 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.listeners.SwipeDismissListViewTouchListener;
 import nsapp.com.combienjtedois.model.DBManager;
 import nsapp.com.combienjtedois.model.LoanObject;
+import nsapp.com.combienjtedois.model.Preferences;
 import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.ViewCreator;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
 import nsapp.com.combienjtedois.views.adapters.LoanObjectAdapter;
 
 public class LoanObjectsFragment extends AbstractFragment {
-
-    private TextView footerView;
-    private ListView listView;
 
     private ArrayList<LoanObject> loanObjects = new ArrayList<LoanObject>();
 
@@ -44,12 +40,7 @@ public class LoanObjectsFragment extends AbstractFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_listview, container, false);
-
-        listView = (ListView) view.findViewById(R.id.listView);
-        footerView = (TextView) inflater.inflate(R.layout.footer_listview, null, false);
-
+        View view = super.onCreateView(inflater, container, savedInstanceState);
         view.findViewById(R.id.headerSeparator).setVisibility(View.GONE);
         launchActivity.supportInvalidateOptionsMenu();
 
@@ -60,31 +51,6 @@ public class LoanObjectsFragment extends AbstractFragment {
     public void onResume() {
         super.onResume();
         ((LaunchActivity) getActivity()).updateActionBarTitle(getString(R.string.title_section2));
-        SwipeDismissListViewTouchListener swipeDismissListViewTouchListener = new SwipeDismissListViewTouchListener(listView, new SwipeDismissListViewTouchListener.OnDismissCallback() {
-            @Override
-            public void onDismiss(int[] reverseSortedPositions) {
-                for (final int position : reverseSortedPositions) {
-                    final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(launchActivity, R.string.message_delete_person_text);
-                    alert.show();
-                    alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            alert.dismiss();
-                            Utils.dbManager.deleteObject(loanObjects.get(position).getIdLoanObject());
-                            notifyChanges();
-                        }
-                    });
-                    alert.findViewById(R.id.negativeView).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            alert.dismiss();
-                        }
-                    });
-                }
-            }
-        });
-        listView.setOnTouchListener(swipeDismissListViewTouchListener);
-        listView.setOnScrollListener(swipeDismissListViewTouchListener.makeScrollListener());
         notifyChanges();
     }
 
@@ -119,6 +85,31 @@ public class LoanObjectsFragment extends AbstractFragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void deleteItem(final int position) {
+        if (preferences.getBoolean(Preferences.CONFIRM_DISMISS_KEY, true)) {
+            final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(launchActivity, R.string.message_delete_person_text);
+            alert.show();
+            alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alert.dismiss();
+                    Utils.dbManager.deleteObject(loanObjects.get(position).getIdLoanObject());
+                    notifyChanges();
+                }
+            });
+            alert.findViewById(R.id.negativeView).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alert.dismiss();
+                }
+            });
+        } else {
+            Utils.dbManager.deleteObject(loanObjects.get(position).getIdLoanObject());
+            notifyChanges();
+        }
     }
 
     private void notifyChanges() {
