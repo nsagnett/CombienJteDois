@@ -405,14 +405,6 @@ public class DBManager {
         return 0;
     }
 
-    public void updateParticipantPhoneNumber(String idParticipant, String phoneNumber) {
-        ContentValues args = new ContentValues();
-        args.put(PHONE_NUMBER_KEY, phoneNumber);
-
-        sqLiteDatabase.update(DATABASE_TABLE_PARTICIPANT, args, IDENTIFIER_KEY + "="
-                + idParticipant, null);
-    }
-
     public void updateParticipantPaid(int idParticipant, int isPaid) {
         ContentValues args = new ContentValues();
         args.put(PAID_KEY, isPaid);

@@ -27,6 +27,7 @@
     <string name="empty_field_format">%s field required !</string>
     <string name="euro">€</string>
     <string name="event_date_format">For  : %1$s ( Dans %2$s )</string>
+    <string name="finish">Finish</string>
     <string name="event_date">Event date</string>
     <string name="impossible_date">You can\'t put a date before tomorrow !</string>
     <string name="hour">&#160;hour</string>
@@ -40,6 +41,7 @@
     <string name="modify_person">Edit a person</string>
     <string name="money_format">%s €</string>
     <string name="name">Name</string>
+    <string name="name_with_points">Name : %s</string>
     <string name="name_hint">Tap the name</string>
     <string name="budget_hint">Tap the budget</string>
     <string name="navigation_drawer_close">Close menu</string>
@@ -69,7 +71,6 @@
     <string name="reduce">Reduce</string>
     <string name="second">&#160;second</string>
     <string name="subtract_hint">to subtract</string>
-    <string name="three_points">&#8230;</string>
     <string name="title_section1">Money</string>
     <string name="title_section2">Items on loan</string>
     <string name="title_section3">Presents</string>

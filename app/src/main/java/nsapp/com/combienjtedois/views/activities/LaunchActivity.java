@@ -18,7 +18,6 @@ import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.DBManager;
 import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.fragments.AbstractFragment;
-import nsapp.com.combienjtedois.views.fragments.DetailPresentFragment;
 import nsapp.com.combienjtedois.views.fragments.LoanObjectsFragment;
 import nsapp.com.combienjtedois.views.fragments.NavigationDrawerFragment;
 import nsapp.com.combienjtedois.views.fragments.PersonListForMoneyFragment;
@@ -123,7 +122,7 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!navigationDrawerFragment.isDrawerOpen()) {
             if (getCurrentFragment() instanceof LoanObjectsFragment
-                    || getCurrentFragment() instanceof DetailPresentFragment
+                    || getCurrentFragment() instanceof PresentFragment
                     || listEmpty) {
                 getMenuInflater().inflate(R.menu.add_menu, menu);
             } else {

@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <include layout="@layout/separator" />
+    <include layout="@layout/horizontal_separator" />
 
     <TextView
         android:textSize="17sp"
@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <include layout="@layout/separator" />
+    <include layout="@layout/horizontal_separator" />
 
     <TextView
         android:textSize="17sp"
@@ -83,7 +83,7 @@
     </LinearLayout>
 
 
-    <include layout="@layout/separator" />
+    <include layout="@layout/horizontal_separator" />
 
     <TextView
         android:textSize="17sp"
@@ -104,7 +104,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <include layout="@layout/separator" />
+    <include layout="@layout/horizontal_separator" />
 
     <TextView
         android:id="@+id/neutralTextView"

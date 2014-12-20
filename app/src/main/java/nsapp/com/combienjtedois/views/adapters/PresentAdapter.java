@@ -52,7 +52,14 @@ public class PresentAdapter extends BaseAdapter {
         ((TextView) convertView.findViewById(R.id.presentView)).setText(String.format(context.getString(R.string.present_format), present.getPresent()));
         ((TextView) convertView.findViewById(R.id.participantNumberView)).setText(String.format(context.getString(R.string.participant_number_format), present.getParticipantNumber()));
         ((TextView) convertView.findViewById(R.id.valueView)).setText(String.format(context.getString(R.string.value_format), present.getValue() + context.getString(R.string.euro)));
-        ((TextView) convertView.findViewById(R.id.subTitleView)).setText(String.format(context.getString(R.string.event_date_format), present.getDate(), Utils.convertLifeTimeFromMillis(context, Utils.getTimeBeforeEvent(present))));
+
+        long time = Utils.getTimeBeforeEvent(present);
+
+        if (time <= 0) {
+            ((TextView) convertView.findViewById(R.id.subTitleView)).setText(context.getString(R.string.finish));
+        } else {
+            ((TextView) convertView.findViewById(R.id.subTitleView)).setText(String.format(context.getString(R.string.event_date_format), present.getDate(), Utils.convertLifeTimeFromMillis(context, Utils.getTimeBeforeEvent(present))));
+        }
 
         return convertView;
     }

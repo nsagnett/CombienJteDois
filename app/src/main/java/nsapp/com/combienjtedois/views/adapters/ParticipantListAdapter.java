@@ -56,12 +56,20 @@ public class ParticipantListAdapter extends BaseAdapter {
         ((TextView) convertView.findViewById(R.id.nameView)).setText(name);
         TextView subTitleView = ((TextView) convertView.findViewById(R.id.subTitleView));
         subTitleView.setText(String.format(context.getString(R.string.budget_format), participant.getBudget() + context.getString(R.string.euro)));
+        ImageView smsView = (ImageView) convertView.findViewById(R.id.smsView);
+        smsView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO sms task
+            }
+        });
 
         TextView rightView = ((TextView) convertView.findViewById(R.id.rightView));
 
         if (participant.isPaid()) {
             rightView.setText(context.getString(R.string.check));
             rightView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.paid, 0, 0, 0);
+            smsView.setVisibility(View.GONE);
         } else {
             rightView.setText(context.getString(R.string.waiting));
             rightView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.clock, 0, 0, 0);

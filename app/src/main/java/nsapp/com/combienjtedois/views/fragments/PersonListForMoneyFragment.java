@@ -12,7 +12,7 @@ import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -87,7 +87,7 @@ public class PersonListForMoneyFragment extends AbstractFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Utils.IMPORT_CONTACT_CODE && resultCode == Activity.RESULT_OK){
+        if (requestCode == Utils.IMPORT_CONTACT_CODE && resultCode == Activity.RESULT_OK) {
             importContact(data);
         }
     }
@@ -98,7 +98,7 @@ public class PersonListForMoneyFragment extends AbstractFragment {
         alert.show();
         final EditText nameEditView = ((EditText) alert.findViewById(R.id.namePersonEditView));
         final EditText phoneNumberView = ((EditText) alert.findViewById(R.id.phoneNumberEditView));
-        final TextView importContactView = ((TextView) alert.findViewById(R.id.importContactView));
+        final ImageView importContactView = ((ImageView) alert.findViewById(R.id.importContactView));
 
         nameEditView.setText(importName);
         phoneNumberView.setText(importPhoneNumber);
@@ -116,7 +116,7 @@ public class PersonListForMoneyFragment extends AbstractFragment {
             public void onClick(View v) {
                 if (checkPersonForm(nameEditView)) {
                     alert.dismiss();
-                    Utils.dbManager.createPerson(nameEditView.getText().toString(), importContactView.getText().toString(), (String) DateFormat.format(Utils.SPECIFIC_PATTERN_DATE, new Date().getTime()));
+                    Utils.dbManager.createPerson(nameEditView.getText().toString(), phoneNumberView.getText().toString(), (String) DateFormat.format(Utils.SPECIFIC_PATTERN_DATE, new Date().getTime()));
                     notifyChanges();
                 }
             }
@@ -167,6 +167,7 @@ public class PersonListForMoneyFragment extends AbstractFragment {
         alert.show();
         final EditText nameView = ((EditText) alert.findViewById(R.id.namePersonEditView));
         final EditText phoneNumberView = ((EditText) alert.findViewById(R.id.phoneNumberEditView));
+        alert.findViewById(R.id.importContactView).setVisibility(View.GONE);
         nameView.setText(person.getName());
         phoneNumberView.setText(person.getPhoneNumber());
         alert.findViewById(R.id.neutralTextView).setOnClickListener(new View.OnClickListener() {

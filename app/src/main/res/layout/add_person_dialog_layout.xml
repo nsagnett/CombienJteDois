@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <include layout="@layout/separator" />
+    <include layout="@layout/horizontal_separator" />
 
 
     <TextView
@@ -49,17 +49,19 @@
             android:layout_width="0dp"
             android:layout_height="match_parent" />
 
-        <TextView
+        <ImageView
             android:id="@+id/importContactView"
-            android:text="@string/three_points"
-            android:gravity="center|bottom"
+            android:gravity="center"
+            android:contentDescription="@string/content"
             android:background="@drawable/custom_button"
             android:layout_weight="0.15"
+            android:padding="10dp"
             android:layout_width="0dp"
+            android:src="@drawable/import_data"
             android:layout_height="match_parent" />
     </LinearLayout>
 
-    <include layout="@layout/separator" />
+    <include layout="@layout/horizontal_separator" />
 
 
     <TextView

@@ -37,7 +37,6 @@
     <string name="empty_field_format">Le champ %s est requis !</string>
     <string name="content">Content</string>
     <string name="euro">€</string>
-    <string name="three_points">&#8230;</string>
     <string name="modification_date_format">Dernière modification : %s&#160;</string>
     <string name="add_date_format">Ajouté le : %s&#160;</string>
     <string name="lifetime_format">( il y a %s )</string>
@@ -103,8 +102,10 @@
     <string name="check">Payé</string>
     <string name="update_payment">Mettre à jour</string>
     <string name="budget_format">Budget : %s</string>
+    <string name="finish">Fini</string>
     <string name="add_participant">Ajouter un participant</string>
     <string name="toast_delete_present">Cadeau supprimé !</string>
+    <string name="budget">Budget</string>
     <string name="toast_delete_participant">Participant supprimé !</string>
     <string name="impossible_date">Vous ne pouvez pas mettre une date avant demain !</string>
     <string name="impossible_budget">Vous ne pouvez pas mettre un budget supérieur ou égal à la valeur du cadeau !</string>

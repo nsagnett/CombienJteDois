@@ -59,7 +59,7 @@
             android:layout_height="match_parent" />
     </LinearLayout>
 
-    <include layout="@layout/separator" />
+    <include layout="@layout/horizontal_separator" />
 
     <TextView
         android:id="@+id/neutralTextView"

@@ -62,12 +62,7 @@ public class DetailPresentFragment extends AbstractFragment {
         ((ImageView) view.findViewById(R.id.headerProfileView)).setImageResource(R.drawable.presents);
         ((TextView) view.findViewById(R.id.valueTextView)).setText(String.format(getString(R.string.value_format), selectedPresent.getValue() + getString(R.string.euro)));
 
-        view.findViewById(R.id.smsView).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // SMS TASK
-            }
-        });
+        view.findViewById(R.id.smsView).setVisibility(View.GONE);
 
         return view;
     }
@@ -87,6 +82,7 @@ public class DetailPresentFragment extends AbstractFragment {
                         public void onClick(View v) {
                             alert.dismiss();
                             Utils.dbManager.deleteParticipant(participants.get(position).getId());
+                            Utils.dbManager.updateParticipantNumber(selectedPresent.getIdPresent(), Integer.parseInt(selectedPresent.getParticipantNumber()) - 1);
                             notifyChanges();
                         }
                     });
@@ -101,7 +97,6 @@ public class DetailPresentFragment extends AbstractFragment {
         });
         listView.setOnTouchListener(swipeDismissListViewTouchListener);
         listView.setOnScrollListener(swipeDismissListViewTouchListener.makeScrollListener());
-        listView.setOnItemClickListener(this);
         notifyChanges();
     }
 
@@ -151,33 +146,35 @@ public class DetailPresentFragment extends AbstractFragment {
 
     @Override
     public void onItemClick(final AdapterView<?> parent, View view, final int position, long id) {
-        if (!participants.isEmpty()) {
-            final Participant participant = participants.get(position);
-            final AlertDialog alert = ViewCreator.createCustomUpdatePaymentDialogBox(launchActivity);
-            alert.show();
-            final TextView checkView = (TextView) alert.findViewById(R.id.checkView);
-            final TextView uncheckView = (TextView) alert.findViewById(R.id.uncheckView);
+        if (isEditingView) {
+            if (!participants.isEmpty()) {
+                final Participant participant = participants.get(position);
+                final AlertDialog alert = ViewCreator.createCustomUpdatePaymentDialogBox(launchActivity);
+                alert.show();
+                final TextView checkView = (TextView) alert.findViewById(R.id.checkView);
+                final TextView uncheckView = (TextView) alert.findViewById(R.id.uncheckView);
 
-            checkView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.paid, 0, 0, 0);
-            uncheckView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.clock, 0, 0, 0);
+                checkView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.paid, 0, 0, 0);
+                uncheckView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.clock, 0, 0, 0);
 
-            checkView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    alert.dismiss();
-                    Utils.dbManager.updateParticipantPaid(participant.getId(), 1);
-                    notifyChanges();
-                }
-            });
+                checkView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alert.dismiss();
+                        Utils.dbManager.updateParticipantPaid(participant.getId(), 1);
+                        notifyChanges();
+                    }
+                });
 
-            uncheckView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    alert.dismiss();
-                    Utils.dbManager.updateParticipantPaid(participant.getId(), 0);
-                    notifyChanges();
-                }
-            });
+                uncheckView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alert.dismiss();
+                        Utils.dbManager.updateParticipantPaid(participant.getId(), 0);
+                        notifyChanges();
+                    }
+                });
+            }
         }
     }
 
@@ -188,7 +185,7 @@ public class DetailPresentFragment extends AbstractFragment {
         final EditText namePersonView = (EditText) alert.findViewById(R.id.namePersonEditView);
         final EditText budgetEditView = (EditText) alert.findViewById(R.id.budgetEditView);
         final EditText phoneNumberEditView = (EditText) alert.findViewById(R.id.phoneNumberEditView);
-        final TextView importContactView = (TextView) alert.findViewById(R.id.importContactView);
+        final ImageView importContactView = (ImageView) alert.findViewById(R.id.importContactView);
         final TextView validateView = (TextView) alert.findViewById(R.id.neutralTextView);
 
         namePersonView.setText(importName);
