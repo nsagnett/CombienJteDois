@@ -1,7 +1,9 @@
 package nsapp.com.combienjtedois.views.fragments;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -18,6 +20,7 @@ import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.listeners.SwipeDismissListViewTouchListener;
 import nsapp.com.combienjtedois.model.Debt;
 import nsapp.com.combienjtedois.model.Person;
+import nsapp.com.combienjtedois.model.Preferences;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
 
 public abstract class AbstractFragment extends Fragment implements AdapterView.OnItemClickListener {
@@ -39,6 +42,7 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
     TextView headerCountView;
     boolean isEditingView;
 
+    SharedPreferences preferences;
     boolean confirmDismiss;
 
     Person selectedPerson;
@@ -56,6 +60,8 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
 
         listView.setOnItemClickListener(this);
         launchActivity.supportInvalidateOptionsMenu();
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(launchActivity);
 
         return view;
     }
@@ -80,7 +86,11 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
         });
         listView.setOnTouchListener(swipeDismissListViewTouchListener);
         listView.setOnScrollListener(swipeDismissListViewTouchListener.makeScrollListener());
-        confirmDismiss = launchActivity.getConfirmDismiss();
+        updatePreferences();
+    }
+
+    private void updatePreferences() {
+        confirmDismiss = preferences.getBoolean(Preferences.CONFIRM_DISMISS_KEY, true);
     }
 
     public abstract void addItem(String importName, String importPhone);
@@ -95,7 +105,7 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
         this.isEditingView = isEditingView;
     }
 
-    void prepareOnReplaceTransaction(Fragment fragment) {
+    public void prepareOnReplaceTransaction(Fragment fragment) {
         isEditingView = false;
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up, R.anim.slide_in_down, R.anim.slide_out_down);

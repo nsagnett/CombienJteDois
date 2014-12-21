@@ -100,9 +100,13 @@ public class DetailPresentFragment extends AbstractFragment {
                     }
                 });
                 listView.addFooterView(footerView);
+                launchActivity.setListEmpty(true);
+                launchActivity.supportInvalidateOptionsMenu();
             }
         } else {
             listView.removeFooterView(footerView);
+            launchActivity.setListEmpty(false);
+            launchActivity.supportInvalidateOptionsMenu();
         }
 
         ParticipantListAdapter participantListAdapter = new ParticipantListAdapter(launchActivity, participants, isEditingView);

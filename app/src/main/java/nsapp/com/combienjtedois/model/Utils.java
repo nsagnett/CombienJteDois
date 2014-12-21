@@ -22,7 +22,6 @@ public class Utils {
 
     public static final int IMPORT_CONTACT_CODE = 0;
     public static final int UPDATE_DEBT_COUNT = 1;
-    public static final int SETTINGS_CODE = 2;
 
     public static DBManager dbManager = null;
 
@@ -59,7 +58,7 @@ public class Utils {
         Long days = TimeUnit.MILLISECONDS.toDays(getLifeTimeInMillis(date));
 
         if (seconds < 60) {
-            return seconds + context.getString(R.string.second) + "s";
+            return context.getString(R.string.some_instants);
         } else if (minutes < 60) {
             if (minutes == 1) {
                 return minutes + context.getString(R.string.minut);
@@ -80,6 +79,7 @@ public class Utils {
             }
         }
     }
+
     public static String formattingDate(DatePicker datePickerEventView) {
         int days = datePickerEventView.getDayOfMonth();
         int month = datePickerEventView.getMonth() + 1;
@@ -106,7 +106,7 @@ public class Utils {
         Long days = hours / 24;
 
         if (seconds < 60) {
-            return seconds + context.getString(R.string.second) + "s";
+            return context.getString(R.string.some_instants);
         } else if (minutes < 60) {
             if (minutes == 1) {
                 return minutes + context.getString(R.string.minut);

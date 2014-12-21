@@ -111,6 +111,8 @@
     <string name="total_budget_format">Budget total : %s €</string>
     <string name="impossible_date">Vous ne pouvez pas mettre une date avant demain !</string>
     <string name="impossible_budget">Vous ne pouvez pas mettre un budget supérieur ou égal à la valeur du cadeau !</string>
+    <string name="some_instants">&#160;quelques instants</string>
+    <string name="settings">Préférences</string>
 
     <!--Preferences-->
     <string name="preferences_confirm_title">Confirmer suppression</string>

@@ -1,10 +1,6 @@
 package nsapp.com.combienjtedois.views.activities;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -15,7 +11,6 @@ import android.view.MenuItem;
 
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.DBManager;
-import nsapp.com.combienjtedois.model.Preferences;
 import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.ViewCreator;
 import nsapp.com.combienjtedois.views.fragments.AbstractFragment;
@@ -23,6 +18,7 @@ import nsapp.com.combienjtedois.views.fragments.LoanObjectsFragment;
 import nsapp.com.combienjtedois.views.fragments.NavigationDrawerFragment;
 import nsapp.com.combienjtedois.views.fragments.PersonListForMoneyFragment;
 import nsapp.com.combienjtedois.views.fragments.PresentFragment;
+import nsapp.com.combienjtedois.views.fragments.SettingsFragment;
 
 public class LaunchActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
@@ -32,9 +28,6 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
 
     private boolean isCreatedView = false;
     private boolean listEmpty;
-
-    SharedPreferences preferences;
-    private boolean confirmDismiss;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +43,6 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
 
         Utils.dbManager = new DBManager(this);
         Utils.dbManager.open();
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
     @Override
@@ -124,7 +116,9 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!navigationDrawerFragment.isDrawerOpen()) {
-            if (getCurrentFragment() instanceof LoanObjectsFragment
+            if (getCurrentFragment() instanceof SettingsFragment) {
+                return true;
+            } else if (getCurrentFragment() instanceof LoanObjectsFragment
                     || listEmpty) {
                 getMenuInflater().inflate(R.menu.add_menu, menu);
             } else {
@@ -149,20 +143,12 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
                 ViewCreator.otherViewToggle(getCurrentFragment());
                 break;
             case R.id.actionSettings:
-                startActivityForResult(new Intent(this, SettingsActivity.class), Utils.SETTINGS_CODE);
+                ((AbstractFragment) getCurrentFragment()).prepareOnReplaceTransaction(new SettingsFragment());
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Utils.SETTINGS_CODE && resultCode == Activity.RESULT_OK){
-            confirmDismiss = preferences.getBoolean(Preferences.CONFIRM_DISMISS_KEY, true);
-            getCurrentFragment().onResume();
-        }
-    }
 
     Fragment getCurrentFragment() {
         return getSupportFragmentManager().findFragmentById(R.id.container);
@@ -175,9 +161,5 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
 
     public void setListEmpty(boolean listEmpty) {
         this.listEmpty = listEmpty;
-    }
-
-    public boolean getConfirmDismiss() {
-        return confirmDismiss;
     }
 }
