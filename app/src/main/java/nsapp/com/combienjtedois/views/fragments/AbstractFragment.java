@@ -1,9 +1,7 @@
 package nsapp.com.combienjtedois.views.fragments;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -35,12 +33,13 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
 
     ArrayList<Person> personArrayList = new ArrayList<Person>();
     ArrayList<Debt> debtArrayList = new ArrayList<Debt>();
-    SharedPreferences preferences;
 
     ListView listView;
     TextView footerView;
     TextView headerCountView;
     boolean isEditingView;
+
+    boolean confirmDismiss;
 
     Person selectedPerson;
     Debt selectedDebt;
@@ -57,7 +56,6 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
 
         listView.setOnItemClickListener(this);
         launchActivity.supportInvalidateOptionsMenu();
-        preferences = PreferenceManager.getDefaultSharedPreferences(launchActivity);
 
         return view;
     }
@@ -82,6 +80,7 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
         });
         listView.setOnTouchListener(swipeDismissListViewTouchListener);
         listView.setOnScrollListener(swipeDismissListViewTouchListener.makeScrollListener());
+        confirmDismiss = launchActivity.getConfirmDismiss();
     }
 
     public abstract void addItem(String importName, String importPhone);

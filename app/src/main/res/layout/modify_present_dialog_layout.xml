@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@android:color/white"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textSize="17sp"
+            android:gravity="center"
+            android:text="@string/person_name"
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/namePersonEditView"
+            android:inputType="text"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:background="@null"
+            android:hint="@string/person_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include layout="@layout/horizontal_separator" />
+
+        <TextView
+            android:textSize="17sp"
+            android:gravity="center"
+            android:text="@string/present"
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/presentView"
+            android:inputType="text"
+            android:layout_margin="5dp"
+            android:maxLength="40"
+            android:padding="5dp"
+            android:background="@null"
+            android:hint="@string/present_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include layout="@layout/horizontal_separator" />
+
+        <TextView
+            android:textSize="17sp"
+            android:gravity="center"
+            android:text="@string/value"
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/valueView"
+                android:inputType="numberSigned"
+                android:hint="@string/value_hint"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:background="@null"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/deviseView"
+                android:textSize="17sp"
+                android:padding="5dp"
+                android:text="@string/euro"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <include layout="@layout/horizontal_separator" />
+
+        <TextView
+            android:id="@+id/neutralTextView"
+            android:textColor="@color/dark_blue"
+            android:padding="15dp"
+            android:gravity="center"
+            android:background="@drawable/custom_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -153,10 +153,9 @@ public class DBManager {
                 + idPerson, null);
     }
 
-    public void modifyPerson(int idPerson, String name, String totalCount, String phoneNumber, String date) {
+    public void modifyPerson(int idPerson, String name, String phoneNumber, String date) {
         ContentValues args = new ContentValues();
         args.put(NAME_KEY, Utils.camelCase(name));
-        args.put(TOTAL_COUNT_KEY, totalCount);
         args.put(PHONE_NUMBER_KEY, phoneNumber);
         args.put(DATE_KEY, date);
 
@@ -335,6 +334,16 @@ public class DBManager {
 
         Toast.makeText(context, context.getString(R.string.toast_add_present), Toast.LENGTH_SHORT).show();
         sqLiteDatabase.insert(DATABASE_TABLE_PRESENT, null, initialValues);
+    }
+
+    public void modifyPresent(int idPresent, String present, String personName, String value) {
+        ContentValues initialValues = new ContentValues();
+        initialValues.put(PRESENT_KEY, Utils.camelCase(present));
+        initialValues.put(CONSIGNEE_KEY, Utils.camelCase(personName));
+        initialValues.put(VALUE_KEY, value);
+
+        Toast.makeText(context, context.getString(R.string.toast_modify), Toast.LENGTH_SHORT).show();
+        sqLiteDatabase.update(DATABASE_TABLE_PRESENT, initialValues, IDENTIFIER_KEY + "=" + idPresent, null);
     }
 
     public Cursor fetchAllPresents() {

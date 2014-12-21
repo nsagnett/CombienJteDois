@@ -3,7 +3,7 @@
 
     <CheckBoxPreference
         android:key="confirm_dismiss_key"
-        android:title="Confirm Dismiss"
-        android:summary="Show dialog to confirm deleting" />
+        android:title="@string/preferences_confirm_title"
+        android:summary="@string/preferences_confirm_summary" />
 
 </PreferenceScreen>

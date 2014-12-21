@@ -78,27 +78,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
+        android:gravity="center"
         android:layout_height="wrap_content">
 
         <EditText
             android:id="@+id/countEditText"
             android:inputType="numberSigned"
             android:hint="@string/amount_hint"
-            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
             android:layout_margin="5dp"
             android:padding="5dp"
             android:background="@null"
-            android:layout_weight="0.9"
             android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/deviseView"
             android:textSize="17sp"
-            android:visibility="gone"
             android:padding="5dp"
+            android:text="@string/euro"
             android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_weight="0.1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
 

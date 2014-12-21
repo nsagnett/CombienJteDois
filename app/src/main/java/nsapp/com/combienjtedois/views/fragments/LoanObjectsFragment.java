@@ -89,7 +89,7 @@ public class LoanObjectsFragment extends AbstractFragment {
 
     @Override
     public void deleteItem(final int position) {
-        if (preferences.getBoolean(Preferences.CONFIRM_DISMISS_KEY, true)) {
+        if (confirmDismiss) {
             final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(launchActivity, R.string.message_delete_person_text);
             alert.show();
             alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {

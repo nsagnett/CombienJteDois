@@ -1,6 +1,7 @@
 package nsapp.com.combienjtedois.model;
 
 import android.content.Context;
+import android.widget.DatePicker;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,6 +22,7 @@ public class Utils {
 
     public static final int IMPORT_CONTACT_CODE = 0;
     public static final int UPDATE_DEBT_COUNT = 1;
+    public static final int SETTINGS_CODE = 2;
 
     public static DBManager dbManager = null;
 
@@ -78,6 +80,24 @@ public class Utils {
             }
         }
     }
+    public static String formattingDate(DatePicker datePickerEventView) {
+        int days = datePickerEventView.getDayOfMonth();
+        int month = datePickerEventView.getMonth() + 1;
+        int year = datePickerEventView.getYear();
+        String date = "";
+        if (days < 10) {
+            date += "0" + days;
+        } else {
+            date += days;
+        }
+        if (month < 10) {
+            date += "-0" + month + "-" + year;
+        } else {
+            date += "-" + month + "-" + year;
+        }
+
+        return date;
+    }
 
     public static String convertLifeTimeFromMillis(Context context, long dateMillis) {
         Long seconds = dateMillis / 1000;
@@ -108,13 +128,13 @@ public class Utils {
         }
     }
 
-    public static long getTimeBeforeEvent(Present present) {
+    public static long getTimeBeforeEvent(String date) {
+        long beforeEventTime = -1;
         try {
-            long eventDate = new SimpleDateFormat(Utils.EVENT_PATTERN_DATE).parse(present.getDate()).getTime();
-            return eventDate - (new Date().getTime());
+            beforeEventTime = new SimpleDateFormat(Utils.EVENT_PATTERN_DATE).parse(date).getTime() - new Date().getTime();
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return 0;
+        return beforeEventTime;
     }
 }

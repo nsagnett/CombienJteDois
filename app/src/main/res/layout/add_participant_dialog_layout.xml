@@ -36,6 +36,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
+        android:gravity="center"
         android:layout_height="wrap_content">
 
         <EditText
@@ -43,9 +44,9 @@
             android:inputType="number"
             android:background="@null"
             android:padding="5dp"
+            android:gravity="center"
             android:hint="@string/budget_hint"
-            android:layout_width="0dp"
-            android:layout_weight="0.9"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
@@ -54,8 +55,7 @@
             android:padding="5dp"
             android:text="@string/euro"
             android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_weight="0.1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
 

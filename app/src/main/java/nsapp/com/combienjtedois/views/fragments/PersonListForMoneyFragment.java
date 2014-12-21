@@ -20,12 +20,13 @@ import java.util.Date;
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.DBManager;
 import nsapp.com.combienjtedois.model.Person;
-import nsapp.com.combienjtedois.model.Preferences;
 import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.ViewCreator;
 import nsapp.com.combienjtedois.views.adapters.PersonListAdapter;
 
 public class PersonListForMoneyFragment extends AbstractFragment {
+
+    private boolean isCreatingPerson;
 
     public static PersonListForMoneyFragment newInstance(int sectionNumber) {
         PersonListForMoneyFragment fragment = new PersonListForMoneyFragment();
@@ -51,7 +52,7 @@ public class PersonListForMoneyFragment extends AbstractFragment {
         if (!personArrayList.isEmpty()) {
             Person person = personArrayList.get(position);
             if (isEditingView) {
-                modifyPerson(personArrayList.get(position));
+                modifyPerson(personArrayList.get(position), null, null);
             } else {
                 prepareOnReplaceTransaction(DetailPersonForMoneyFragment.newInstance(person));
             }
@@ -69,6 +70,7 @@ public class PersonListForMoneyFragment extends AbstractFragment {
 
     @Override
     public void addItem(String importName, String importPhoneNumber) {
+        isCreatingPerson = true;
         final AlertDialog alert = ViewCreator.createCustomPersonDialogBox(launchActivity, R.string.add_person, R.drawable.add);
         alert.show();
         final EditText nameEditView = ((EditText) alert.findViewById(R.id.namePersonEditView));
@@ -98,9 +100,48 @@ public class PersonListForMoneyFragment extends AbstractFragment {
         });
     }
 
+    private void modifyPerson(final Person person, String name, String phoneNumber) {
+        isCreatingPerson = false;
+        selectedPerson = person;
+        final AlertDialog alert = ViewCreator.createCustomPersonDialogBox(launchActivity, R.string.modify_person, R.drawable.edit);
+        alert.show();
+        final EditText nameView = ((EditText) alert.findViewById(R.id.namePersonEditView));
+        final EditText phoneNumberView = ((EditText) alert.findViewById(R.id.phoneNumberEditView));
+        final ImageView importView = (ImageView) alert.findViewById(R.id.importContactView);
+
+        importView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI), Utils.IMPORT_CONTACT_CODE);
+                alert.dismiss();
+            }
+        });
+
+        if (name == null) {
+            nameView.setText(person.getName());
+        } else {
+            nameView.setText(name);
+        }
+        if (phoneNumber == null) {
+            phoneNumberView.setText(person.getPhoneNumber());
+        } else {
+            phoneNumberView.setText(phoneNumber);
+        }
+        alert.findViewById(R.id.neutralTextView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkPersonForm(nameView)) {
+                    alert.dismiss();
+                    Utils.dbManager.modifyPerson(person.getId(), nameView.getText().toString(), phoneNumberView.getText().toString(), (String) DateFormat.format(Utils.SPECIFIC_PATTERN_DATE, new Date().getTime()));
+                    notifyChanges();
+                }
+            }
+        });
+    }
+
     @Override
     public void deleteItem(final int position) {
-        if (preferences.getBoolean(Preferences.CONFIRM_DISMISS_KEY, true)) {
+        if (confirmDismiss) {
             final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(launchActivity, R.string.message_delete_person_text);
             alert.show();
             alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {
@@ -162,26 +203,6 @@ public class PersonListForMoneyFragment extends AbstractFragment {
         listView.setAdapter(personListAdapter);
     }
 
-    private void modifyPerson(final Person person) {
-        final AlertDialog alert = ViewCreator.createCustomPersonDialogBox(launchActivity, R.string.modify_person, R.drawable.edit);
-        alert.show();
-        final EditText nameView = ((EditText) alert.findViewById(R.id.namePersonEditView));
-        final EditText phoneNumberView = ((EditText) alert.findViewById(R.id.phoneNumberEditView));
-        alert.findViewById(R.id.importContactView).setVisibility(View.GONE);
-        nameView.setText(person.getName());
-        phoneNumberView.setText(person.getPhoneNumber());
-        alert.findViewById(R.id.neutralTextView).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkPersonForm(nameView)) {
-                    alert.dismiss();
-                    Utils.dbManager.modifyPerson(person.getId(), nameView.getText().toString(), person.getTotalAmount(), person.getPhoneNumber(), (String) DateFormat.format(Utils.SPECIFIC_PATTERN_DATE, new Date().getTime()));
-                    notifyChanges();
-                }
-            }
-        });
-    }
-
     private void importContact(Intent data) {
         ContentResolver contentResolver = getActivity().getContentResolver();
         Uri dataUri = data.getData();
@@ -203,7 +224,11 @@ public class PersonListForMoneyFragment extends AbstractFragment {
             }
         }
         c.close();
-        addItem(importName, importPhoneNumber);
+        if (isCreatingPerson) {
+            addItem(importName, importPhoneNumber);
+        } else {
+            modifyPerson(selectedPerson, importName, importPhoneNumber);
+        }
     }
 
     boolean checkPersonForm(EditText editText) {

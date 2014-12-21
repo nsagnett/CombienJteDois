@@ -13,14 +13,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.DBManager;
-import nsapp.com.combienjtedois.model.Preferences;
 import nsapp.com.combienjtedois.model.Present;
 import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.ViewCreator;
@@ -113,8 +109,8 @@ public class PresentFragment extends AbstractFragment {
         validateView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String date = formattingDate(datePickerEventView);
-                long beforeEventTime = getTimeBeforeEvent(date);
+                String date = Utils.formattingDate(datePickerEventView);
+                long beforeEventTime = Utils.getTimeBeforeEvent(date);
                 if (checkAddForm(namePersonView, presentView, valueView, beforeEventTime)) {
                     alert.dismiss();
                     Utils.dbManager.createPresent(namePersonView.getText().toString(), presentView.getText().toString(), valueView.getText().toString(), date);
@@ -124,9 +120,33 @@ public class PresentFragment extends AbstractFragment {
         });
     }
 
+    public void modifyPresent(final Present present) {
+        final AlertDialog alert = ViewCreator.modifyCustomPresentDialogBox(launchActivity);
+        alert.show();
+        final EditText namePersonView = (EditText) alert.findViewById(R.id.namePersonEditView);
+        final EditText valueView = (EditText) alert.findViewById(R.id.valueView);
+        final EditText presentView = (EditText) alert.findViewById(R.id.presentView);
+        final TextView validateView = (TextView) alert.findViewById(R.id.neutralTextView);
+
+        namePersonView.setText(present.getConsignee());
+        valueView.setText(present.getValue());
+        presentView.setText(present.getPresent());
+
+        validateView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkModifyForm(namePersonView, presentView, valueView)) {
+                    alert.dismiss();
+                    Utils.dbManager.modifyPresent(present.getIdPresent(), namePersonView.getText().toString(), presentView.getText().toString(), valueView.getText().toString());
+                    notifyChanges();
+                }
+            }
+        });
+    }
+
     @Override
     public void deleteItem(final int position) {
-        if (preferences.getBoolean(Preferences.CONFIRM_DISMISS_KEY, true)) {
+        if (confirmDismiss) {
             final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(launchActivity, R.string.message_delete_person_text);
             alert.show();
             alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {
@@ -166,33 +186,18 @@ public class PresentFragment extends AbstractFragment {
         return true;
     }
 
-    private String formattingDate(DatePicker datePickerEventView) {
-        int days = datePickerEventView.getDayOfMonth();
-        int month = datePickerEventView.getMonth() + 1;
-        int year = datePickerEventView.getYear();
-        String date = "";
-        if (days < 10) {
-            date += "0" + days;
-        } else {
-            date += days;
+    private boolean checkModifyForm(EditText namePersonView, EditText presentView, EditText valueView) {
+        if (namePersonView.getText().length() == 0) {
+            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.person_name)));
+            return false;
+        } else if (presentView.getText().length() == 0) {
+            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.present)));
+            return false;
+        } else if (valueView.getText().length() == 0) {
+            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.value)));
+            return false;
         }
-        if (month < 10) {
-            date += "-0" + month + "-" + year;
-        } else {
-            date += "-" + month + "-" + year;
-        }
-
-        return date;
-    }
-
-    private long getTimeBeforeEvent(String date) {
-        long beforeEventTime = -1;
-        try {
-            beforeEventTime = new SimpleDateFormat(Utils.EVENT_PATTERN_DATE).parse(date).getTime() - new Date().getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return beforeEventTime;
+        return true;
     }
 
     @Override
@@ -200,7 +205,7 @@ public class PresentFragment extends AbstractFragment {
         if (!presentsArray.isEmpty()) {
             Present present = presentsArray.get(position);
             if (isEditingView) {
-                // MODIFY PRESENT
+                modifyPresent(presentsArray.get(position));
             } else {
                 prepareOnReplaceTransaction(DetailPresentFragment.newInstance(present));
             }

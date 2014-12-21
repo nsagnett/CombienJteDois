@@ -79,6 +79,7 @@
     <string name="toast_add_person">Person added !</string>
     <string name="toast_add_present">Present added !</string>
     <string name="add_present">Add a present</string>
+    <string name="modify_present">Edit a present</string>
     <string name="toast_delete_element">Element deleted !</string>
     <string name="toast_delete_person">Person deleted</string>
     <string name="toast_delete_present">Present deleted !</string>
@@ -97,4 +98,8 @@
     <string name="impossible_budget">You can\'t put a budget greater than or equal to the present value !</string>
     <string name="check">Check</string>
     <string name="budget_format">Budget : %s</string>
+    <string name="total_budget_format">Total budget : %s €</string>
+
+    <string name="preferences_confirm_title">Confirm Dismiss</string>
+    <string name="preferences_confirm_summary">Show dialog to confirm deleting</string>
 </resources>

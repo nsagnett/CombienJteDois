@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.DBManager;
 import nsapp.com.combienjtedois.model.Participant;
-import nsapp.com.combienjtedois.model.Preferences;
 import nsapp.com.combienjtedois.model.Present;
 import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.ViewCreator;
@@ -33,6 +32,8 @@ import nsapp.com.combienjtedois.views.adapters.ParticipantListAdapter;
 public class DetailPresentFragment extends AbstractFragment {
 
     private Present selectedPresent;
+
+    private double totalBudget;
 
     private ArrayList<Participant> participants = new ArrayList<Participant>();
 
@@ -84,6 +85,7 @@ public class DetailPresentFragment extends AbstractFragment {
 
             int id = Utils.dbManager.fetchIdParticipant(selectedPresent.getIdPresent(), name);
             participants.add(new Participant(id, name, phoneNumber, budget, paid == 1));
+            totalBudget += Double.parseDouble(budget);
         }
 
         if (participants.isEmpty()) {
@@ -105,6 +107,7 @@ public class DetailPresentFragment extends AbstractFragment {
 
         ParticipantListAdapter participantListAdapter = new ParticipantListAdapter(launchActivity, participants, isEditingView);
         listView.setAdapter(participantListAdapter);
+        Toast.makeText(launchActivity, String.format(getString(R.string.total_budget_format), totalBudget), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -187,7 +190,7 @@ public class DetailPresentFragment extends AbstractFragment {
 
     @Override
     public void deleteItem(final int position) {
-        if (preferences.getBoolean(Preferences.CONFIRM_DISMISS_KEY, true)) {
+        if (confirmDismiss) {
             final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(launchActivity, R.string.message_delete_person_text);
             alert.show();
             alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {

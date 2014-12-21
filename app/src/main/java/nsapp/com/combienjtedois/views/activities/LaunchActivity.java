@@ -1,8 +1,10 @@
 package nsapp.com.combienjtedois.views.activities;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -10,14 +12,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.TranslateAnimation;
-import android.widget.ImageView;
-import android.widget.ListView;
 
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.DBManager;
+import nsapp.com.combienjtedois.model.Preferences;
 import nsapp.com.combienjtedois.model.Utils;
+import nsapp.com.combienjtedois.views.ViewCreator;
 import nsapp.com.combienjtedois.views.fragments.AbstractFragment;
 import nsapp.com.combienjtedois.views.fragments.LoanObjectsFragment;
 import nsapp.com.combienjtedois.views.fragments.NavigationDrawerFragment;
@@ -26,14 +26,15 @@ import nsapp.com.combienjtedois.views.fragments.PresentFragment;
 
 public class LaunchActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    private static final int X_ANIMATION = 150;
-
     private NavigationDrawerFragment navigationDrawerFragment;
 
     private CharSequence title;
 
     private boolean isCreatedView = false;
     private boolean listEmpty;
+
+    SharedPreferences preferences;
+    private boolean confirmDismiss;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
 
         Utils.dbManager = new DBManager(this);
         Utils.dbManager.open();
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
     @Override
@@ -123,7 +125,6 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!navigationDrawerFragment.isDrawerOpen()) {
             if (getCurrentFragment() instanceof LoanObjectsFragment
-                    || getCurrentFragment() instanceof PresentFragment
                     || listEmpty) {
                 getMenuInflater().inflate(R.menu.add_menu, menu);
             } else {
@@ -145,49 +146,21 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
                 break;
             case R.id.actionEdit:
                 ((AbstractFragment) getCurrentFragment()).setEditingView(!((AbstractFragment) getCurrentFragment()).isEditingView());
-                otherViewToggle();
+                ViewCreator.otherViewToggle(getCurrentFragment());
                 break;
             case R.id.actionSettings:
-                startActivity(new Intent(this, SettingsActivity.class));
+                startActivityForResult(new Intent(this, SettingsActivity.class), Utils.SETTINGS_CODE);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void otherViewToggle() {
-        View view = getCurrentFragment().getView();
-        if (view != null) {
-            ListView listView = (ListView) getCurrentFragment().getView().findViewById(R.id.listView);
-            if (listView != null && listView.getAdapter() != null) {
-                for (int i = 0; i < listView.getAdapter().getCount(); i++) {
-
-                    if (listView.getChildAt(i) != null) {
-                        final ImageView otherView = (ImageView) listView.getChildAt(i).findViewById(R.id.otherView);
-
-                        if (otherView != null) {
-
-                            TranslateAnimation imageViewTranslation;
-                            otherView.setImageResource(R.drawable.dark_edit);
-
-                            if (otherView.getVisibility() == View.GONE) {
-                                imageViewTranslation = new TranslateAnimation(otherView.getLeft() - X_ANIMATION, otherView.getLeft(), otherView.getTop(), otherView.getTop());
-                                otherView.setVisibility(View.VISIBLE);
-
-                            } else {
-                                imageViewTranslation = new TranslateAnimation(otherView.getLeft(), otherView.getLeft() - X_ANIMATION, otherView.getTop(), otherView.getTop());
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        otherView.setVisibility(View.GONE);
-                                    }
-                                }, Utils.ANIMATION_DURATION);
-                            }
-                            imageViewTranslation.setDuration(Utils.ANIMATION_DURATION);
-                            otherView.startAnimation(imageViewTranslation);
-                        }
-                    }
-                }
-            }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Utils.SETTINGS_CODE && resultCode == Activity.RESULT_OK){
+            confirmDismiss = preferences.getBoolean(Preferences.CONFIRM_DISMISS_KEY, true);
+            getCurrentFragment().onResume();
         }
     }
 
@@ -202,5 +175,9 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
 
     public void setListEmpty(boolean listEmpty) {
         this.listEmpty = listEmpty;
+    }
+
+    public boolean getConfirmDismiss() {
+        return confirmDismiss;
     }
 }

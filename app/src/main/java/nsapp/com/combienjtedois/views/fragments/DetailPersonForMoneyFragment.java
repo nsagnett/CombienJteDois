@@ -21,7 +21,6 @@ import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.DBManager;
 import nsapp.com.combienjtedois.model.Debt;
 import nsapp.com.combienjtedois.model.Person;
-import nsapp.com.combienjtedois.model.Preferences;
 import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.ViewCreator;
 import nsapp.com.combienjtedois.views.activities.EditTextAmountActivity;
@@ -101,9 +100,6 @@ public class DetailPersonForMoneyFragment extends AbstractFragment {
     public void addItem(String importName, String importPhone) {
         final AlertDialog alert = ViewCreator.createCustomAddDebtDialogBox(getActivity());
         alert.show();
-        TextView deviseView = (TextView) alert.findViewById(R.id.deviseView);
-        deviseView.setVisibility(View.VISIBLE);
-        deviseView.setText(R.string.euro);
 
         final TextView positiveDebtView = (TextView) alert.findViewById(R.id.positiveDebtView);
         final TextView negativeDebtView = (TextView) alert.findViewById(R.id.negativeDebtView);
@@ -136,7 +132,7 @@ public class DetailPersonForMoneyFragment extends AbstractFragment {
 
     @Override
     public void deleteItem(final int position) {
-        if (preferences.getBoolean(Preferences.CONFIRM_DISMISS_KEY, true)) {
+        if (confirmDismiss) {
             final AlertDialog alert = ViewCreator.createCustomConfirmDialogBox(getActivity(), R.string.message_delete_element);
             alert.show();
             alert.findViewById(R.id.positiveView).setOnClickListener(new View.OnClickListener() {

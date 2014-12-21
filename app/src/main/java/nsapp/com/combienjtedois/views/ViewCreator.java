@@ -2,15 +2,24 @@ package nsapp.com.combienjtedois.views;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import nsapp.com.combienjtedois.R;
+import nsapp.com.combienjtedois.model.Utils;
 
 public class ViewCreator {
+
+    private static final int X_ANIMATION = 150;
+
 
     private static View getCustomTitleDialogBox(Context context, int resTitleID, int resDrawableTitleID) {
         TextView titleView = new TextView(context);
@@ -157,6 +166,18 @@ public class ViewCreator {
         return builder.create();
     }
 
+    public static AlertDialog modifyCustomPresentDialogBox(Context context) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.modify_present_dialog_layout, null);
+
+        builder.setCustomTitle(getCustomTitleDialogBox(context, R.string.modify_present, R.drawable.edit));
+
+        ((TextView) view.findViewById(R.id.neutralTextView)).setText(R.string.validate);
+
+        builder.setView(view);
+        return builder.create();
+    }
+
     public static AlertDialog createCustomParticipantDialogBox(Context context) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View view = LayoutInflater.from(context).inflate(R.layout.add_participant_dialog_layout, null);
@@ -177,5 +198,42 @@ public class ViewCreator {
 
         builder.setView(view);
         return builder.create();
+    }
+
+    public static void otherViewToggle(Fragment fragment) {
+        View view = fragment.getView();
+        if (view != null) {
+            ListView listView = (ListView) fragment.getView().findViewById(R.id.listView);
+            if (listView != null && listView.getAdapter() != null) {
+                for (int i = 0; i < listView.getAdapter().getCount(); i++) {
+
+                    if (listView.getChildAt(i) != null) {
+                        final ImageView otherView = (ImageView) listView.getChildAt(i).findViewById(R.id.otherView);
+
+                        if (otherView != null) {
+
+                            TranslateAnimation imageViewTranslation;
+                            otherView.setImageResource(R.drawable.dark_edit);
+
+                            if (otherView.getVisibility() == View.GONE) {
+                                imageViewTranslation = new TranslateAnimation(otherView.getLeft() - X_ANIMATION, otherView.getLeft(), otherView.getTop(), otherView.getTop());
+                                otherView.setVisibility(View.VISIBLE);
+
+                            } else {
+                                imageViewTranslation = new TranslateAnimation(otherView.getLeft(), otherView.getLeft() - X_ANIMATION, otherView.getTop(), otherView.getTop());
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        otherView.setVisibility(View.GONE);
+                                    }
+                                }, Utils.ANIMATION_DURATION);
+                            }
+                            imageViewTranslation.setDuration(Utils.ANIMATION_DURATION);
+                            otherView.startAnimation(imageViewTranslation);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
