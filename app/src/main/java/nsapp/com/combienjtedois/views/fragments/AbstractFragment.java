@@ -42,7 +42,7 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
     TextView headerCountView;
     boolean isEditingView;
 
-    SharedPreferences preferences;
+    private SharedPreferences preferences;
     boolean confirmDismiss;
 
     Person selectedPerson;
@@ -95,7 +95,7 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
 
     public abstract void addItem(String importName, String importPhone);
 
-    public abstract void deleteItem(final int position);
+    protected abstract void deleteItem(final int position);
 
     public boolean isEditingView() {
         return isEditingView;

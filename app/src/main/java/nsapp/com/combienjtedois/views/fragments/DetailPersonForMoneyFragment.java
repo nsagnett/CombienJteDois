@@ -30,6 +30,8 @@ public class DetailPersonForMoneyFragment extends AbstractFragment {
 
     private String type;
 
+    private ImageView smsView;
+
     public static DetailPersonForMoneyFragment newInstance(Person person) {
         DetailPersonForMoneyFragment fragment = new DetailPersonForMoneyFragment();
         Bundle args = new Bundle();
@@ -48,12 +50,7 @@ public class DetailPersonForMoneyFragment extends AbstractFragment {
         ((TextView) view.findViewById(R.id.headerNameView)).setText(selectedPerson.getName());
         ((ImageView) view.findViewById(R.id.headerProfileView)).setImageResource(R.drawable.profile);
 
-        view.findViewById(R.id.smsView).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // SMS TASK
-            }
-        });
+        smsView = (ImageView) view.findViewById(R.id.smsView);
 
         return view;
     }
@@ -201,10 +198,17 @@ public class DetailPersonForMoneyFragment extends AbstractFragment {
 
         Double total = Double.parseDouble(Utils.dbManager.getTotalCount(selectedPerson.getId()));
 
-        if (total >= 0) {
+        if (total > 0) {
             headerCountView.setTextColor(getResources().getColor(R.color.green));
+            smsView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO sms task
+                }
+            });
         } else {
             headerCountView.setTextColor(getResources().getColor(R.color.red));
+            smsView.setVisibility(View.GONE);
         }
 
         headerCountView.setText(String.format(getString(R.string.money_format), total.toString()));

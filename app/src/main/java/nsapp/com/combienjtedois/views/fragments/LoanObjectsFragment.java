@@ -20,7 +20,6 @@ import java.util.Date;
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.DBManager;
 import nsapp.com.combienjtedois.model.LoanObject;
-import nsapp.com.combienjtedois.model.Preferences;
 import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.ViewCreator;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;

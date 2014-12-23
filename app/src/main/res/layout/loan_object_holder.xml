@@ -83,11 +83,8 @@
     <ImageView
         android:id="@+id/smsView"
         android:layout_width="wrap_content"
-        android:paddingEnd="15dp"
-        android:paddingRight="15dp"
-        android:paddingStart="15dp"
-        android:paddingTop="15dp"
-        android:layout_alignParentBottom="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:background="@drawable/custom_button"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"

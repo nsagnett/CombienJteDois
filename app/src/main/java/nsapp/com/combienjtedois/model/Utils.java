@@ -12,7 +12,7 @@ import nsapp.com.combienjtedois.R;
 
 public class Utils {
 
-    public static final String EVENT_PATTERN_DATE = "dd-MM-yyyy";
+    private static final String EVENT_PATTERN_DATE = "dd-MM-yyyy";
     public static final String SPECIFIC_PATTERN_DATE = "dd-MM-yyyy HH:mm";
 
     public static final String PERSON_KEY = "person_key";

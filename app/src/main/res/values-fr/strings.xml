@@ -45,7 +45,6 @@
     <string name="reduce">Réduire</string>
     <string name="subtract_hint">à soustraire</string>
     <string name="negative_amount">Le montant ne peut pas être négatif</string>
-    <string name="second">&#160;seconde</string>
     <string name="minut">&#160;minute</string>
     <string name="hour">&#160;heure</string>
     <string name="day">&#160;jour</string>
@@ -115,7 +114,13 @@
     <string name="settings">Préférences</string>
 
     <!--Preferences-->
-    <string name="preferences_confirm_title">Confirmer suppression</string>
-    <string name="preferences_confirm_summary">Affiche une confirmation de suppression</string>
+    <string name="preferences_confirm_dismiss">Confirmer suppression</string>
+    <string name="preferences_money_alert">Notification dette</string>
+    <string name="preferences_money_description">Notification de l\'état des dettes</string>
+    <string name="preferences_loan_alert">Notification prêt d\'objets</string>
+    <string name="preferences_loan_description">Notification de l\'état des prêts d\'objets</string>
+    <string name="preferences_present_alert">Notification cadeau</string>
+    <string name="preferences_present_description">Notification sur les participants en attente</string>
+    <string name="preferences_frequency">Fréquence des notifications</string>
 
 </resources>

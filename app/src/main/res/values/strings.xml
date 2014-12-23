@@ -69,7 +69,6 @@
     <string name="value_format">Value : %s</string>
     <string name="value">Value</string>
     <string name="reduce">Reduce</string>
-    <string name="second">&#160;second</string>
     <string name="subtract_hint">to subtract</string>
     <string name="title_section1">Money</string>
     <string name="title_section2">Items on loan</string>
@@ -102,6 +101,12 @@
     <string name="some_instants">&#160;a short time</string>
     <string name="settings">Settings</string>
 
-    <string name="preferences_confirm_title">Confirm Dismiss</string>
-    <string name="preferences_confirm_summary">Show dialog to confirm deleting</string>
+    <string name="preferences_confirm_dismiss">Confirm Dismiss</string>
+    <string name="preferences_money_alert">Debt notification</string>
+    <string name="preferences_money_description">Notification to state debt</string>
+    <string name="preferences_loan_alert">Loan object notification</string>
+    <string name="preferences_loan_description">Notification to state loan object</string>
+    <string name="preferences_present_alert">Present notification</string>
+    <string name="preferences_present_description">Notification for waiting participants</string>
+    <string name="preferences_frequency">Notification frequency</string>
 </resources>

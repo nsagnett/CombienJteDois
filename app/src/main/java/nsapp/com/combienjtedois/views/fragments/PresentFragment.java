@@ -120,7 +120,7 @@ public class PresentFragment extends AbstractFragment {
         });
     }
 
-    public void modifyPresent(final Present present) {
+    void modifyPresent(final Present present) {
         final AlertDialog alert = ViewCreator.modifyCustomPresentDialogBox(launchActivity);
         alert.show();
         final EditText namePersonView = (EditText) alert.findViewById(R.id.namePersonEditView);

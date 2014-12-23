@@ -55,10 +55,10 @@
 
     <LinearLayout
         android:padding="20dp"
-        android:orientation="vertical"
         android:layout_width="0dp"
-        android:gravity="center"
         android:layout_weight="0.25"
+        android:orientation="vertical"
+        android:gravity="center"
         android:layout_height="match_parent">
 
         <ImageView

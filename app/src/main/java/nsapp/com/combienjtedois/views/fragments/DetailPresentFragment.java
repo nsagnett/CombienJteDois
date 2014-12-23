@@ -33,8 +33,6 @@ public class DetailPresentFragment extends AbstractFragment {
 
     private Present selectedPresent;
 
-    private double totalBudget;
-
     private ArrayList<Participant> participants = new ArrayList<Participant>();
 
     public static DetailPresentFragment newInstance(Present present) {
@@ -76,6 +74,7 @@ public class DetailPresentFragment extends AbstractFragment {
     private void notifyChanges() {
         Cursor c = Utils.dbManager.fetchAllParticipants(selectedPresent.getIdPresent());
         participants = new ArrayList<Participant>();
+        double totalBudget = 0;
 
         while (c.moveToNext()) {
             String name = c.getString(c.getColumnIndex(DBManager.NAME_KEY));
@@ -85,7 +84,9 @@ public class DetailPresentFragment extends AbstractFragment {
 
             int id = Utils.dbManager.fetchIdParticipant(selectedPresent.getIdPresent(), name);
             participants.add(new Participant(id, name, phoneNumber, budget, paid == 1));
-            totalBudget += Double.parseDouble(budget);
+            if (paid == 1) {
+                totalBudget += Double.parseDouble(budget);
+            }
         }
 
         if (participants.isEmpty()) {
