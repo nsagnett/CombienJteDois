@@ -7,8 +7,6 @@
 
     <style name="CustomActionBar" parent="@style/Widget.AppCompat.Light.ActionBar">
         <item name="android:background">@color/light_grey</item>
-        <item name="android:backgroundStacked">@color/light_grey</item>
-        <item name="android:backgroundSplit">@color/light_grey</item>
         <item name="android:titleTextStyle">@style/CustomActionBar.Title</item>
     </style>
 
