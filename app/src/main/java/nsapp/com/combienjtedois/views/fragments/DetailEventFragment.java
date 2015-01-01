@@ -38,7 +38,7 @@ public class DetailEventFragment extends AbstractFragment {
     public static DetailEventFragment newInstance(Event event) {
         DetailEventFragment fragment = new DetailEventFragment();
         Bundle args = new Bundle();
-        args.putSerializable(Utils.PRESENT_KEY, event);
+        args.putSerializable(Utils.EVENT_KEY, event);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,7 +53,7 @@ public class DetailEventFragment extends AbstractFragment {
 
         footerView = (TextView) inflater.inflate(R.layout.footer_listview, null, false);
 
-        selectedEvent = (Event) getArguments().getSerializable(Utils.PRESENT_KEY);
+        selectedEvent = (Event) getArguments().getSerializable(Utils.EVENT_KEY);
         view.findViewById(R.id.headerLayout).setVisibility(View.VISIBLE);
         ((TextView) view.findViewById(R.id.headerNameView)).setText(selectedEvent.getSubject());
         ((ImageView) view.findViewById(R.id.headerProfileView)).setImageResource(R.drawable.event);
@@ -74,19 +74,16 @@ public class DetailEventFragment extends AbstractFragment {
     private void notifyChanges() {
         Cursor c = Utils.dbManager.fetchAllParticipants(selectedEvent.getIdEvent());
         participants = new ArrayList<Participant>();
-        double totalBudget = 0;
 
         while (c.moveToNext()) {
             String name = c.getString(c.getColumnIndex(DBManager.NAME_KEY));
-            String budget = c.getString(c.getColumnIndex(DBManager.BUDGET_KEY));
             String phoneNumber = c.getString(c.getColumnIndex(DBManager.PHONE_NUMBER_KEY));
             int paid = Integer.parseInt(c.getString(c.getColumnIndex(DBManager.PAID_KEY)));
+            int value = Integer.parseInt(selectedEvent.getValue());
+            int numberParticipant = selectedEvent.getParticipantNumber();
 
             int id = Utils.dbManager.fetchIdParticipant(selectedEvent.getIdEvent(), name);
-            participants.add(new Participant(id, name, phoneNumber, budget, paid == 1));
-            if (paid == 1) {
-                totalBudget += Double.parseDouble(budget);
-            }
+            participants.add(new Participant(id, name, phoneNumber, String.valueOf(value / numberParticipant), paid == 1));
         }
 
         if (participants.isEmpty()) {
@@ -112,7 +109,6 @@ public class DetailEventFragment extends AbstractFragment {
 
         ParticipantListAdapter participantListAdapter = new ParticipantListAdapter(launchActivity, participants, isEditingView);
         listView.setAdapter(participantListAdapter);
-        Toast.makeText(launchActivity, String.format(getString(R.string.total_budget_format), totalBudget), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -163,7 +159,6 @@ public class DetailEventFragment extends AbstractFragment {
         final AlertDialog alert = ViewCreator.createCustomParticipantDialogBox(launchActivity);
         alert.show();
         final EditText namePersonView = (EditText) alert.findViewById(R.id.namePersonEditView);
-        final EditText budgetEditView = (EditText) alert.findViewById(R.id.budgetEditView);
         final EditText phoneNumberEditView = (EditText) alert.findViewById(R.id.phoneNumberEditView);
         final ImageView importContactView = (ImageView) alert.findViewById(R.id.importContactView);
         final TextView validateView = (TextView) alert.findViewById(R.id.neutralTextView);
@@ -183,10 +178,11 @@ public class DetailEventFragment extends AbstractFragment {
         validateView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkPersonForm(namePersonView, budgetEditView)) {
+                if (checkPersonForm(namePersonView)) {
                     alert.dismiss();
-                    Utils.dbManager.createParticipant(selectedEvent.getIdEvent(), namePersonView.getText().toString(), phoneNumberEditView.getText().toString(), budgetEditView.getText().toString());
-                    Utils.dbManager.updateParticipantNumber(selectedEvent.getIdEvent(), Integer.parseInt(selectedEvent.getParticipantNumber()) + 1);
+                    Utils.dbManager.createParticipant(selectedEvent.getIdEvent(), namePersonView.getText().toString(), phoneNumberEditView.getText().toString());
+                    Utils.dbManager.updateParticipantNumber(selectedEvent.getIdEvent(), selectedEvent.getParticipantNumber() + 1);
+                    selectedEvent.setParticipantNumber(selectedEvent.getParticipantNumber() + 1);
                     notifyChanges();
                 }
             }
@@ -203,7 +199,8 @@ public class DetailEventFragment extends AbstractFragment {
                 public void onClick(View v) {
                     alert.dismiss();
                     Utils.dbManager.deleteParticipant(participants.get(position).getId());
-                    Utils.dbManager.updateParticipantNumber(selectedEvent.getIdEvent(), Integer.parseInt(selectedEvent.getParticipantNumber()) - 1);
+                    Utils.dbManager.updateParticipantNumber(selectedEvent.getIdEvent(), selectedEvent.getParticipantNumber() - 1);
+                    selectedEvent.setParticipantNumber(selectedEvent.getParticipantNumber() - 1);
                     notifyChanges();
                 }
             });
@@ -215,20 +212,15 @@ public class DetailEventFragment extends AbstractFragment {
             });
         } else {
             Utils.dbManager.deleteParticipant(participants.get(position).getId());
-            Utils.dbManager.updateParticipantNumber(selectedEvent.getIdEvent(), Integer.parseInt(selectedEvent.getParticipantNumber()) - 1);
+            Utils.dbManager.updateParticipantNumber(selectedEvent.getIdEvent(), selectedEvent.getParticipantNumber() - 1);
+            selectedEvent.setParticipantNumber(selectedEvent.getParticipantNumber() - 1);
             notifyChanges();
         }
     }
 
-    boolean checkPersonForm(EditText namePersonView, EditText budgetEditView) {
+    boolean checkPersonForm(EditText namePersonView) {
         if (namePersonView.getText().length() == 0) {
             ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.name)));
-            return false;
-        } else if (budgetEditView.getText().length() == 0) {
-            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.budget)));
-            return false;
-        } else if (Integer.parseInt(budgetEditView.getText().toString()) >= Integer.parseInt(selectedEvent.getValue())) {
-            Toast.makeText(launchActivity, getString(R.string.impossible_budget), Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

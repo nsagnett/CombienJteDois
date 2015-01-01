@@ -15,7 +15,6 @@ public class DBManager {
     // PERSON
     private static final String TOTAL_COUNT_KEY = "totalCount";
 
-
     // DEBT
     private static final String ID_PERSON_DEBT_KEY = "idFKP";
     private static final String AMOUNT_KEY = "amount";
@@ -34,7 +33,6 @@ public class DBManager {
 
     //PARTICIPANT
     private static final String ID_EVENT_PARTICIPANT_KEY = "idFKEvent";
-    public static final String BUDGET_KEY = "budget";
     public static final String PAID_KEY = "paid";
 
     // COMMON
@@ -81,7 +79,6 @@ public class DBManager {
     private static final String CREATE_TABLE_PARTICIPANT_QUERY = "create table participant (id integer primary key autoincrement, "
             + "idFKEvent integer not null, "
             + "name text not null, "
-            + "budget text not null, "
             + "paid integer not null, "
             + "phoneNumber text, "
             + "foreign key(idFKEvent) references event(id))";
@@ -380,15 +377,14 @@ public class DBManager {
      * PARTICIPANT QUERIES
      * **************
      */
-    public void createParticipant(int idPresent, String name, String phoneNumber, String budget) {
+    public void createParticipant(int idEvent, String name, String phoneNumber) {
         ContentValues initialValues = new ContentValues();
         name = Utils.camelCase(name);
 
-        if (fetchIdParticipant(idPresent, name) == 0) {
-            initialValues.put(ID_EVENT_PARTICIPANT_KEY, idPresent);
+        if (fetchIdParticipant(idEvent, name) == 0) {
+            initialValues.put(ID_EVENT_PARTICIPANT_KEY, idEvent);
             initialValues.put(NAME_KEY, name);
             initialValues.put(PHONE_NUMBER_KEY, phoneNumber);
-            initialValues.put(BUDGET_KEY, budget);
             initialValues.put(PAID_KEY, 0);
 
             Toast.makeText(context, context.getString(R.string.toast_add_participant), Toast.LENGTH_SHORT).show();
@@ -398,14 +394,14 @@ public class DBManager {
         }
     }
 
-    public Cursor fetchAllParticipants(int idPresent) {
+    public Cursor fetchAllParticipants(int idEvent) {
         return sqLiteDatabase.query(DATABASE_TABLE_PARTICIPANT, new String[]{
-                IDENTIFIER_KEY, ID_EVENT_PARTICIPANT_KEY, NAME_KEY, PHONE_NUMBER_KEY, BUDGET_KEY, PAID_KEY}, ID_EVENT_PARTICIPANT_KEY + "=" + idPresent, null, null, null, null);
+                IDENTIFIER_KEY, ID_EVENT_PARTICIPANT_KEY, NAME_KEY, PHONE_NUMBER_KEY, PAID_KEY}, ID_EVENT_PARTICIPANT_KEY + "=" + idEvent, null, null, null, null);
     }
 
-    public int fetchIdParticipant(int idPresent, String participantName) {
+    public int fetchIdParticipant(int idEvent, String participantName) {
         Cursor c = sqLiteDatabase.query(DATABASE_TABLE_PARTICIPANT, new String[]{
-                IDENTIFIER_KEY, ID_EVENT_PARTICIPANT_KEY, NAME_KEY, PHONE_NUMBER_KEY, BUDGET_KEY, PAID_KEY}, ID_EVENT_PARTICIPANT_KEY + "='" + idPresent + "' AND " +
+                IDENTIFIER_KEY, ID_EVENT_PARTICIPANT_KEY, NAME_KEY, PHONE_NUMBER_KEY, PAID_KEY}, ID_EVENT_PARTICIPANT_KEY + "='" + idEvent + "' AND " +
                 NAME_KEY + "='" + participantName + "'", null, null, null, null);
 
         if (c != null && c.moveToFirst()) {

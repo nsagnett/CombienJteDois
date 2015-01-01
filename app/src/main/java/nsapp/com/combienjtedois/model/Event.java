@@ -6,12 +6,12 @@ public class Event implements Serializable{
 
     private final int idEvent;
     private final String consignee;
-    private final String participantNumber;
+    private int participantNumber;
     private final String subject;
     private final String value;
     private final String date;
 
-    public Event(int idEvent, String consignee, String participantNumber, String present, String value, String date) {
+    public Event(int idEvent, String consignee, int participantNumber, String present, String value, String date) {
         this.idEvent = idEvent;
         this.consignee = consignee;
         this.participantNumber = participantNumber;
@@ -28,7 +28,7 @@ public class Event implements Serializable{
         return consignee;
     }
 
-    public String getParticipantNumber() {
+    public int getParticipantNumber() {
         return participantNumber;
     }
 
@@ -42,5 +42,9 @@ public class Event implements Serializable{
 
     public String getDate() {
         return date;
+    }
+
+    public void setParticipantNumber(int participantNumber) {
+        this.participantNumber = participantNumber;
     }
 }

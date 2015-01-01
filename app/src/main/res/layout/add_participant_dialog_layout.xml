@@ -26,42 +26,6 @@
     <include layout="@layout/horizontal_separator" />
 
     <TextView
-        android:text="@string/budget"
-        android:textSize="17sp"
-        android:gravity="center"
-        android:layout_margin="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/budgetEditView"
-            android:inputType="number"
-            android:background="@null"
-            android:padding="5dp"
-            android:gravity="center"
-            android:hint="@string/budget_hint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/deviseView"
-            android:textSize="17sp"
-            android:padding="5dp"
-            android:text="@string/euro"
-            android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <include layout="@layout/horizontal_separator" />
-
-    <TextView
         android:text="@string/phone_number"
         android:textSize="17sp"
         android:gravity="center"

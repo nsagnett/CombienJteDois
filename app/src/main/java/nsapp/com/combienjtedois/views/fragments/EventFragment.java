@@ -57,7 +57,7 @@ public class EventFragment extends AbstractFragment {
 
         while (c.moveToNext()) {
             String consignee = c.getString(c.getColumnIndex(DBManager.CONSIGNEE_KEY));
-            String participantNumber = c.getString(c.getColumnIndex(DBManager.PARTICIPANT_NUMBER_KEY));
+            int participantNumber = c.getInt(c.getColumnIndex(DBManager.PARTICIPANT_NUMBER_KEY));
             String present = c.getString(c.getColumnIndex(DBManager.SUBJECT_KEY));
             String value = c.getString(c.getColumnIndex(DBManager.VALUE_KEY));
             String date = c.getString(c.getColumnIndex(DBManager.DATE_KEY));
