@@ -16,7 +16,7 @@ import nsapp.com.combienjtedois.model.Utils;
 public class LoanObjectAdapter extends BaseAdapter {
 
     private final Context context;
-    private final ArrayList<LoanObject> loanObjects = new ArrayList<LoanObject>();
+    private final ArrayList<LoanObject> loanObjects = new ArrayList<>();
 
     public LoanObjectAdapter(Context context, ArrayList<LoanObject> loanObjects) {
         this.context = context;

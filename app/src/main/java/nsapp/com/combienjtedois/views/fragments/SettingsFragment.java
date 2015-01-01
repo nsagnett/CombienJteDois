@@ -49,7 +49,7 @@ public class SettingsFragment extends Fragment implements CompoundButton.OnCheck
         presentAlertCheckbox.setOnCheckedChangeListener(this);
 
         Spinner frequencySpinner = (Spinner) view.findViewById(R.id.notificationFrequencySpinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(launchActivity, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.frequencyArray));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(launchActivity, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.frequencyArray));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         frequencySpinner.setAdapter(adapter);
         frequencySpinner.setSelection(prefs.getInt(Preferences.FREQUENCY_NOTIFICATION_KEY, 0));

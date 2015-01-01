@@ -16,7 +16,7 @@ import nsapp.com.combienjtedois.model.Participant;
 public class ParticipantListAdapter extends BaseAdapter {
 
     private final Context context;
-    private final ArrayList<Participant> participants = new ArrayList<Participant>();
+    private final ArrayList<Participant> participants = new ArrayList<>();
 
     private final boolean isEditingView;
 

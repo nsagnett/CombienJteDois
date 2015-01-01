@@ -166,7 +166,7 @@ public class PersonListForMoneyFragment extends AbstractFragment {
 
     private void notifyChanges() {
         Cursor c = Utils.dbManager.fetchAllPersons();
-        personArrayList = new ArrayList<Person>();
+        personArrayList = new ArrayList<>();
 
         while (c.moveToNext()) {
             String name = c.getString(c.getColumnIndex(DBManager.NAME_KEY));

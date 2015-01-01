@@ -27,7 +27,7 @@ import static android.os.Build.VERSION_CODES.HONEYCOMB;
 
 public class EventFragment extends AbstractFragment {
 
-    private ArrayList<Event> presentsArray = new ArrayList<Event>();
+    private ArrayList<Event> presentsArray = new ArrayList<>();
 
     public static EventFragment newInstance(int sectionNumber) {
         EventFragment fragment = new EventFragment();
@@ -53,7 +53,7 @@ public class EventFragment extends AbstractFragment {
 
     private void notifyChanges() {
         Cursor c = Utils.dbManager.fetchAllEvents();
-        presentsArray = new ArrayList<Event>();
+        presentsArray = new ArrayList<>();
 
         while (c.moveToNext()) {
             String consignee = c.getString(c.getColumnIndex(DBManager.CONSIGNEE_KEY));

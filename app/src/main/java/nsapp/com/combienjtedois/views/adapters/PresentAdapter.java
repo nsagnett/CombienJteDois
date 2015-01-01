@@ -16,7 +16,7 @@ import nsapp.com.combienjtedois.model.Utils;
 public class PresentAdapter extends BaseAdapter {
 
     private final Context context;
-    private final ArrayList<Event> eventArrayList = new ArrayList<Event>();
+    private final ArrayList<Event> eventArrayList = new ArrayList<>();
 
     public PresentAdapter(Context context, ArrayList<Event> eventArrayList) {
         this.context = context;

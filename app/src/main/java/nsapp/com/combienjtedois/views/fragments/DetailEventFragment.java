@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -33,7 +32,7 @@ public class DetailEventFragment extends AbstractFragment {
 
     private Event selectedEvent;
 
-    private ArrayList<Participant> participants = new ArrayList<Participant>();
+    private ArrayList<Participant> participants = new ArrayList<>();
 
     public static DetailEventFragment newInstance(Event event) {
         DetailEventFragment fragment = new DetailEventFragment();
@@ -73,7 +72,7 @@ public class DetailEventFragment extends AbstractFragment {
 
     private void notifyChanges() {
         Cursor c = Utils.dbManager.fetchAllParticipants(selectedEvent.getIdEvent());
-        participants = new ArrayList<Participant>();
+        participants = new ArrayList<>();
 
         while (c.moveToNext()) {
             String name = c.getString(c.getColumnIndex(DBManager.NAME_KEY));

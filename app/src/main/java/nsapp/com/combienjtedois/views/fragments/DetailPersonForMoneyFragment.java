@@ -161,7 +161,7 @@ public class DetailPersonForMoneyFragment extends AbstractFragment {
     private void notifyChanges() {
         int idPerson = selectedPerson.getId();
         Cursor c = Utils.dbManager.fetchAllDebt(idPerson);
-        debtArrayList = new ArrayList<Debt>();
+        debtArrayList = new ArrayList<>();
 
         while (c.moveToNext()) {
             String reason = c.getString(c.getColumnIndex(DBManager.REASON_KEY));

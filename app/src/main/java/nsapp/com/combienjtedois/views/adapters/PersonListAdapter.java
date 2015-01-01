@@ -17,7 +17,7 @@ import nsapp.com.combienjtedois.model.Utils;
 public class PersonListAdapter extends BaseAdapter {
 
     private final Context context;
-    private final ArrayList<Person> personList = new ArrayList<Person>();
+    private final ArrayList<Person> personList = new ArrayList<>();
 
     private final boolean isEditingView;
 

@@ -20,7 +20,7 @@ public class CustomNavigationAdapter extends BaseAdapter {
 
     public CustomNavigationAdapter(Context context, String[] items) {
         this.context = context;
-        this.items = new ArrayList<String>(Arrays.asList(items));
+        this.items = new ArrayList<>(Arrays.asList(items));
     }
 
     @Override

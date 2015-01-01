@@ -17,7 +17,7 @@ import nsapp.com.combienjtedois.model.Utils;
 public class DebtListAdapter extends BaseAdapter {
 
     private final Context context;
-    private final ArrayList<Debt> debtArrayList = new ArrayList<Debt>();
+    private final ArrayList<Debt> debtArrayList = new ArrayList<>();
     private final boolean isEditingView;
 
     public DebtListAdapter(Context context, ArrayList<Debt> debtArrayList, boolean isEditingView) {

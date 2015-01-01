@@ -27,7 +27,7 @@ import nsapp.com.combienjtedois.views.adapters.LoanObjectAdapter;
 
 public class LoanObjectsFragment extends AbstractFragment {
 
-    private ArrayList<LoanObject> loanObjects = new ArrayList<LoanObject>();
+    private ArrayList<LoanObject> loanObjects = new ArrayList<>();
 
     public static LoanObjectsFragment newInstance(int sectionNumber) {
         LoanObjectsFragment fragment = new LoanObjectsFragment();
@@ -64,7 +64,7 @@ public class LoanObjectsFragment extends AbstractFragment {
         final EditText descriptionView = (EditText) alert.findViewById(R.id.objectDescriptionView);
         final TextView validateView = (TextView) alert.findViewById(R.id.neutralTextView);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(launchActivity, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.objectsArray));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(launchActivity, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.objectsArray));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categories.setAdapter(adapter);
 
@@ -113,7 +113,7 @@ public class LoanObjectsFragment extends AbstractFragment {
 
     private void notifyChanges() {
         Cursor c = Utils.dbManager.fetchAllObjects();
-        loanObjects = new ArrayList<LoanObject>();
+        loanObjects = new ArrayList<>();
 
         while (c.moveToNext()) {
             String name = c.getString(c.getColumnIndex(DBManager.NAME_KEY));

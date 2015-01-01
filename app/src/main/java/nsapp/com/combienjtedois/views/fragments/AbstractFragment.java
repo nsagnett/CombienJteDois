@@ -34,8 +34,8 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
 
     LaunchActivity launchActivity;
 
-    ArrayList<Person> personArrayList = new ArrayList<Person>();
-    ArrayList<Debt> debtArrayList = new ArrayList<Debt>();
+    ArrayList<Person> personArrayList = new ArrayList<>();
+    ArrayList<Debt> debtArrayList = new ArrayList<>();
 
     ListView listView;
     TextView footerView;
