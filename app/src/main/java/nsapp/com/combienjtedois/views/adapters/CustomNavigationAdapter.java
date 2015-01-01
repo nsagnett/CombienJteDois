@@ -54,7 +54,7 @@ public class CustomNavigationAdapter extends BaseAdapter {
                 ((ImageView) convertView.findViewById(R.id.navigationItemImage)).setImageResource(R.drawable.objects);
                 break;
             case 2:
-                ((ImageView) convertView.findViewById(R.id.navigationItemImage)).setImageResource(R.drawable.presents);
+                ((ImageView) convertView.findViewById(R.id.navigationItemImage)).setImageResource(R.drawable.event);
                 break;
             case 3:
                 ((ImageView) convertView.findViewById(R.id.navigationItemImage)).setImageResource(R.drawable.donation);

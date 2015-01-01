@@ -10,27 +10,27 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.model.Present;
+import nsapp.com.combienjtedois.model.Event;
 import nsapp.com.combienjtedois.model.Utils;
 
 public class PresentAdapter extends BaseAdapter {
 
     private final Context context;
-    private final ArrayList<Present> presentArrayList = new ArrayList<Present>();
+    private final ArrayList<Event> eventArrayList = new ArrayList<Event>();
 
-    public PresentAdapter(Context context, ArrayList<Present> presentArrayList) {
+    public PresentAdapter(Context context, ArrayList<Event> eventArrayList) {
         this.context = context;
-        this.presentArrayList.addAll(presentArrayList);
+        this.eventArrayList.addAll(eventArrayList);
     }
 
     @Override
     public int getCount() {
-        return presentArrayList.size();
+        return eventArrayList.size();
     }
 
     @Override
-    public Present getItem(int position) {
-        return presentArrayList.get(position);
+    public Event getItem(int position) {
+        return eventArrayList.get(position);
     }
 
     @Override
@@ -46,19 +46,19 @@ public class PresentAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.present_holder, null);
         }
-        Present present = presentArrayList.get(position);
+        Event event = eventArrayList.get(position);
 
-        ((TextView) convertView.findViewById(R.id.nameView)).setText(String.format(context.getString(R.string.consignee_format), present.getConsignee()));
-        ((TextView) convertView.findViewById(R.id.presentView)).setText(String.format(context.getString(R.string.present_format), present.getPresent()));
-        ((TextView) convertView.findViewById(R.id.participantNumberView)).setText(String.format(context.getString(R.string.participant_number_format), present.getParticipantNumber()));
-        ((TextView) convertView.findViewById(R.id.valueView)).setText(String.format(context.getString(R.string.value_format), present.getValue() + context.getString(R.string.euro)));
+        ((TextView) convertView.findViewById(R.id.nameView)).setText(String.format(context.getString(R.string.consignee_format), event.getConsignee()));
+        ((TextView) convertView.findViewById(R.id.presentView)).setText(String.format(context.getString(R.string.event_format), event.getSubject()));
+        ((TextView) convertView.findViewById(R.id.participantNumberView)).setText(String.format(context.getString(R.string.participant_number_format), event.getParticipantNumber()));
+        ((TextView) convertView.findViewById(R.id.valueView)).setText(String.format(context.getString(R.string.value_format), event.getValue() + context.getString(R.string.euro)));
 
-        long time = Utils.getTimeBeforeEvent(present.getDate());
+        long time = Utils.getTimeBeforeEvent(event.getDate());
 
         if (time <= 0) {
             ((TextView) convertView.findViewById(R.id.subTitleView)).setText(context.getString(R.string.finish));
         } else {
-            ((TextView) convertView.findViewById(R.id.subTitleView)).setText(String.format(context.getString(R.string.event_date_format), present.getDate(), Utils.convertLifeTimeFromMillis(context, Utils.getTimeBeforeEvent(present.getDate()))));
+            ((TextView) convertView.findViewById(R.id.subTitleView)).setText(String.format(context.getString(R.string.event_date_format), event.getDate(), Utils.convertLifeTimeFromMillis(context, Utils.getTimeBeforeEvent(event.getDate()))));
         }
 
         return convertView;

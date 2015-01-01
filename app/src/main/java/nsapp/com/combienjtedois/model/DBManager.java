@@ -26,14 +26,14 @@ public class DBManager {
     public static final String NAME_OBJECT_KEY = "nameObject";
     public static final String TYPE_OBJECT_KEY = "type";
 
-    //PRESENT
+    //EVENT
     public static final String CONSIGNEE_KEY = "consignee";
     public static final String PARTICIPANT_NUMBER_KEY = "participantNumber";
-    public static final String PRESENT_KEY = "present";
+    public static final String SUBJECT_KEY = "subject";
     public static final String VALUE_KEY = "value";
 
     //PARTICIPANT
-    private static final String ID_PRESENT_PARTICIPANT_KEY = "idFKPresent";
+    private static final String ID_EVENT_PARTICIPANT_KEY = "idFKEvent";
     public static final String BUDGET_KEY = "budget";
     public static final String PAID_KEY = "paid";
 
@@ -48,7 +48,7 @@ public class DBManager {
     private static final String DATABASE_TABLE_PERSON = "person";
     private static final String DATABASE_TABLE_DEBT = "debt";
     private static final String DATABASE_TABLE_OBJECT = "loanObject";
-    private static final String DATABASE_TABLE_PRESENT = "presents";
+    private static final String DATABASE_TABLE_EVENT = "event";
     private static final String DATABASE_TABLE_PARTICIPANT = "participant";
 
     private static final String CREATE_TABLE_PERSON_QUERY = "create table person (id integer primary key autoincrement, "
@@ -71,20 +71,20 @@ public class DBManager {
             + "type text not null, "
             + "date text) ";
 
-    private static final String CREATE_TABLE_PRESENT_QUERY = "create table presents (id integer primary key autoincrement, "
+    private static final String CREATE_TABLE_EVENT_QUERY = "create table event (id integer primary key autoincrement, "
             + "consignee text not null, "
             + "participantNumber integer, "
-            + "present text not null, "
+            + "subject text not null, "
             + "value text not null, "
             + "date text) ";
 
     private static final String CREATE_TABLE_PARTICIPANT_QUERY = "create table participant (id integer primary key autoincrement, "
-            + "idFKPresent integer not null, "
+            + "idFKEvent integer not null, "
             + "name text not null, "
             + "budget text not null, "
             + "paid integer not null, "
             + "phoneNumber text, "
-            + "foreign key(idFKPresent) references presents(id))";
+            + "foreign key(idFKEvent) references event(id))";
 
     private SQLiteDatabase sqLiteDatabase;
     private final Context context;
@@ -100,7 +100,7 @@ public class DBManager {
             db.execSQL(CREATE_TABLE_PERSON_QUERY);
             db.execSQL(CREATE_TABLE_DEBT_QUERY);
             db.execSQL(CREATE_TABLE_LOAN_OBJECT_QUERY);
-            db.execSQL(CREATE_TABLE_PRESENT_QUERY);
+            db.execSQL(CREATE_TABLE_EVENT_QUERY);
             db.execSQL(CREATE_TABLE_PARTICIPANT_QUERY);
         }
 
@@ -109,7 +109,7 @@ public class DBManager {
             db.execSQL("DROP TABLE IF EXISTS person");
             db.execSQL("DROP TABLE IF EXISTS debt");
             db.execSQL("DROP TABLE IF EXISTS loanObject");
-            db.execSQL("DROP TABLE IF EXISTS presents");
+            db.execSQL("DROP TABLE IF EXISTS event");
             db.execSQL("DROP TABLE IF EXISTS participant");
             onCreate(db);
         }
@@ -318,42 +318,42 @@ public class DBManager {
 
     /**
      * *************
-     * PRESENT QUERIES
+     * EVENT QUERIES
      * **************
      */
-    public void createPresent(String consigneeName, String present, String value, String date) {
+    public void createEvent(String consigneeName, String subject, String value, String date) {
         ContentValues initialValues = new ContentValues();
         consigneeName = Utils.camelCase(consigneeName);
-        present = Utils.camelCase(present);
+        subject = Utils.camelCase(subject);
 
         initialValues.put(CONSIGNEE_KEY, consigneeName);
         initialValues.put(PARTICIPANT_NUMBER_KEY, "0");
-        initialValues.put(PRESENT_KEY, present);
+        initialValues.put(SUBJECT_KEY, subject);
         initialValues.put(VALUE_KEY, value);
         initialValues.put(DATE_KEY, date);
 
-        Toast.makeText(context, context.getString(R.string.toast_add_present), Toast.LENGTH_SHORT).show();
-        sqLiteDatabase.insert(DATABASE_TABLE_PRESENT, null, initialValues);
+        Toast.makeText(context, context.getString(R.string.toast_add_event), Toast.LENGTH_SHORT).show();
+        sqLiteDatabase.insert(DATABASE_TABLE_EVENT, null, initialValues);
     }
 
-    public void modifyPresent(int idPresent, String present, String personName, String value) {
+    public void modifyEvent(int idEvent, String subject, String personName, String value) {
         ContentValues initialValues = new ContentValues();
-        initialValues.put(PRESENT_KEY, Utils.camelCase(present));
+        initialValues.put(SUBJECT_KEY, Utils.camelCase(subject));
         initialValues.put(CONSIGNEE_KEY, Utils.camelCase(personName));
         initialValues.put(VALUE_KEY, value);
 
         Toast.makeText(context, context.getString(R.string.toast_modify), Toast.LENGTH_SHORT).show();
-        sqLiteDatabase.update(DATABASE_TABLE_PRESENT, initialValues, IDENTIFIER_KEY + "=" + idPresent, null);
+        sqLiteDatabase.update(DATABASE_TABLE_EVENT, initialValues, IDENTIFIER_KEY + "=" + idEvent, null);
     }
 
-    public Cursor fetchAllPresents() {
-        return sqLiteDatabase.query(DATABASE_TABLE_PRESENT, new String[]{
-                IDENTIFIER_KEY, CONSIGNEE_KEY, PARTICIPANT_NUMBER_KEY, PRESENT_KEY, VALUE_KEY, DATE_KEY}, null, null, null, null, null);
+    public Cursor fetchAllEvents() {
+        return sqLiteDatabase.query(DATABASE_TABLE_EVENT, new String[]{
+                IDENTIFIER_KEY, CONSIGNEE_KEY, PARTICIPANT_NUMBER_KEY, SUBJECT_KEY, VALUE_KEY, DATE_KEY}, null, null, null, null, null);
     }
 
-    public int fetchIdPresent(String present, String date) {
-        Cursor c = sqLiteDatabase.query(DATABASE_TABLE_PRESENT, new String[]{
-                IDENTIFIER_KEY, CONSIGNEE_KEY, PARTICIPANT_NUMBER_KEY, PRESENT_KEY, VALUE_KEY, DATE_KEY}, PRESENT_KEY + "='" + present + "'AND " +
+    public int fetchIdEvent(String subject, String date) {
+        Cursor c = sqLiteDatabase.query(DATABASE_TABLE_EVENT, new String[]{
+                IDENTIFIER_KEY, CONSIGNEE_KEY, PARTICIPANT_NUMBER_KEY, SUBJECT_KEY, VALUE_KEY, DATE_KEY}, SUBJECT_KEY + "='" + subject + "'AND " +
                 DATE_KEY + "='" + date + "'", null, null, null, null);
 
         if (c != null && c.moveToFirst()) {
@@ -362,17 +362,17 @@ public class DBManager {
         return 0;
     }
 
-    public void updateParticipantNumber(int idPresent, int participantNumber) {
+    public void updateParticipantNumber(int idEvent, int participantNumber) {
         ContentValues args = new ContentValues();
         args.put(PARTICIPANT_NUMBER_KEY, participantNumber);
 
-        sqLiteDatabase.update(DATABASE_TABLE_PRESENT, args, IDENTIFIER_KEY + "="
-                + idPresent, null);
+        sqLiteDatabase.update(DATABASE_TABLE_EVENT, args, IDENTIFIER_KEY + "="
+                + idEvent, null);
     }
 
-    public void deletePresent(int idPresent) {
-        Toast.makeText(context, context.getString(R.string.toast_delete_present), Toast.LENGTH_SHORT).show();
-        sqLiteDatabase.delete(DATABASE_TABLE_PRESENT, IDENTIFIER_KEY + "=" + idPresent, null);
+    public void deleteEvent(int idEvent) {
+        Toast.makeText(context, context.getString(R.string.toast_delete_event), Toast.LENGTH_SHORT).show();
+        sqLiteDatabase.delete(DATABASE_TABLE_EVENT, IDENTIFIER_KEY + "=" + idEvent, null);
     }
 
     /**
@@ -385,7 +385,7 @@ public class DBManager {
         name = Utils.camelCase(name);
 
         if (fetchIdParticipant(idPresent, name) == 0) {
-            initialValues.put(ID_PRESENT_PARTICIPANT_KEY, idPresent);
+            initialValues.put(ID_EVENT_PARTICIPANT_KEY, idPresent);
             initialValues.put(NAME_KEY, name);
             initialValues.put(PHONE_NUMBER_KEY, phoneNumber);
             initialValues.put(BUDGET_KEY, budget);
@@ -400,12 +400,12 @@ public class DBManager {
 
     public Cursor fetchAllParticipants(int idPresent) {
         return sqLiteDatabase.query(DATABASE_TABLE_PARTICIPANT, new String[]{
-                IDENTIFIER_KEY, ID_PRESENT_PARTICIPANT_KEY, NAME_KEY, PHONE_NUMBER_KEY, BUDGET_KEY, PAID_KEY}, ID_PRESENT_PARTICIPANT_KEY + "=" + idPresent, null, null, null, null);
+                IDENTIFIER_KEY, ID_EVENT_PARTICIPANT_KEY, NAME_KEY, PHONE_NUMBER_KEY, BUDGET_KEY, PAID_KEY}, ID_EVENT_PARTICIPANT_KEY + "=" + idPresent, null, null, null, null);
     }
 
     public int fetchIdParticipant(int idPresent, String participantName) {
         Cursor c = sqLiteDatabase.query(DATABASE_TABLE_PARTICIPANT, new String[]{
-                IDENTIFIER_KEY, ID_PRESENT_PARTICIPANT_KEY, NAME_KEY, PHONE_NUMBER_KEY, BUDGET_KEY, PAID_KEY}, ID_PRESENT_PARTICIPANT_KEY + "='" + idPresent + "' AND " +
+                IDENTIFIER_KEY, ID_EVENT_PARTICIPANT_KEY, NAME_KEY, PHONE_NUMBER_KEY, BUDGET_KEY, PAID_KEY}, ID_EVENT_PARTICIPANT_KEY + "='" + idPresent + "' AND " +
                 NAME_KEY + "='" + participantName + "'", null, null, null, null);
 
         if (c != null && c.moveToFirst()) {

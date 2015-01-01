@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.DBManager;
-import nsapp.com.combienjtedois.model.Present;
+import nsapp.com.combienjtedois.model.Event;
 import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.ViewCreator;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
@@ -25,12 +25,12 @@ import nsapp.com.combienjtedois.views.adapters.PresentAdapter;
 
 import static android.os.Build.VERSION_CODES.HONEYCOMB;
 
-public class PresentFragment extends AbstractFragment {
+public class EventFragment extends AbstractFragment {
 
-    private ArrayList<Present> presentsArray = new ArrayList<Present>();
+    private ArrayList<Event> presentsArray = new ArrayList<Event>();
 
-    public static PresentFragment newInstance(int sectionNumber) {
-        PresentFragment fragment = new PresentFragment();
+    public static EventFragment newInstance(int sectionNumber) {
+        EventFragment fragment = new EventFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
@@ -52,18 +52,18 @@ public class PresentFragment extends AbstractFragment {
     }
 
     private void notifyChanges() {
-        Cursor c = Utils.dbManager.fetchAllPresents();
-        presentsArray = new ArrayList<Present>();
+        Cursor c = Utils.dbManager.fetchAllEvents();
+        presentsArray = new ArrayList<Event>();
 
         while (c.moveToNext()) {
             String consignee = c.getString(c.getColumnIndex(DBManager.CONSIGNEE_KEY));
             String participantNumber = c.getString(c.getColumnIndex(DBManager.PARTICIPANT_NUMBER_KEY));
-            String present = c.getString(c.getColumnIndex(DBManager.PRESENT_KEY));
+            String present = c.getString(c.getColumnIndex(DBManager.SUBJECT_KEY));
             String value = c.getString(c.getColumnIndex(DBManager.VALUE_KEY));
             String date = c.getString(c.getColumnIndex(DBManager.DATE_KEY));
 
-            int id = Utils.dbManager.fetchIdPresent(present, date);
-            presentsArray.add(new Present(id, consignee, participantNumber, present, value, date));
+            int id = Utils.dbManager.fetchIdEvent(present, date);
+            presentsArray.add(new Event(id, consignee, participantNumber, present, value, date));
         }
 
         if (presentsArray.isEmpty()) {
@@ -113,14 +113,14 @@ public class PresentFragment extends AbstractFragment {
                 long beforeEventTime = Utils.getTimeBeforeEvent(date);
                 if (checkAddForm(namePersonView, presentView, valueView, beforeEventTime)) {
                     alert.dismiss();
-                    Utils.dbManager.createPresent(namePersonView.getText().toString(), presentView.getText().toString(), valueView.getText().toString(), date);
+                    Utils.dbManager.createEvent(namePersonView.getText().toString(), presentView.getText().toString(), valueView.getText().toString(), date);
                     notifyChanges();
                 }
             }
         });
     }
 
-    void modifyPresent(final Present present) {
+    void modifyPresent(final Event event) {
         final AlertDialog alert = ViewCreator.modifyCustomPresentDialogBox(launchActivity);
         alert.show();
         final EditText namePersonView = (EditText) alert.findViewById(R.id.namePersonEditView);
@@ -128,16 +128,16 @@ public class PresentFragment extends AbstractFragment {
         final EditText presentView = (EditText) alert.findViewById(R.id.presentView);
         final TextView validateView = (TextView) alert.findViewById(R.id.neutralTextView);
 
-        namePersonView.setText(present.getConsignee());
-        valueView.setText(present.getValue());
-        presentView.setText(present.getPresent());
+        namePersonView.setText(event.getConsignee());
+        valueView.setText(event.getValue());
+        presentView.setText(event.getSubject());
 
         validateView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (checkModifyForm(namePersonView, presentView, valueView)) {
                     alert.dismiss();
-                    Utils.dbManager.modifyPresent(present.getIdPresent(), namePersonView.getText().toString(), presentView.getText().toString(), valueView.getText().toString());
+                    Utils.dbManager.modifyEvent(event.getIdEvent(), namePersonView.getText().toString(), presentView.getText().toString(), valueView.getText().toString());
                     notifyChanges();
                 }
             }
@@ -153,7 +153,7 @@ public class PresentFragment extends AbstractFragment {
                 @Override
                 public void onClick(View v) {
                     alert.dismiss();
-                    Utils.dbManager.deletePresent(presentsArray.get(position).getIdPresent());
+                    Utils.dbManager.deleteEvent(presentsArray.get(position).getIdEvent());
                     notifyChanges();
                 }
             });
@@ -164,7 +164,7 @@ public class PresentFragment extends AbstractFragment {
                 }
             });
         } else {
-            Utils.dbManager.deletePresent(presentsArray.get(position).getIdPresent());
+            Utils.dbManager.deleteEvent(presentsArray.get(position).getIdEvent());
             notifyChanges();
         }
     }
@@ -174,7 +174,7 @@ public class PresentFragment extends AbstractFragment {
             ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.person_name)));
             return false;
         } else if (presentView.getText().length() == 0) {
-            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.present)));
+            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.subject)));
             return false;
         } else if (valueView.getText().length() == 0) {
             ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.value)));
@@ -191,7 +191,7 @@ public class PresentFragment extends AbstractFragment {
             ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.person_name)));
             return false;
         } else if (presentView.getText().length() == 0) {
-            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.present)));
+            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.subject)));
             return false;
         } else if (valueView.getText().length() == 0) {
             ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.value)));
@@ -203,11 +203,11 @@ public class PresentFragment extends AbstractFragment {
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (!presentsArray.isEmpty()) {
-            Present present = presentsArray.get(position);
+            Event event = presentsArray.get(position);
             if (isEditingView) {
                 modifyPresent(presentsArray.get(position));
             } else {
-                prepareOnReplaceTransaction(DetailPresentFragment.newInstance(present));
+                prepareOnReplaceTransaction(DetailEventFragment.newInstance(event));
             }
         }
     }

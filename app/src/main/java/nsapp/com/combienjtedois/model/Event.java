@@ -2,26 +2,26 @@ package nsapp.com.combienjtedois.model;
 
 import java.io.Serializable;
 
-public class Present implements Serializable{
+public class Event implements Serializable{
 
-    private final int idPresent;
+    private final int idEvent;
     private final String consignee;
     private final String participantNumber;
-    private final String present;
+    private final String subject;
     private final String value;
     private final String date;
 
-    public Present(int idPresent, String consignee, String participantNumber, String present, String value, String date) {
-        this.idPresent = idPresent;
+    public Event(int idEvent, String consignee, String participantNumber, String present, String value, String date) {
+        this.idEvent = idEvent;
         this.consignee = consignee;
         this.participantNumber = participantNumber;
-        this.present = present;
+        this.subject = present;
         this.value = value;
         this.date = date;
     }
 
-    public int getIdPresent() {
-        return idPresent;
+    public int getIdEvent() {
+        return idEvent;
     }
 
     public String getConsignee() {
@@ -32,8 +32,8 @@ public class Present implements Serializable{
         return participantNumber;
     }
 
-    public String getPresent() {
-        return present;
+    public String getSubject() {
+        return subject;
     }
 
     public String getValue() {

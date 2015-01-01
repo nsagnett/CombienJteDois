@@ -14,10 +14,10 @@ import nsapp.com.combienjtedois.model.DBManager;
 import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.ViewCreator;
 import nsapp.com.combienjtedois.views.fragments.AbstractFragment;
+import nsapp.com.combienjtedois.views.fragments.EventFragment;
 import nsapp.com.combienjtedois.views.fragments.LoanObjectsFragment;
 import nsapp.com.combienjtedois.views.fragments.NavigationDrawerFragment;
 import nsapp.com.combienjtedois.views.fragments.PersonListForMoneyFragment;
-import nsapp.com.combienjtedois.views.fragments.PresentFragment;
 import nsapp.com.combienjtedois.views.fragments.SettingsFragment;
 
 public class LaunchActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -58,7 +58,7 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
                 fragment = LoanObjectsFragment.newInstance(position);
                 break;
             case 2:
-                fragment = PresentFragment.newInstance(position);
+                fragment = EventFragment.newInstance(position);
                 break;
             case 3:
                 fragment = PersonListForMoneyFragment.newInstance(position);

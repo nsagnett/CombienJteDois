@@ -5,7 +5,7 @@
     <string name="app_name">CombienJteDois</string>
     <string name="title_section1">Argent</string>
     <string name="title_section2">Objets prêtés</string>
-    <string name="title_section3">Cadeaux</string>
+    <string name="title_section3">Evènements</string>
     <string name="title_section4">Faire un don</string>
     <string name="navigation_drawer_open">Ouvrir le menu</string>
     <string name="navigation_drawer_close">Fermer le menu</string>
@@ -82,34 +82,34 @@
     <string name="negative_loan">Emprunt</string>
     <string name="positive_loan">Prêt</string>
 
-    <!--Cadeaux-->
+    <!--Evenements-->
     <string name="consignee_format">Pour : %s</string>
-    <string name="present_format">Cadeau : %s</string>
+    <string name="event_format">Evènement : %s</string>
     <string name="participant_number_format">Participants : %s</string>
     <string name="value_format">Valeur : %s</string>
     <string name="value">Valeur</string>
     <string name="value_hint">Saisir la valeur</string>
-    <string name="present">Cadeau</string>
-    <string name="present_hint">Saisir le cadeau</string>
-    <string name="add_present">Ajouter un cadeau</string>
-    <string name="event_date">Date de l\'évènement</string>
+    <string name="subject">Sujet</string>
+    <string name="subject_hint">Saisir le sujet</string>
+    <string name="add_event">Ajouter un évènement</string>
+    <string name="event_date">Date</string>
     <string name="event_date_format">Pour le : %1$s ( Dans %2$s )</string>
-    <string name="toast_add_present">Cadeau ajouté !</string>
+    <string name="toast_add_event">Evènement ajouté !</string>
     <string name="toast_add_participant">Participant ajouté !</string>
     <string name="budget_hint">Saisir le budget</string>
     <string name="waiting">En attente</string>
-    <string name="modify_present">Modifier un cadeau</string>
+    <string name="modify_event">Modifier un évènement</string>
     <string name="check">Payé</string>
     <string name="update_payment">Mettre à jour</string>
     <string name="budget_format">Budget : %s</string>
     <string name="finish">Fini</string>
     <string name="add_participant">Ajouter un participant</string>
-    <string name="toast_delete_present">Cadeau supprimé !</string>
+    <string name="toast_delete_event">Evènement supprimé !</string>
     <string name="budget">Budget</string>
     <string name="toast_delete_participant">Participant supprimé !</string>
     <string name="total_budget_format">Budget total : %s €</string>
     <string name="impossible_date">Vous ne pouvez pas mettre une date avant demain !</string>
-    <string name="impossible_budget">Vous ne pouvez pas mettre un budget supérieur ou égal à la valeur du cadeau !</string>
+    <string name="impossible_budget">Vous ne pouvez pas mettre un budget supérieur ou égal à la valeur !</string>
     <string name="some_instants">&#160;quelques instants</string>
     <string name="settings">Préférences</string>
 

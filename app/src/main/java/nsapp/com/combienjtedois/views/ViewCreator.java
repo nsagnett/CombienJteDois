@@ -158,7 +158,7 @@ public class ViewCreator {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View view = LayoutInflater.from(context).inflate(R.layout.add_present_dialog_layout, null);
 
-        builder.setCustomTitle(getCustomTitleDialogBox(context, R.string.add_present, R.drawable.add));
+        builder.setCustomTitle(getCustomTitleDialogBox(context, R.string.add_event, R.drawable.add));
 
         ((TextView) view.findViewById(R.id.neutralTextView)).setText(R.string.validate);
 
@@ -170,7 +170,7 @@ public class ViewCreator {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View view = LayoutInflater.from(context).inflate(R.layout.modify_present_dialog_layout, null);
 
-        builder.setCustomTitle(getCustomTitleDialogBox(context, R.string.modify_present, R.drawable.edit));
+        builder.setCustomTitle(getCustomTitleDialogBox(context, R.string.modify_event, R.drawable.edit));
 
         ((TextView) view.findViewById(R.id.neutralTextView)).setText(R.string.validate);
 

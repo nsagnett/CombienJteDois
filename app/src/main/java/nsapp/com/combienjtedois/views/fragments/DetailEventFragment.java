@@ -23,22 +23,22 @@ import java.util.ArrayList;
 
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.DBManager;
+import nsapp.com.combienjtedois.model.Event;
 import nsapp.com.combienjtedois.model.Participant;
-import nsapp.com.combienjtedois.model.Present;
 import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.ViewCreator;
 import nsapp.com.combienjtedois.views.adapters.ParticipantListAdapter;
 
-public class DetailPresentFragment extends AbstractFragment {
+public class DetailEventFragment extends AbstractFragment {
 
-    private Present selectedPresent;
+    private Event selectedEvent;
 
     private ArrayList<Participant> participants = new ArrayList<Participant>();
 
-    public static DetailPresentFragment newInstance(Present present) {
-        DetailPresentFragment fragment = new DetailPresentFragment();
+    public static DetailEventFragment newInstance(Event event) {
+        DetailEventFragment fragment = new DetailEventFragment();
         Bundle args = new Bundle();
-        args.putSerializable(Utils.PRESENT_KEY, present);
+        args.putSerializable(Utils.PRESENT_KEY, event);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,11 +53,11 @@ public class DetailPresentFragment extends AbstractFragment {
 
         footerView = (TextView) inflater.inflate(R.layout.footer_listview, null, false);
 
-        selectedPresent = (Present) getArguments().getSerializable(Utils.PRESENT_KEY);
+        selectedEvent = (Event) getArguments().getSerializable(Utils.PRESENT_KEY);
         view.findViewById(R.id.headerLayout).setVisibility(View.VISIBLE);
-        ((TextView) view.findViewById(R.id.headerNameView)).setText(selectedPresent.getPresent());
-        ((ImageView) view.findViewById(R.id.headerProfileView)).setImageResource(R.drawable.presents);
-        ((TextView) view.findViewById(R.id.valueTextView)).setText(String.format(getString(R.string.value_format), selectedPresent.getValue() + getString(R.string.euro)));
+        ((TextView) view.findViewById(R.id.headerNameView)).setText(selectedEvent.getSubject());
+        ((ImageView) view.findViewById(R.id.headerProfileView)).setImageResource(R.drawable.event);
+        ((TextView) view.findViewById(R.id.valueTextView)).setText(String.format(getString(R.string.value_format), selectedEvent.getValue() + getString(R.string.euro)));
 
         view.findViewById(R.id.smsView).setVisibility(View.GONE);
 
@@ -67,12 +67,12 @@ public class DetailPresentFragment extends AbstractFragment {
     @Override
     public void onResume() {
         super.onResume();
-        launchActivity.updateActionBarTitle(String.format(getString(R.string.consignee_format), selectedPresent.getConsignee()));
+        launchActivity.updateActionBarTitle(String.format(getString(R.string.consignee_format), selectedEvent.getConsignee()));
         notifyChanges();
     }
 
     private void notifyChanges() {
-        Cursor c = Utils.dbManager.fetchAllParticipants(selectedPresent.getIdPresent());
+        Cursor c = Utils.dbManager.fetchAllParticipants(selectedEvent.getIdEvent());
         participants = new ArrayList<Participant>();
         double totalBudget = 0;
 
@@ -82,7 +82,7 @@ public class DetailPresentFragment extends AbstractFragment {
             String phoneNumber = c.getString(c.getColumnIndex(DBManager.PHONE_NUMBER_KEY));
             int paid = Integer.parseInt(c.getString(c.getColumnIndex(DBManager.PAID_KEY)));
 
-            int id = Utils.dbManager.fetchIdParticipant(selectedPresent.getIdPresent(), name);
+            int id = Utils.dbManager.fetchIdParticipant(selectedEvent.getIdEvent(), name);
             participants.add(new Participant(id, name, phoneNumber, budget, paid == 1));
             if (paid == 1) {
                 totalBudget += Double.parseDouble(budget);
@@ -185,8 +185,8 @@ public class DetailPresentFragment extends AbstractFragment {
             public void onClick(View v) {
                 if (checkPersonForm(namePersonView, budgetEditView)) {
                     alert.dismiss();
-                    Utils.dbManager.createParticipant(selectedPresent.getIdPresent(), namePersonView.getText().toString(), phoneNumberEditView.getText().toString(), budgetEditView.getText().toString());
-                    Utils.dbManager.updateParticipantNumber(selectedPresent.getIdPresent(), Integer.parseInt(selectedPresent.getParticipantNumber()) + 1);
+                    Utils.dbManager.createParticipant(selectedEvent.getIdEvent(), namePersonView.getText().toString(), phoneNumberEditView.getText().toString(), budgetEditView.getText().toString());
+                    Utils.dbManager.updateParticipantNumber(selectedEvent.getIdEvent(), Integer.parseInt(selectedEvent.getParticipantNumber()) + 1);
                     notifyChanges();
                 }
             }
@@ -203,7 +203,7 @@ public class DetailPresentFragment extends AbstractFragment {
                 public void onClick(View v) {
                     alert.dismiss();
                     Utils.dbManager.deleteParticipant(participants.get(position).getId());
-                    Utils.dbManager.updateParticipantNumber(selectedPresent.getIdPresent(), Integer.parseInt(selectedPresent.getParticipantNumber()) - 1);
+                    Utils.dbManager.updateParticipantNumber(selectedEvent.getIdEvent(), Integer.parseInt(selectedEvent.getParticipantNumber()) - 1);
                     notifyChanges();
                 }
             });
@@ -215,7 +215,7 @@ public class DetailPresentFragment extends AbstractFragment {
             });
         } else {
             Utils.dbManager.deleteParticipant(participants.get(position).getId());
-            Utils.dbManager.updateParticipantNumber(selectedPresent.getIdPresent(), Integer.parseInt(selectedPresent.getParticipantNumber()) - 1);
+            Utils.dbManager.updateParticipantNumber(selectedEvent.getIdEvent(), Integer.parseInt(selectedEvent.getParticipantNumber()) - 1);
             notifyChanges();
         }
     }
@@ -227,7 +227,7 @@ public class DetailPresentFragment extends AbstractFragment {
         } else if (budgetEditView.getText().length() == 0) {
             ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.budget)));
             return false;
-        } else if (Integer.parseInt(budgetEditView.getText().toString()) >= Integer.parseInt(selectedPresent.getValue())) {
+        } else if (Integer.parseInt(budgetEditView.getText().toString()) >= Integer.parseInt(selectedEvent.getValue())) {
             Toast.makeText(launchActivity, getString(R.string.impossible_budget), Toast.LENGTH_SHORT).show();
             return false;
         }
