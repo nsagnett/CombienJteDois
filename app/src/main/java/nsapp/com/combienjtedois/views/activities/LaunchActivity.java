@@ -14,6 +14,7 @@ import nsapp.com.combienjtedois.model.DBManager;
 import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.ViewCreator;
 import nsapp.com.combienjtedois.views.fragments.AbstractFragment;
+import nsapp.com.combienjtedois.views.fragments.DonationsFragment;
 import nsapp.com.combienjtedois.views.fragments.EventFragment;
 import nsapp.com.combienjtedois.views.fragments.LoanObjectsFragment;
 import nsapp.com.combienjtedois.views.fragments.NavigationDrawerFragment;
@@ -28,6 +29,11 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
 
     private boolean isCreatedView = false;
     private boolean listEmpty;
+
+    private static final String ARG_SECTION_NUMBER = "section_number";
+
+    private static final String PAYPAL_USER = "nsagnett@gmail.com";
+    private static final String PAYPAL_CURRENCY_CODE = "EUR";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +67,7 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
                 fragment = EventFragment.newInstance(position);
                 break;
             case 3:
-                fragment = PersonListForMoneyFragment.newInstance(position);
+                fragment = DonationsFragment.newInstance(position, PAYPAL_USER, PAYPAL_CURRENCY_CODE, getString(R.string.donation_paypal));
                 break;
             default:
                 break;
@@ -115,7 +121,8 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!navigationDrawerFragment.isDrawerOpen()) {
-            if (getCurrentFragment() instanceof SettingsFragment) {
+            if (getCurrentFragment() instanceof SettingsFragment ||
+                    getCurrentFragment() instanceof DonationsFragment) {
                 return true;
             } else if (getCurrentFragment() instanceof LoanObjectsFragment
                     || listEmpty) {

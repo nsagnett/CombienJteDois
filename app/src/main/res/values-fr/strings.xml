@@ -123,4 +123,14 @@
     <string name="preferences_present_description">Notification sur les participants en attente</string>
     <string name="preferences_frequency">Fréquence des notifications</string>
 
+    <string name="donations_button_close">Fermer</string>
+    <string name="donations__description">Cette application vous rend service ?\nParticiper à son développement en effectuant un don !</string>
+    <string name="donations__paypal">PayPal</string>
+    <string name="donations__paypal_description">Vous pouvez faire un don du montant  désiré en cliquant sur ce bouton !</string>
+    <string name="donations__thanks_dialog_title">Merci !</string>
+    <string name="donations__thanks_dialog">Merci beaucoup pour votre don ! </string>
+    <string name="donation_alert_dialog_title">Une erreur est survenue</string>
+    <string name="donation_alert_dialog_no_browser">Aucun navigateur web n\'a été trouvé pour ouvrir le site web !</string>
+    <string name="donation_paypal">Faites un don !</string>
+
 </resources>

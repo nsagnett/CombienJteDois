@@ -29,7 +29,7 @@ public class ViewCreator {
         titleView.setText(resTitleID);
         titleView.setTextSize(17);
         titleView.setTextColor(context.getResources().getColor(android.R.color.white));
-        titleView.setBackgroundResource(R.color.light_grey);
+        titleView.setBackgroundResource(R.color.light_blue);
         titleView.setCompoundDrawablesWithIntrinsicBounds(resDrawableTitleID, 0, 0, 0);
 
         return titleView;
