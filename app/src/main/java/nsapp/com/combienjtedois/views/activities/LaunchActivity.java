@@ -30,9 +30,6 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
     private boolean isCreatedView = false;
     private boolean listEmpty;
 
-    private static final String PAYPAL_USER = "nsagnett@gmail.com";
-    private static final String PAYPAL_CURRENCY_CODE = "EUR";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +62,7 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
                 fragment = EventFragment.newInstance(position);
                 break;
             case 3:
-                fragment = DonationsFragment.newInstance(position, PAYPAL_USER, PAYPAL_CURRENCY_CODE, getString(R.string.donation_paypal));
+                fragment = DonationsFragment.newInstance(position);
                 break;
             default:
                 break;

@@ -200,6 +200,7 @@ public class DetailPersonForMoneyFragment extends AbstractFragment {
 
         if (total > 0) {
             headerCountView.setTextColor(getResources().getColor(R.color.green));
+            smsView.setVisibility(View.VISIBLE);
             smsView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

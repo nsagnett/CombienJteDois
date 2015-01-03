@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/typeDebtView"
-        android:textSize="17sp"
+        android:textStyle="bold"
         android:gravity="center"
         android:layout_margin="20dp"
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
 
     <TextView
         android:id="@+id/reasonTextView"
-        android:textSize="17sp"
+        android:textStyle="bold"
         android:gravity="center"
         android:layout_margin="20dp"
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
 
     <TextView
         android:id="@+id/countTextView"
-        android:textSize="17sp"
+        android:textStyle="bold"
         android:gravity="center"
         android:layout_margin="20dp"
         android:layout_width="match_parent"
@@ -38,7 +38,7 @@
 
         <TextView
             android:id="@+id/addTextView"
-            android:textSize="17sp"
+            android:textStyle="bold"
             android:gravity="center"
             android:padding="15dp"
             android:background="@drawable/custom_button"
@@ -49,7 +49,7 @@
 
         <TextView
             android:id="@+id/subtractTextView"
-            android:textSize="17sp"
+            android:textStyle="bold"
             android:gravity="center"
             android:padding="15dp"
             android:text="@string/reduce"

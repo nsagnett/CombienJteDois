@@ -79,8 +79,8 @@
     <string name="description_hint">Saisir la description</string>
     <string name="category_object_with_points">Catégorie de l\'objet :&#160;</string>
     <string name="category_object">Catégorie</string>
-    <string name="negative_loan">Emprunt</string>
-    <string name="positive_loan">Prêt</string>
+    <string name="loan">Prêt</string>
+    <string name="lending">Emprunt</string>
 
     <!--Evenements-->
     <string name="consignee_format">Pour : %s</string>
@@ -96,7 +96,6 @@
     <string name="event_date_format">Pour le : %1$s ( Dans %2$s )</string>
     <string name="toast_add_event">Evènement ajouté !</string>
     <string name="toast_add_participant">Participant ajouté !</string>
-    <string name="budget_hint">Saisir le budget</string>
     <string name="waiting">En attente</string>
     <string name="modify_event">Modifier un évènement</string>
     <string name="check">Payé</string>
@@ -105,11 +104,8 @@
     <string name="finish">Fini</string>
     <string name="add_participant">Ajouter un participant</string>
     <string name="toast_delete_event">Evènement supprimé !</string>
-    <string name="budget">Budget</string>
     <string name="toast_delete_participant">Participant supprimé !</string>
-    <string name="total_budget_format">Budget total : %s €</string>
     <string name="impossible_date">Vous ne pouvez pas mettre une date avant demain !</string>
-    <string name="impossible_budget">Vous ne pouvez pas mettre un budget supérieur ou égal à la valeur !</string>
     <string name="some_instants">&#160;quelques instants</string>
     <string name="settings">Préférences</string>
 
@@ -119,18 +115,16 @@
     <string name="preferences_money_description">Notification de l\'état des dettes</string>
     <string name="preferences_loan_alert">Notification prêt d\'objets</string>
     <string name="preferences_loan_description">Notification de l\'état des prêts d\'objets</string>
-    <string name="preferences_present_alert">Notification cadeau</string>
-    <string name="preferences_present_description">Notification sur les participants en attente</string>
     <string name="preferences_frequency">Fréquence des notifications</string>
 
     <string name="donations_button_close">Fermer</string>
     <string name="donations_description">Cette application vous rend service ?\nParticiper à son développement en effectuant un don !</string>
-    <string name="donations_paypal">PayPal</string>
     <string name="donations_paypal_description">Vous serez redirigé vers le site PayPal, n\'ayez crainte c\'est sécurisé ! :)</string>
-    <string name="donations_thanks_dialog_title">Merci !</string>
-    <string name="donations_thanks_dialog">Merci beaucoup pour votre don ! </string>
     <string name="donation_alert_dialog_title">Une erreur est survenue</string>
     <string name="donation_alert_dialog_no_browser">Aucun navigateur web n\'a été trouvé pour ouvrir le site web !</string>
     <string name="donation_paypal">Faites un don avec PayPal !</string>
+
+    <string name="notification_money_text_format">Créances : %1$s € Dettes : %2$s €</string>
+    <string name="notification_loan_text_format">Objet(s) échangé(s) : %s</string>
 
 </resources>

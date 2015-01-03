@@ -23,11 +23,5 @@
         <item>Jouets</item>
         <item>Autres objets</item>
     </string-array>
-    <string-array name="frequencyArray">
-        <item>Aucune</item>
-        <item>Quotidienne</item>
-        <item>Hebdomadaire</item>
-        <item>Mensuelle</item>
-    </string-array>
 
 </resources>

@@ -20,6 +20,7 @@ import java.util.Date;
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.DBManager;
 import nsapp.com.combienjtedois.model.LoanObject;
+import nsapp.com.combienjtedois.model.Preferences;
 import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.ViewCreator;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
@@ -114,6 +115,8 @@ public class LoanObjectsFragment extends AbstractFragment {
     private void notifyChanges() {
         Cursor c = Utils.dbManager.fetchAllObjects();
         loanObjects = new ArrayList<>();
+        int lendingObjectCount = 0;
+        int loanObjectCount = 0;
 
         while (c.moveToNext()) {
             String name = c.getString(c.getColumnIndex(DBManager.NAME_KEY));
@@ -122,10 +125,19 @@ public class LoanObjectsFragment extends AbstractFragment {
             String type = c.getString(c.getColumnIndex(DBManager.TYPE_OBJECT_KEY));
             String date = c.getString(c.getColumnIndex(DBManager.DATE_KEY));
 
+            if (type.equals(getString(R.string.lending))) {
+                lendingObjectCount++;
+            } else {
+                loanObjectCount++;
+            }
+
             int id = Utils.dbManager.fetchIdObject(name, date);
 
             loanObjects.add(new LoanObject(id, name, category, nameObject, type, date));
         }
+
+        preferences.edit().putInt(Preferences.COUNT_LENDING_OBJECTS, lendingObjectCount).apply();
+        preferences.edit().putInt(Preferences.COUNT_LOAN_OBJECTS, loanObjectCount).apply();
 
         if (loanObjects.isEmpty()) {
             isEditingView = false;

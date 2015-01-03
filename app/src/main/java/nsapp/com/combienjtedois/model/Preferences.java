@@ -2,9 +2,14 @@ package nsapp.com.combienjtedois.model;
 
 public class Preferences {
 
-    public static final String CONFIRM_DISMISS_KEY = "confirm_dismiss_key";
-    public static final String ENABLED_NOTIFICATION_MONEY_KEY = "enabledNotificationMoneyKey";
-    public static final String ENABLED_NOTIFICATION_LOAN_KEY = "enabledNotificationLoanKey";
-    public static final String ENABLED_NOTIFICATION_PRESENT_KEY = "enabledNotificationPresentKey";
-    public static final String FREQUENCY_NOTIFICATION_KEY = "frequencyNotificationKey";
+    public static final String CONFIRM_DISMISS = "confirm_dismiss_key";
+    public static final String ENABLED_NOTIFICATION_MONEY = "enabledNotificationMoneyKey";
+    public static final String ENABLED_NOTIFICATION_LOAN = "enabledNotificationLoanKey";
+
+    public static final String AMOUNT_CREDENCE_MONEY = "amountCredenceMoneyKey";
+    public static final String AMOUNT_DEBT_MONEY = "amountDebtMoneyKey";
+
+    public static final String COUNT_LOAN_OBJECTS = "countLoanObjectsKey";
+    public static final String COUNT_LENDING_OBJECTS = "countLendingObjectsKey";
+
 }

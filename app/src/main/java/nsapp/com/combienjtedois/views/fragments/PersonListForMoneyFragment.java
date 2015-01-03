@@ -20,6 +20,7 @@ import java.util.Date;
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.DBManager;
 import nsapp.com.combienjtedois.model.Person;
+import nsapp.com.combienjtedois.model.Preferences;
 import nsapp.com.combienjtedois.model.Utils;
 import nsapp.com.combienjtedois.views.ViewCreator;
 import nsapp.com.combienjtedois.views.adapters.PersonListAdapter;
@@ -167,6 +168,8 @@ public class PersonListForMoneyFragment extends AbstractFragment {
     private void notifyChanges() {
         Cursor c = Utils.dbManager.fetchAllPersons();
         personArrayList = new ArrayList<>();
+        float positiveTotal = 0.f;
+        float negativeTotal = 0.f;
 
         while (c.moveToNext()) {
             String name = c.getString(c.getColumnIndex(DBManager.NAME_KEY));
@@ -174,9 +177,19 @@ public class PersonListForMoneyFragment extends AbstractFragment {
             String date = c.getString(c.getColumnIndex(DBManager.DATE_KEY));
 
             int id = Utils.dbManager.fetchIdPerson(name);
-            String total = Utils.dbManager.getTotalCount(id);
-            personArrayList.add(new Person(id, name, total, phoneNumber, date));
+            String totalPerson = Utils.dbManager.getTotalCount(id);
+            personArrayList.add(new Person(id, name, totalPerson, phoneNumber, date));
+            if (Float.parseFloat(totalPerson) > 0) {
+                positiveTotal += Float.parseFloat(totalPerson);
+            } else {
+                negativeTotal += Float.parseFloat(totalPerson);
+            }
         }
+
+
+
+        preferences.edit().putFloat(Preferences.AMOUNT_CREDENCE_MONEY, positiveTotal).apply();
+        preferences.edit().putFloat(Preferences.AMOUNT_DEBT_MONEY, negativeTotal).apply();
 
         if (personArrayList.isEmpty()) {
             isEditingView = false;

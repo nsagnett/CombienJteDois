@@ -9,17 +9,14 @@ import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.Spinner;
 
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.Preferences;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
 
-public class SettingsFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, AdapterView.OnItemSelectedListener {
+public class SettingsFragment extends Fragment implements CompoundButton.OnCheckedChangeListener{
 
     private LaunchActivity launchActivity;
 
@@ -33,27 +30,17 @@ public class SettingsFragment extends Fragment implements CompoundButton.OnCheck
         prefs = PreferenceManager.getDefaultSharedPreferences(launchActivity);
 
         CheckBox confirmDismissCheckbox = (CheckBox) view.findViewById(R.id.confirmDismissCheckbox);
-        confirmDismissCheckbox.setChecked(prefs.getBoolean(Preferences.CONFIRM_DISMISS_KEY, true));
+        confirmDismissCheckbox.setChecked(prefs.getBoolean(Preferences.CONFIRM_DISMISS, true));
         confirmDismissCheckbox.setOnCheckedChangeListener(this);
 
         CheckBox moneyAlertCheckbox = (CheckBox) view.findViewById(R.id.moneyAlertCheckbox);
-        moneyAlertCheckbox.setChecked(prefs.getBoolean(Preferences.ENABLED_NOTIFICATION_MONEY_KEY, false));
+        moneyAlertCheckbox.setChecked(prefs.getBoolean(Preferences.ENABLED_NOTIFICATION_MONEY, false));
         moneyAlertCheckbox.setOnCheckedChangeListener(this);
 
         CheckBox loanAlertCheckbox = (CheckBox) view.findViewById(R.id.loanAlertCheckbox);
-        loanAlertCheckbox.setChecked(prefs.getBoolean(Preferences.ENABLED_NOTIFICATION_LOAN_KEY, false));
+        loanAlertCheckbox.setChecked(prefs.getBoolean(Preferences.ENABLED_NOTIFICATION_LOAN, false));
         loanAlertCheckbox.setOnCheckedChangeListener(this);
 
-        CheckBox presentAlertCheckbox = (CheckBox) view.findViewById(R.id.presentAlertCheckbox);
-        presentAlertCheckbox.setChecked(prefs.getBoolean(Preferences.ENABLED_NOTIFICATION_PRESENT_KEY, false));
-        presentAlertCheckbox.setOnCheckedChangeListener(this);
-
-        Spinner frequencySpinner = (Spinner) view.findViewById(R.id.notificationFrequencySpinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(launchActivity, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.frequencyArray));
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        frequencySpinner.setAdapter(adapter);
-        frequencySpinner.setSelection(prefs.getInt(Preferences.FREQUENCY_NOTIFICATION_KEY, 0));
-        frequencySpinner.setOnItemSelectedListener(this);
         return view;
     }
 
@@ -71,27 +58,14 @@ public class SettingsFragment extends Fragment implements CompoundButton.OnCheck
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         switch (buttonView.getId()) {
             case R.id.confirmDismissCheckbox:
-                prefs.edit().putBoolean(Preferences.CONFIRM_DISMISS_KEY, isChecked).apply();
+                prefs.edit().putBoolean(Preferences.CONFIRM_DISMISS, isChecked).apply();
                 break;
             case R.id.moneyAlertCheckbox:
-                prefs.edit().putBoolean(Preferences.ENABLED_NOTIFICATION_MONEY_KEY, isChecked).apply();
+                prefs.edit().putBoolean(Preferences.ENABLED_NOTIFICATION_MONEY, isChecked).apply();
                 break;
             case R.id.loanAlertCheckbox:
-                prefs.edit().putBoolean(Preferences.ENABLED_NOTIFICATION_LOAN_KEY, isChecked).apply();
-                break;
-            case R.id.presentAlertCheckbox:
-                prefs.edit().putBoolean(Preferences.ENABLED_NOTIFICATION_PRESENT_KEY, isChecked).apply();
+                prefs.edit().putBoolean(Preferences.ENABLED_NOTIFICATION_LOAN, isChecked).apply();
                 break;
         }
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        prefs.edit().putInt(Preferences.FREQUENCY_NOTIFICATION_KEY, position).apply();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        // Required implementation
     }
 }

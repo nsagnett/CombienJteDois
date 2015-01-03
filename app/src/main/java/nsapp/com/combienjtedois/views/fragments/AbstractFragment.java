@@ -42,7 +42,7 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
     TextView headerCountView;
     boolean isEditingView;
 
-    private SharedPreferences preferences;
+    SharedPreferences preferences;
     boolean confirmDismiss;
 
     Person selectedPerson;
@@ -90,7 +90,7 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
     }
 
     private void updatePreferences() {
-        confirmDismiss = preferences.getBoolean(Preferences.CONFIRM_DISMISS_KEY, true);
+        confirmDismiss = preferences.getBoolean(Preferences.CONFIRM_DISMISS, true);
     }
 
     public abstract void addItem(String importName, String importPhone);

@@ -19,28 +19,21 @@ import nsapp.com.combienjtedois.views.activities.LaunchActivity;
 
 public class DonationsFragment extends Fragment {
 
-    static final String ARG_SECTION_NUMBER = "section_number";
+    private static final String ARG_SECTION_NUMBER = "section_number";
 
-    public static final String ARG_PAYPAL_USER = "paypalUser";
-    public static final String ARG_PAYPAL_CURRENCY_CODE = "paypalCurrencyCode";
-    public static final String ARG_PAYPAL_ITEM_NAME = "mPaypalItemName";
+    private static final String PAYPAL_USER = "nsagnett@gmail.com";
+    private static final String PAYPAL_CURRENCY_CODE = "EUR";
 
-    protected String mPaypalUser = "";
-    protected String mPaypalCurrencyCode = "";
-    protected String mPaypalItemName = "";
+    private String mPaypalUser = "";
+    private String mPaypalCurrencyCode = "";
+    private String mPaypalItemName = "";
 
-    public static DonationsFragment newInstance(int sectionNumber,
-                                                String paypalUser,
-                                                String paypalCurrencyCode,
-                                                String paypalItemName) {
+    public static DonationsFragment newInstance(int sectionNumber) {
 
         DonationsFragment donationsFragment = new DonationsFragment();
         Bundle args = new Bundle();
 
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-        args.putString(ARG_PAYPAL_USER, paypalUser);
-        args.putString(ARG_PAYPAL_CURRENCY_CODE, paypalCurrencyCode);
-        args.putString(ARG_PAYPAL_ITEM_NAME, paypalItemName);
 
         donationsFragment.setArguments(args);
         return donationsFragment;
@@ -51,9 +44,9 @@ public class DonationsFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.donation_fragment, container, false);
 
-        mPaypalUser = getArguments().getString(ARG_PAYPAL_USER);
-        mPaypalCurrencyCode = getArguments().getString(ARG_PAYPAL_CURRENCY_CODE);
-        mPaypalItemName = getArguments().getString(ARG_PAYPAL_ITEM_NAME);
+        mPaypalUser = PAYPAL_USER;
+        mPaypalCurrencyCode = PAYPAL_CURRENCY_CODE;
+        mPaypalItemName = getString(R.string.donation_paypal);
 
         LaunchActivity launchActivity = (LaunchActivity) getActivity();
         launchActivity.updateActionBarTitle(getString(R.string.title_section4));
@@ -75,31 +68,7 @@ public class DonationsFragment extends Fragment {
                 getArguments().getInt(ARG_SECTION_NUMBER));
     }
 
-    /**
-     * Open dialog
-     *
-     * @param icon    int
-     * @param title   int
-     * @param message String
-     */
-    void openDialog(int icon, int title, String message) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-        dialog.setIcon(icon);
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        dialog.setCancelable(true);
-        dialog.setNeutralButton(R.string.donations_button_close,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                }
-        );
-        dialog.show();
-    }
-
-    public void donatePayPalOnClick() {
+    void donatePayPalOnClick() {
         Uri.Builder uriBuilder = new Uri.Builder();
         uriBuilder.scheme("https").authority("www.paypal.com").path("cgi-bin/webscr");
         uriBuilder.appendQueryParameter("cmd", "_donations");
@@ -117,8 +86,20 @@ public class DonationsFragment extends Fragment {
             Intent viewIntent = new Intent(Intent.ACTION_VIEW, payPalUri);
             startActivity(viewIntent);
         } catch (ActivityNotFoundException e) {
-            openDialog(android.R.drawable.ic_dialog_alert, R.string.donation_alert_dialog_title,
-                    getString(R.string.donation_alert_dialog_no_browser));
+            AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+            dialog.setIcon(android.R.drawable.ic_dialog_alert);
+            dialog.setTitle(R.string.donation_alert_dialog_title);
+            dialog.setMessage(getString(R.string.donation_alert_dialog_no_browser));
+            dialog.setCancelable(true);
+            dialog.setNeutralButton(R.string.donations_button_close,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }
+            );
+            dialog.show();
         }
     }
 }

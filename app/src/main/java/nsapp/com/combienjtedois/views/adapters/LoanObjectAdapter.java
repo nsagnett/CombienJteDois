@@ -55,7 +55,7 @@ public class LoanObjectAdapter extends BaseAdapter {
         TextView dateView = ((TextView) convertView.findViewById(R.id.subTitleView));
         dateView.setText(String.format(context.getString(R.string.add_date_format), loanObject.getDate()));
         dateView.setText(dateView.getText() + String.format(context.getString(R.string.lifetime_format), Utils.convertLifeTime(context, loanObject.getDate())));
-        if (loanObject.getType().equals(context.getString(R.string.negative_loan))) {
+        if (loanObject.getType().equals(context.getString(R.string.loan))) {
             convertView.findViewById(R.id.smsView).setVisibility(View.GONE);
         } else {
             convertView.findViewById(R.id.smsView).setOnClickListener(new View.OnClickListener() {
