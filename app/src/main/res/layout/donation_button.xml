@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:background="@android:color/white"
+    android:layout_height="wrap_content">
+
+    <include layout="@layout/horizontal_separator" />
+
+    <LinearLayout
+        android:id="@+id/paypal_donate_view"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/custom_button"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/vertical_separator" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:padding="30dp"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:drawableLeft="@drawable/donation"
+            android:drawableStart="@drawable/donation"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/donation_paypal" />
+
+        <include layout="@layout/vertical_separator" />
+
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_separator" />
+
+</LinearLayout>

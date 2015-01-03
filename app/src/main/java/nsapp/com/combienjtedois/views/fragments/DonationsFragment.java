@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.LinearLayout;
 
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
@@ -30,9 +30,9 @@ public class DonationsFragment extends Fragment {
     protected String mPaypalItemName = "";
 
     public static DonationsFragment newInstance(int sectionNumber,
-            String paypalUser,
-            String paypalCurrencyCode,
-            String paypalItemName) {
+                                                String paypalUser,
+                                                String paypalCurrencyCode,
+                                                String paypalItemName) {
 
         DonationsFragment donationsFragment = new DonationsFragment();
         Bundle args = new Bundle();
@@ -47,22 +47,18 @@ public class DonationsFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.donation_fragment, container, false);
 
         mPaypalUser = getArguments().getString(ARG_PAYPAL_USER);
         mPaypalCurrencyCode = getArguments().getString(ARG_PAYPAL_CURRENCY_CODE);
         mPaypalItemName = getArguments().getString(ARG_PAYPAL_ITEM_NAME);
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.donation_fragment, container, false);
         LaunchActivity launchActivity = (LaunchActivity) getActivity();
         launchActivity.updateActionBarTitle(getString(R.string.title_section4));
-        Button btPayPal = (Button) view.findViewById(R.id.paypal_donate_button);
-        btPayPal.setOnClickListener(new OnClickListener() {
+        LinearLayout donationPaypal = (LinearLayout) view.findViewById(R.id.paypal_donate_view);
+        donationPaypal.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {

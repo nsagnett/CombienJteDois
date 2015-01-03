@@ -30,8 +30,6 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
     private boolean isCreatedView = false;
     private boolean listEmpty;
 
-    private static final String ARG_SECTION_NUMBER = "section_number";
-
     private static final String PAYPAL_USER = "nsagnett@gmail.com";
     private static final String PAYPAL_CURRENCY_CODE = "EUR";
 

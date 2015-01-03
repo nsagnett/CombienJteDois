@@ -110,13 +110,13 @@
     <string name="preferences_present_description">Notification for waiting participants</string>
     <string name="preferences_frequency">Notification frequency</string>
 
-    <string name="donation_paypal">Donation</string>
+    <string name="donation_paypal">Donate with PayPal</string>
     <string name="donations_button_close">Close</string>
-    <string name="donations__paypal">PayPal</string>
-    <string name="donations__description">Do you find this application useful?\nSupport it\'s development by sending a donation to the developer!</string>
-    <string name="donations__paypal_description">You can choose how much you want to donate after clicking the button!</string>
-    <string name="donations__thanks_dialog_title">Thanks!</string>
-    <string name="donations__thanks_dialog">Thanks for donating!\nI really appreciate this!</string>
+    <string name="donations_paypal">PayPal</string>
+    <string name="donations_description">Do you find this application useful?\nSupport it\'s development by sending a donation to the developer!</string>
+    <string name="donations_paypal_description">You will be redirected to the PayPal website, don\'t worry, it\'s secured ! :)</string>
+    <string name="donations_thanks_dialog_title">Thanks!</string>
+    <string name="donations_thanks_dialog">Thanks for donating!\nI really appreciate this!</string>
     <string name="donation_alert_dialog_title">Error occurred</string>
     <string name="donation_alert_dialog_no_browser">No browser was found to open a website!</string>
 </resources>
