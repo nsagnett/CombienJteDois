@@ -113,9 +113,9 @@
     <!--Preferences-->
     <string name="preferences_confirm_dismiss">Confirmer suppression</string>
     <string name="preferences_money_alert">Notification dette</string>
-    <string name="preferences_money_description">Notification de l\'état des dettes</string>
+    <string name="preferences_money_description">Notification de l\'état des dettes (après démarrage du téléphone)</string>
     <string name="preferences_loan_alert">Notification prêt d\'objets</string>
-    <string name="preferences_loan_description">Notification de l\'état des prêts d\'objets</string>
+    <string name="preferences_loan_description">Notification de l\'état des prêts d\'objets (après démarrage du téléphone)</string>
     <string name="preferences_frequency">Fréquence des notifications</string>
 
     <string name="donations_button_close">Fermer</string>

@@ -103,9 +103,9 @@
 
     <string name="preferences_confirm_dismiss">Confirm Dismiss</string>
     <string name="preferences_money_alert">Debt notification</string>
-    <string name="preferences_money_description">Notification to state debt</string>
+    <string name="preferences_money_description">Notification to state debt (after device boot)</string>
     <string name="preferences_loan_alert">Loan object notification</string>
-    <string name="preferences_loan_description">Notification to state loan object</string>
+    <string name="preferences_loan_description">Notification to state loan object (after device boot)</string>
 
     <string name="donation_paypal">Donate with PayPal</string>
     <string name="donations_button_close">Close</string>

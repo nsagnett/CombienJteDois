@@ -118,6 +118,7 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
         if (!navigationDrawerFragment.isDrawerOpen()) {
             if (getCurrentFragment() instanceof SettingsFragment ||
                     getCurrentFragment() instanceof DonationsFragment) {
+                restoreActionBar();
                 return true;
             } else if (getCurrentFragment() instanceof ExchangedObjectsFragment
                     || listEmpty) {

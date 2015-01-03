@@ -40,6 +40,8 @@ public class SendSmsTask extends AsyncTask<String, Void, Void> {
         super.onPostExecute(aVoid);
         if (failure) {
             Toast.makeText(context, context.getString(R.string.impossible_send), Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(context, context.getString(R.string.sending), Toast.LENGTH_SHORT).show();
         }
     }
 }

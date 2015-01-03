@@ -48,8 +48,6 @@ public class DonationsFragment extends Fragment {
         mPaypalCurrencyCode = PAYPAL_CURRENCY_CODE;
         mPaypalItemName = getString(R.string.donation_paypal);
 
-        LaunchActivity launchActivity = (LaunchActivity) getActivity();
-        launchActivity.updateActionBarTitle(getString(R.string.title_section4));
         LinearLayout donationPaypal = (LinearLayout) view.findViewById(R.id.paypal_donate_view);
         donationPaypal.setOnClickListener(new OnClickListener() {
 
@@ -59,6 +57,14 @@ public class DonationsFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LaunchActivity launchActivity = (LaunchActivity) getActivity();
+        launchActivity.updateActionBarTitle(getString(R.string.title_section4));
+        launchActivity.supportInvalidateOptionsMenu();
     }
 
     @Override

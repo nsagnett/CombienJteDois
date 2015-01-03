@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.utils.Preferences;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
 
-public class SettingsFragment extends Fragment implements CompoundButton.OnCheckedChangeListener{
+public class SettingsFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
 
     private LaunchActivity launchActivity;
 
@@ -47,11 +46,8 @@ public class SettingsFragment extends Fragment implements CompoundButton.OnCheck
     @Override
     public void onResume() {
         super.onResume();
-        ActionBar actionBar = launchActivity.getSupportActionBar();
-        if (actionBar != null) {
-            launchActivity.updateActionBarTitle(getString(R.string.settings));
-            launchActivity.supportInvalidateOptionsMenu();
-        }
+        launchActivity.updateActionBarTitle(getString(R.string.settings));
+        launchActivity.supportInvalidateOptionsMenu();
     }
 
     @Override
