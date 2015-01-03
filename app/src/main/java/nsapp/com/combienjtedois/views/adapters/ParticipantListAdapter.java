@@ -1,29 +1,36 @@
 package nsapp.com.combienjtedois.views.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import nsapp.com.combienjtedois.R;
+import nsapp.com.combienjtedois.model.Event;
 import nsapp.com.combienjtedois.model.Participant;
+import nsapp.com.combienjtedois.services.SendSmsTask;
+import nsapp.com.combienjtedois.utils.ViewCreator;
 
 public class ParticipantListAdapter extends BaseAdapter {
 
     private final Context context;
     private final ArrayList<Participant> participants = new ArrayList<>();
+    private final Event event;
 
     private final boolean isEditingView;
 
-    public ParticipantListAdapter(Context context, ArrayList<Participant> participants, boolean isEditingView) {
+    public ParticipantListAdapter(Context context, ArrayList<Participant> participants, boolean isEditingView, Event event) {
         this.context = context;
         this.participants.addAll(participants);
         this.isEditingView = isEditingView;
+        this.event = event;
     }
 
     @Override
@@ -50,7 +57,7 @@ public class ParticipantListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.participant_holder, null);
         }
 
-        Participant participant = participants.get(position);
+        final Participant participant = participants.get(position);
         String name = participant.getName();
 
         ((TextView) convertView.findViewById(R.id.nameView)).setText(name);
@@ -60,7 +67,24 @@ public class ParticipantListAdapter extends BaseAdapter {
         smsView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO sms task
+                final AlertDialog alert = ViewCreator.createSendMessageDialogBox(context);
+                alert.show();
+
+                final EditText messageView = (EditText) alert.findViewById(R.id.messageView);
+                final EditText phoneView = (EditText) alert.findViewById(R.id.phoneNumberEditView);
+
+                messageView.setText(String.format(context.getString(R.string.message_text_event_format), participant.getBudget(), event.getSubject()));
+                phoneView.setText(participant.getPhoneNumber());
+
+                alert.findViewById(R.id.neutralTextView).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (checkSendForm(messageView, phoneView)) {
+                            alert.dismiss();
+                            new SendSmsTask(context).execute(messageView.getText().toString(), phoneView.getText().toString());
+                        }
+                    }
+                });
             }
         });
 
@@ -82,5 +106,16 @@ public class ParticipantListAdapter extends BaseAdapter {
             imageView.setVisibility(View.VISIBLE);
         }
         return convertView;
+    }
+
+    private boolean checkSendForm(EditText messageView, EditText phoneNumberView) {
+        if (messageView.getText().length() == 0) {
+            ViewCreator.showCustomAlertDialogBox(context, String.format(context.getString(R.string.empty_field_format), context.getString(R.string.message)));
+            return false;
+        } else if (phoneNumberView.getText().length() == 0) {
+            ViewCreator.showCustomAlertDialogBox(context, String.format(context.getString(R.string.empty_field_format), context.getString(R.string.phone_number)));
+            return false;
+        }
+        return true;
     }
 }

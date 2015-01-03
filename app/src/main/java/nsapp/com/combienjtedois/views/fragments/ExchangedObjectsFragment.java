@@ -18,20 +18,20 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.model.DBManager;
+import nsapp.com.combienjtedois.utils.DBManager;
 import nsapp.com.combienjtedois.model.LoanObject;
-import nsapp.com.combienjtedois.model.Preferences;
-import nsapp.com.combienjtedois.model.Utils;
-import nsapp.com.combienjtedois.views.ViewCreator;
+import nsapp.com.combienjtedois.utils.Preferences;
+import nsapp.com.combienjtedois.utils.Utils;
+import nsapp.com.combienjtedois.utils.ViewCreator;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
 import nsapp.com.combienjtedois.views.adapters.LoanObjectAdapter;
 
-public class LoanObjectsFragment extends AbstractFragment {
+public class ExchangedObjectsFragment extends AbstractFragment {
 
     private ArrayList<LoanObject> loanObjects = new ArrayList<>();
 
-    public static LoanObjectsFragment newInstance(int sectionNumber) {
-        LoanObjectsFragment fragment = new LoanObjectsFragment();
+    public static ExchangedObjectsFragment newInstance(int sectionNumber) {
+        ExchangedObjectsFragment fragment = new ExchangedObjectsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);

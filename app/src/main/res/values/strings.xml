@@ -24,7 +24,7 @@
     <string name="value_hint">Tap the value</string>
     <string name="subject_hint">Tap the present</string>
     <string name="digits_edittext">abcdefghijklmnopqrstuvwxyz .ABCDEFGHIJKLMNOPQRSTUVWXYZ-</string>
-    <string name="empty_field_format">%s field required !</string>
+    <string name="empty_field_format">\"%s\" field required !</string>
     <string name="euro">€</string>
     <string name="event_date_format">For  : %1$s ( Dans %2$s )</string>
     <string name="finish">Finish</string>
@@ -41,6 +41,7 @@
     <string name="modify_person">Edit a person</string>
     <string name="money_format">%s €</string>
     <string name="name">Name</string>
+    <string name="message">Message</string>
     <string name="name_with_points">Name : %s</string>
     <string name="name_hint">Tap the name</string>
     <string name="navigation_drawer_close">Close menu</string>
@@ -60,7 +61,8 @@
     <string name="person_name">Person name</string>
     <string name="person_name_with_points">Person name :&#160;</string>
     <string name="phone_hint">Tap the number</string>
-    <string name="phone_number">Phone number : (optional)</string>
+    <string name="phone_number_optional">Phone number (optional)</string>
+    <string name="phone_number">Phone number</string>
     <string name="lending">Lending</string>
     <string name="positive_text">Yes</string>
     <string name="event_format">Event : %s</string>
@@ -86,12 +88,14 @@
     <string name="type">Type</string>
     <string name="type_with_points">Type :&#160;</string>
     <string name="validate">Validate</string>
+    <string name="send">Send</string>
     <string name="warning_text">Warning !</string>
     <string name="participant_already_present">Participant always exists !</string>
     <string name="toast_add_participant">Participant added !</string>
     <string name="toast_delete_participant">Participant deleted !</string>
     <string name="waiting">Waiting for payment</string>
     <string name="update_payment">Update</string>
+    <string name="send_message_title">Send a message</string>
     <string name="check">Check</string>
     <string name="budget_format">Budget : %s</string>
     <string name="some_instants">&#160;a short time</string>
@@ -110,6 +114,13 @@
     <string name="donation_alert_dialog_title">Error occurred</string>
     <string name="donation_alert_dialog_no_browser">No browser was found to open a website!</string>
 
-    <string name="notification_money_text_format">Credence : %1$s € Debt : %2$s €</string>
+    <string name="notification_money_text_format">Credence : %1$s € | Debt : %2$s €</string>
     <string name="notification_loan_text_format">Object(s) exchanged : %s</string>
+
+    <string name="message_text_money_format">Hey, don\'t forget to give me %s€ ! :)</string>
+    <string name="message_text_event_format">Hey, don\'t forget to give me %1$s€ for your participation on \"%2$s\" :)</string>
+
+    <string name="impossible_send">Error to send message !</string>
+    <string name="pending_send">Sending&#8230;</string>
+    <string name="sending">Sending successfully !</string>
 </resources>

@@ -1,4 +1,4 @@
-package nsapp.com.combienjtedois.views;
+package nsapp.com.combienjtedois.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -14,7 +14,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.model.Utils;
 
 public class ViewCreator {
 
@@ -156,7 +155,7 @@ public class ViewCreator {
 
     public static AlertDialog createCustomPresentDialogBox(Context context) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        View view = LayoutInflater.from(context).inflate(R.layout.add_present_dialog_layout, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.add_event_dialog_layout, null);
 
         builder.setCustomTitle(getCustomTitleDialogBox(context, R.string.add_event, R.drawable.add));
 
@@ -195,6 +194,16 @@ public class ViewCreator {
         View view = LayoutInflater.from(context).inflate(R.layout.change_payment_present_dialog_layout, null);
 
         builder.setCustomTitle(getCustomTitleDialogBox(context, R.string.update_payment, R.drawable.edit));
+
+        builder.setView(view);
+        return builder.create();
+    }
+
+    public static AlertDialog createSendMessageDialogBox(Context context) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.send_message_dialog_layout, null);
+
+        builder.setCustomTitle(getCustomTitleDialogBox(context, R.string.send_message_title, R.drawable.sms));
 
         builder.setView(view);
         return builder.create();

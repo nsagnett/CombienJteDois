@@ -1,4 +1,4 @@
-package nsapp.com.combienjtedois.model;
+package nsapp.com.combienjtedois.utils;
 
 public class Preferences {
 

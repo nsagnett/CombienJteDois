@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.Debt;
-import nsapp.com.combienjtedois.model.Utils;
+import nsapp.com.combienjtedois.utils.Utils;
 
 public class DebtListAdapter extends BaseAdapter {
 

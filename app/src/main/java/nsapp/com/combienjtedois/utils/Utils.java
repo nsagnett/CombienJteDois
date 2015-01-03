@@ -1,4 +1,4 @@
-package nsapp.com.combienjtedois.model;
+package nsapp.com.combienjtedois.utils;
 
 import android.content.Context;
 import android.widget.DatePicker;

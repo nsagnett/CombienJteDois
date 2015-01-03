@@ -10,15 +10,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.model.DBManager;
-import nsapp.com.combienjtedois.model.Utils;
-import nsapp.com.combienjtedois.views.ViewCreator;
+import nsapp.com.combienjtedois.utils.DBManager;
+import nsapp.com.combienjtedois.utils.Utils;
+import nsapp.com.combienjtedois.utils.ViewCreator;
 import nsapp.com.combienjtedois.views.fragments.AbstractFragment;
 import nsapp.com.combienjtedois.views.fragments.DonationsFragment;
-import nsapp.com.combienjtedois.views.fragments.EventFragment;
-import nsapp.com.combienjtedois.views.fragments.LoanObjectsFragment;
+import nsapp.com.combienjtedois.views.fragments.EventsFragment;
+import nsapp.com.combienjtedois.views.fragments.ExchangedObjectsFragment;
 import nsapp.com.combienjtedois.views.fragments.NavigationDrawerFragment;
-import nsapp.com.combienjtedois.views.fragments.PersonListForMoneyFragment;
+import nsapp.com.combienjtedois.views.fragments.PersonsFragment;
 import nsapp.com.combienjtedois.views.fragments.SettingsFragment;
 
 public class LaunchActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -53,13 +53,13 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
 
         switch (position) {
             case 0:
-                fragment = PersonListForMoneyFragment.newInstance(position);
+                fragment = PersonsFragment.newInstance(position);
                 break;
             case 1:
-                fragment = LoanObjectsFragment.newInstance(position);
+                fragment = ExchangedObjectsFragment.newInstance(position);
                 break;
             case 2:
-                fragment = EventFragment.newInstance(position);
+                fragment = EventsFragment.newInstance(position);
                 break;
             case 3:
                 fragment = DonationsFragment.newInstance(position);
@@ -119,7 +119,7 @@ public class LaunchActivity extends ActionBarActivity implements NavigationDrawe
             if (getCurrentFragment() instanceof SettingsFragment ||
                     getCurrentFragment() instanceof DonationsFragment) {
                 return true;
-            } else if (getCurrentFragment() instanceof LoanObjectsFragment
+            } else if (getCurrentFragment() instanceof ExchangedObjectsFragment
                     || listEmpty) {
                 getMenuInflater().inflate(R.menu.add_menu, menu);
             } else {

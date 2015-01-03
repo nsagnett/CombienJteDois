@@ -10,7 +10,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.model.Preferences;
+import nsapp.com.combienjtedois.utils.Preferences;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
 
 public class AutoSendNotificationReceiver extends BroadcastReceiver {

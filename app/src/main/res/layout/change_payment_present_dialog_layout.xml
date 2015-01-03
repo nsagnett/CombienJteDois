@@ -8,25 +8,27 @@
 
     <TextView
         android:id="@+id/checkView"
-        android:textSize="17sp"
         android:gravity="center"
         android:padding="15dp"
+        android:drawablePadding="5dp"
         android:background="@drawable/custom_button"
         android:text="@string/check"
+        android:drawableLeft="@drawable/paid"
+        android:drawableStart="@drawable/paid"
         android:layout_width="0dp"
-        android:textColor="@color/green"
         android:layout_weight="0.5"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 
     <include layout="@layout/vertical_separator" />
 
     <TextView
         android:id="@+id/uncheckView"
-        android:textSize="17sp"
         android:padding="15dp"
+        android:drawablePadding="5dp"
         android:gravity="center"
+        android:drawableLeft="@drawable/clock"
+        android:drawableStart="@drawable/clock"
         android:text="@string/waiting"
-        android:textColor="@color/red"
         android:background="@drawable/custom_button"
         android:layout_width="0dp"
         android:layout_weight="0.5"

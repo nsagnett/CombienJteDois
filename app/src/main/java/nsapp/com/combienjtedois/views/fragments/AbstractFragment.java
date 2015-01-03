@@ -20,7 +20,7 @@ import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.listeners.SwipeDismissListViewTouchListener;
 import nsapp.com.combienjtedois.model.Debt;
 import nsapp.com.combienjtedois.model.Person;
-import nsapp.com.combienjtedois.model.Preferences;
+import nsapp.com.combienjtedois.utils.Preferences;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
 
 public abstract class AbstractFragment extends Fragment implements AdapterView.OnItemClickListener {

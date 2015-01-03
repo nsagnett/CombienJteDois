@@ -16,21 +16,21 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.model.DBManager;
+import nsapp.com.combienjtedois.utils.DBManager;
 import nsapp.com.combienjtedois.model.Event;
-import nsapp.com.combienjtedois.model.Utils;
-import nsapp.com.combienjtedois.views.ViewCreator;
+import nsapp.com.combienjtedois.utils.Utils;
+import nsapp.com.combienjtedois.utils.ViewCreator;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
-import nsapp.com.combienjtedois.views.adapters.PresentAdapter;
+import nsapp.com.combienjtedois.views.adapters.EventAdapter;
 
 import static android.os.Build.VERSION_CODES.HONEYCOMB;
 
-public class EventFragment extends AbstractFragment {
+public class EventsFragment extends AbstractFragment {
 
     private ArrayList<Event> presentsArray = new ArrayList<>();
 
-    public static EventFragment newInstance(int sectionNumber) {
-        EventFragment fragment = new EventFragment();
+    public static EventsFragment newInstance(int sectionNumber) {
+        EventsFragment fragment = new EventsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
@@ -87,8 +87,8 @@ public class EventFragment extends AbstractFragment {
             launchActivity.supportInvalidateOptionsMenu();
         }
 
-        PresentAdapter presentAdapter = new PresentAdapter(launchActivity, presentsArray);
-        listView.setAdapter(presentAdapter);
+        EventAdapter eventAdapter = new EventAdapter(launchActivity, presentsArray);
+        listView.setAdapter(eventAdapter);
     }
 
 
@@ -207,7 +207,7 @@ public class EventFragment extends AbstractFragment {
             if (isEditingView) {
                 modifyPresent(presentsArray.get(position));
             } else {
-                prepareOnReplaceTransaction(DetailEventFragment.newInstance(event));
+                prepareOnReplaceTransaction(EventParticipantsFragment.newInstance(event));
             }
         }
     }

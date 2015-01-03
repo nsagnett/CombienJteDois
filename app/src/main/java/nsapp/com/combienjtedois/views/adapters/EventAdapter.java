@@ -11,14 +11,14 @@ import java.util.ArrayList;
 
 import nsapp.com.combienjtedois.R;
 import nsapp.com.combienjtedois.model.Event;
-import nsapp.com.combienjtedois.model.Utils;
+import nsapp.com.combienjtedois.utils.Utils;
 
-public class PresentAdapter extends BaseAdapter {
+public class EventAdapter extends BaseAdapter {
 
     private final Context context;
     private final ArrayList<Event> eventArrayList = new ArrayList<>();
 
-    public PresentAdapter(Context context, ArrayList<Event> eventArrayList) {
+    public EventAdapter(Context context, ArrayList<Event> eventArrayList) {
         this.context = context;
         this.eventArrayList.addAll(eventArrayList);
     }
@@ -44,7 +44,7 @@ public class PresentAdapter extends BaseAdapter {
         LayoutInflater inflater = LayoutInflater.from(context);
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.present_holder, null);
+            convertView = inflater.inflate(R.layout.event_holder, null);
         }
         Event event = eventArrayList.get(position);
 

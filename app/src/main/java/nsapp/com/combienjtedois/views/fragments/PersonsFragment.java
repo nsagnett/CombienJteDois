@@ -18,19 +18,19 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.model.DBManager;
+import nsapp.com.combienjtedois.utils.DBManager;
 import nsapp.com.combienjtedois.model.Person;
-import nsapp.com.combienjtedois.model.Preferences;
-import nsapp.com.combienjtedois.model.Utils;
-import nsapp.com.combienjtedois.views.ViewCreator;
+import nsapp.com.combienjtedois.utils.Preferences;
+import nsapp.com.combienjtedois.utils.Utils;
+import nsapp.com.combienjtedois.utils.ViewCreator;
 import nsapp.com.combienjtedois.views.adapters.PersonListAdapter;
 
-public class PersonListForMoneyFragment extends AbstractFragment {
+public class PersonsFragment extends AbstractFragment {
 
     private boolean isCreatingPerson;
 
-    public static PersonListForMoneyFragment newInstance(int sectionNumber) {
-        PersonListForMoneyFragment fragment = new PersonListForMoneyFragment();
+    public static PersonsFragment newInstance(int sectionNumber) {
+        PersonsFragment fragment = new PersonsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
@@ -55,7 +55,7 @@ public class PersonListForMoneyFragment extends AbstractFragment {
             if (isEditingView) {
                 modifyPerson(personArrayList.get(position), null, null);
             } else {
-                prepareOnReplaceTransaction(DetailPersonForMoneyFragment.newInstance(person));
+                prepareOnReplaceTransaction(PersonDebtFragment.newInstance(person));
             }
         }
     }

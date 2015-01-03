@@ -18,7 +18,8 @@
     <string name="modify_person">Modifier une personne</string>
     <string name="name">Nom</string>
     <string name="name_with_points">Nom : %s</string>
-    <string name="phone_number">N° de téléphone (facultatif)</string>
+    <string name="phone_number_optional">N° de téléphone (facultatif)</string>
+    <string name="phone_number">N° de téléphone</string>
     <string name="validate">Valider</string>
     <string name="name_hint">Saisir le nom</string>
     <string name="toast_add_person">Personne ajoutée !</string>
@@ -34,7 +35,7 @@
     <string name="negative_text">Non</string>
     <string name="ok">OK</string>
     <string name="total">Total :&#160;</string>
-    <string name="empty_field_format">Le champ %s est requis !</string>
+    <string name="empty_field_format">Le champ \"%s\" est requis !</string>
     <string name="content">Content</string>
     <string name="euro">€</string>
     <string name="modification_date_format">Dernière modification : %s&#160;</string>
@@ -124,7 +125,16 @@
     <string name="donation_alert_dialog_no_browser">Aucun navigateur web n\'a été trouvé pour ouvrir le site web !</string>
     <string name="donation_paypal">Faites un don avec PayPal !</string>
 
-    <string name="notification_money_text_format">Créances : %1$s € Dettes : %2$s €</string>
+    <string name="notification_money_text_format">Créances : %1$s | € Dettes : %2$s €</string>
     <string name="notification_loan_text_format">Objet(s) échangé(s) : %s</string>
+
+    <string name="send">Envoyer</string>
+    <string name="send_message_title">Envoyer un message</string>
+    <string name="message_text_money_format">Hey, petit message pour te dire que tu me dois encore %s€ ! :)</string>
+    <string name="message_text_event_format">Hey, petit message pour te rappeler de me donner les %1$s€ de ta participation pour \"%2$s\" :)</string>
+
+    <string name="impossible_send">Erreur durant l\'envoi du message !</string>
+    <string name="sending">Message envoyé avec succès</string>
+    <string name="pending_send">Envoi&#8230;</string>
 
 </resources>

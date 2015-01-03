@@ -18,22 +18,23 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.model.DBManager;
+import nsapp.com.combienjtedois.services.SendSmsTask;
+import nsapp.com.combienjtedois.utils.DBManager;
 import nsapp.com.combienjtedois.model.Debt;
 import nsapp.com.combienjtedois.model.Person;
-import nsapp.com.combienjtedois.model.Utils;
-import nsapp.com.combienjtedois.views.ViewCreator;
+import nsapp.com.combienjtedois.utils.Utils;
+import nsapp.com.combienjtedois.utils.ViewCreator;
 import nsapp.com.combienjtedois.views.activities.EditTextAmountActivity;
 import nsapp.com.combienjtedois.views.adapters.DebtListAdapter;
 
-public class DetailPersonForMoneyFragment extends AbstractFragment {
+public class PersonDebtFragment extends AbstractFragment {
 
     private String type;
 
     private ImageView smsView;
 
-    public static DetailPersonForMoneyFragment newInstance(Person person) {
-        DetailPersonForMoneyFragment fragment = new DetailPersonForMoneyFragment();
+    public static PersonDebtFragment newInstance(Person person) {
+        PersonDebtFragment fragment = new PersonDebtFragment();
         Bundle args = new Bundle();
         args.putSerializable(Utils.PERSON_KEY, person);
         fragment.setArguments(args);
@@ -196,7 +197,7 @@ public class DetailPersonForMoneyFragment extends AbstractFragment {
         DebtListAdapter debtListAdapter = new DebtListAdapter(launchActivity, debtArrayList, isEditingView);
         listView.setAdapter(debtListAdapter);
 
-        Double total = Double.parseDouble(Utils.dbManager.getTotalCount(selectedPerson.getId()));
+        final Double total = Double.parseDouble(Utils.dbManager.getTotalCount(selectedPerson.getId()));
 
         if (total > 0) {
             headerCountView.setTextColor(getResources().getColor(R.color.green));
@@ -204,7 +205,24 @@ public class DetailPersonForMoneyFragment extends AbstractFragment {
             smsView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO sms task
+                    final AlertDialog alert = ViewCreator.createSendMessageDialogBox(launchActivity);
+                    alert.show();
+
+                    final EditText messageView = (EditText) alert.findViewById(R.id.messageView);
+                    final EditText phoneView = (EditText) alert.findViewById(R.id.phoneNumberEditView);
+
+                    messageView.setText(String.format(getString(R.string.message_text_money_format), total));
+                    phoneView.setText(selectedPerson.getPhoneNumber());
+
+                    alert.findViewById(R.id.neutralTextView).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (checkSendForm(messageView, phoneView)) {
+                                alert.dismiss();
+                                new SendSmsTask(launchActivity).execute(messageView.getText().toString(), phoneView.getText().toString());
+                            }
+                        }
+                    });
                 }
             });
         } else {
@@ -289,6 +307,17 @@ public class DetailPersonForMoneyFragment extends AbstractFragment {
             }
         } else {
             ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.type)));
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkSendForm(EditText messageView, EditText phoneNumberView) {
+        if (messageView.getText().length() == 0) {
+            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.message)));
+            return false;
+        } else if (phoneNumberView.getText().length() == 0) {
+            ViewCreator.showCustomAlertDialogBox(launchActivity, String.format(getString(R.string.empty_field_format), getString(R.string.phone_number)));
             return false;
         }
         return true;

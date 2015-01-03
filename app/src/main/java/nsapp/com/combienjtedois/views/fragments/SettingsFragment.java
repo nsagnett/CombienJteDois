@@ -13,7 +13,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.model.Preferences;
+import nsapp.com.combienjtedois.utils.Preferences;
 import nsapp.com.combienjtedois.views.activities.LaunchActivity;
 
 public class SettingsFragment extends Fragment implements CompoundButton.OnCheckedChangeListener{

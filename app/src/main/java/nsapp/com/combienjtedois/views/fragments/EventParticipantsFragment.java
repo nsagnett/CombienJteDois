@@ -21,21 +21,21 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import nsapp.com.combienjtedois.R;
-import nsapp.com.combienjtedois.model.DBManager;
+import nsapp.com.combienjtedois.utils.DBManager;
 import nsapp.com.combienjtedois.model.Event;
 import nsapp.com.combienjtedois.model.Participant;
-import nsapp.com.combienjtedois.model.Utils;
-import nsapp.com.combienjtedois.views.ViewCreator;
+import nsapp.com.combienjtedois.utils.Utils;
+import nsapp.com.combienjtedois.utils.ViewCreator;
 import nsapp.com.combienjtedois.views.adapters.ParticipantListAdapter;
 
-public class DetailEventFragment extends AbstractFragment {
+public class EventParticipantsFragment extends AbstractFragment {
 
     private Event selectedEvent;
 
     private ArrayList<Participant> participants = new ArrayList<>();
 
-    public static DetailEventFragment newInstance(Event event) {
-        DetailEventFragment fragment = new DetailEventFragment();
+    public static EventParticipantsFragment newInstance(Event event) {
+        EventParticipantsFragment fragment = new EventParticipantsFragment();
         Bundle args = new Bundle();
         args.putSerializable(Utils.EVENT_KEY, event);
         fragment.setArguments(args);
@@ -106,7 +106,7 @@ public class DetailEventFragment extends AbstractFragment {
             launchActivity.supportInvalidateOptionsMenu();
         }
 
-        ParticipantListAdapter participantListAdapter = new ParticipantListAdapter(launchActivity, participants, isEditingView);
+        ParticipantListAdapter participantListAdapter = new ParticipantListAdapter(launchActivity, participants, isEditingView, selectedEvent);
         listView.setAdapter(participantListAdapter);
     }
 
@@ -118,7 +118,6 @@ public class DetailEventFragment extends AbstractFragment {
         }
     }
 
-
     @Override
     public void onItemClick(final AdapterView<?> parent, View view, final int position, long id) {
         if (isEditingView) {
@@ -128,9 +127,6 @@ public class DetailEventFragment extends AbstractFragment {
                 alert.show();
                 final TextView checkView = (TextView) alert.findViewById(R.id.checkView);
                 final TextView uncheckView = (TextView) alert.findViewById(R.id.uncheckView);
-
-                checkView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.paid, 0, 0, 0);
-                uncheckView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.clock, 0, 0, 0);
 
                 checkView.setOnClickListener(new View.OnClickListener() {
                     @Override
