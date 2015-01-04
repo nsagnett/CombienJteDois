@@ -5,6 +5,7 @@ public class Preferences {
     public static final String CONFIRM_DISMISS = "confirm_dismiss_key";
     public static final String ENABLED_NOTIFICATION_MONEY = "enabledNotificationMoneyKey";
     public static final String ENABLED_NOTIFICATION_LOAN = "enabledNotificationLoanKey";
+    public static final String ENABLED_SWIPE_TO_DISMISS = "enabledSwipeToDismissKey";
 
     public static final String AMOUNT_CREDENCE_MONEY = "amountCredenceMoneyKey";
     public static final String AMOUNT_DEBT_MONEY = "amountDebtMoneyKey";

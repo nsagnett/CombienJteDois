@@ -76,16 +76,26 @@ public abstract class AbstractFragment extends Fragment implements AdapterView.O
     @Override
     public void onResume() {
         super.onResume();
-        SwipeDismissListViewTouchListener swipeDismissListViewTouchListener = new SwipeDismissListViewTouchListener(listView, new SwipeDismissListViewTouchListener.OnDismissCallback() {
-            @Override
-            public void onDismiss(int[] reverseSortedPositions) {
-                for (final int position : reverseSortedPositions) {
-                    deleteItem(position);
+        if (preferences.getBoolean(Preferences.ENABLED_SWIPE_TO_DISMISS, false)) {
+            SwipeDismissListViewTouchListener swipeDismissListViewTouchListener = new SwipeDismissListViewTouchListener(listView, new SwipeDismissListViewTouchListener.OnDismissCallback() {
+                @Override
+                public void onDismiss(int[] reverseSortedPositions) {
+                    for (final int position : reverseSortedPositions) {
+                        deleteItem(position);
+                    }
                 }
-            }
-        });
-        listView.setOnTouchListener(swipeDismissListViewTouchListener);
-        listView.setOnScrollListener(swipeDismissListViewTouchListener.makeScrollListener());
+            });
+            listView.setOnTouchListener(swipeDismissListViewTouchListener);
+            listView.setOnScrollListener(swipeDismissListViewTouchListener.makeScrollListener());
+        } else {
+            listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    deleteItem(position);
+                    return true;
+                }
+            });
+        }
         updatePreferences();
     }
 

@@ -102,6 +102,8 @@
     <string name="settings">Settings</string>
 
     <string name="preferences_confirm_dismiss">Confirm Dismiss</string>
+    <string name="preferences_swipe_to_dismiss">Swipe to dismiss</string>
+    <string name="preferences_swipe_description">Swipe to dismiss an element or a long click</string>
     <string name="preferences_money_alert">Debt notification</string>
     <string name="preferences_money_description">Notification to state debt (after device boot)</string>
     <string name="preferences_loan_alert">Loan object notification</string>

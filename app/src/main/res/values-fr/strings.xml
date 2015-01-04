@@ -113,6 +113,8 @@
     <!--Preferences-->
     <string name="preferences_confirm_dismiss">Confirmer suppression</string>
     <string name="preferences_money_alert">Notification dette</string>
+    <string name="preferences_swipe_to_dismiss">Glisser pour supprimer</string>
+    <string name="preferences_swipe_description">Faire glisser un élément pour le supprimer ou appuyer longuement</string>
     <string name="preferences_money_description">Notification de l\'état des dettes (après démarrage du téléphone)</string>
     <string name="preferences_loan_alert">Notification prêt d\'objets</string>
     <string name="preferences_loan_description">Notification de l\'état des prêts d\'objets (après démarrage du téléphone)</string>

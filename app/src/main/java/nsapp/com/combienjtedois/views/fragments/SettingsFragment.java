@@ -40,6 +40,10 @@ public class SettingsFragment extends Fragment implements CompoundButton.OnCheck
         loanAlertCheckbox.setChecked(prefs.getBoolean(Preferences.ENABLED_NOTIFICATION_LOAN, false));
         loanAlertCheckbox.setOnCheckedChangeListener(this);
 
+        CheckBox swipeToDismissCheckbox = (CheckBox) view.findViewById(R.id.swipeToDismissCheckbox);
+        swipeToDismissCheckbox.setChecked(prefs.getBoolean(Preferences.ENABLED_SWIPE_TO_DISMISS, false));
+        swipeToDismissCheckbox.setOnCheckedChangeListener(this);
+
         return view;
     }
 
@@ -61,6 +65,9 @@ public class SettingsFragment extends Fragment implements CompoundButton.OnCheck
                 break;
             case R.id.loanAlertCheckbox:
                 prefs.edit().putBoolean(Preferences.ENABLED_NOTIFICATION_LOAN, isChecked).apply();
+                break;
+            case R.id.swipeToDismissCheckbox:
+                prefs.edit().putBoolean(Preferences.ENABLED_SWIPE_TO_DISMISS, isChecked).apply();
                 break;
         }
     }

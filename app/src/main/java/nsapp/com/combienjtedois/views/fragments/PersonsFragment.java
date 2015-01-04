@@ -182,10 +182,9 @@ public class PersonsFragment extends AbstractFragment {
             if (Float.parseFloat(totalPerson) > 0) {
                 positiveTotal += Float.parseFloat(totalPerson);
             } else {
-                negativeTotal += Float.parseFloat(totalPerson);
+                negativeTotal += Float.parseFloat(totalPerson.replace("-", ""));
             }
         }
-
 
 
         preferences.edit().putFloat(Preferences.AMOUNT_CREDENCE_MONEY, positiveTotal).apply();

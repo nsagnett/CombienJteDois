@@ -49,17 +49,6 @@
             android:layout_weight="0.85"
             android:layout_width="0dp"
             android:layout_height="match_parent" />
-
-        <ImageView
-            android:id="@+id/importContactView"
-            android:gravity="center"
-            android:contentDescription="@string/content"
-            android:background="@drawable/custom_button"
-            android:layout_weight="0.15"
-            android:padding="10dp"
-            android:layout_width="0dp"
-            android:src="@drawable/import_data"
-            android:layout_height="match_parent" />
     </LinearLayout>
 
     <include layout="@layout/horizontal_separator" />
